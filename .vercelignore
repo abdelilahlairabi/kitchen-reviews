@@ -1,0 +1,5 @@
+.env
+admin/
+admin-server.js
+scripts/
+supabase/

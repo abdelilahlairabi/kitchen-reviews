@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kitchen Reviews — Local Admin</title>
+    <style>
+      :root { font-family: Inter, system-ui, sans-serif; color: #1f2937; background: #f8fafc; }
+      body { margin: 0; } main { max-width: 1160px; margin: auto; padding: 32px 20px 64px; }
+      header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 24px; }
+      h1 { margin: 0; font-size: 28px; } .local { color: #64748b; font-size: 14px; }
+      .layout { display: grid; grid-template-columns: minmax(0, 1fr) 1.15fr; gap: 24px; } @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+      section { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 20px; } h2 { margin: 0 0 16px; font-size: 20px; }
+      form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } .wide { grid-column: 1 / -1; }
+      label { display: grid; gap: 5px; font-size: 12px; font-weight: 700; color: #475569; }
+      input, select, textarea { box-sizing: border-box; width: 100%; border: 1px solid #cbd5e1; border-radius: 8px; padding: 9px; font: inherit; color: #0f172a; } textarea { resize: vertical; min-height: 74px; }
+      button { border: 0; border-radius: 8px; padding: 10px 14px; font: inherit; font-weight: 700; cursor: pointer; background: #b77942; color: #fff; } button:hover { background: #965b2e; } button.secondary { background: #e2e8f0; color: #334155; } button.danger { background: #b91c1c; } .actions { display: flex; gap: 8px; align-items: center; } #message { min-height: 20px; margin: 14px 0; font-size: 14px; } .error { color: #b91c1c; } .success { color: #15803d; }
+      .products { max-height: 650px; overflow: auto; } table { width: 100%; border-collapse: collapse; font-size: 13px; } th, td { padding: 10px 6px; border-bottom: 1px solid #e2e8f0; text-align: left; vertical-align: top; } th { color: #64748b; position: sticky; top: 0; background: #fff; } td.actions { white-space: nowrap; } td.actions button { padding: 6px 8px; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header><h1>Products — Local Admin</h1><span class="local">Only available on 127.0.0.1</span></header>
+      <div id="message" role="status"></div>
+      <div class="layout">
+        <section><h2 id="form-title">Add product</h2>
+          <form id="product-form">
+            <label>Product name<input name="name" required maxlength="240" /></label>
+            <label>Slug<input name="slug" required maxlength="160" pattern="[a-z0-9]+(-[a-z0-9]+)*" /></label>
+            <label>Category<select name="category_id" id="category"><option value="">No category</option></select></label>
+            <label>Badge<input name="badge" maxlength="80" placeholder="Best Seller" /></label>
+            <label>Price<input name="price" type="number" min="0" step="0.01" /></label>
+            <label>Original price<input name="original_price" type="number" min="0" step="0.01" /></label>
+            <label>Discount %<input name="discount_percent" type="number" min="0" max="100" step="0.01" /></label>
+            <label>Rating<input name="rating" type="number" min="0" max="5" step="0.1" /></label>
+            <label>Review count<input name="review_count" type="number" min="0" step="1" /></label>
+            <label>Types (comma-separated)<input name="types" placeholder="Faucets, Pull-down" /></label>
+            <label class="wide">Primary image URL<input name="primary_image" maxlength="2000" /></label>
+            <label class="wide">Affiliate URL<input name="affiliate_url" maxlength="2000" /></label>
+            <label class="wide">Description<textarea name="description" maxlength="5000"></textarea></label>
+            <label class="wide">Features (one per line)<textarea name="features"></textarea></label>
+            <label class="wide">Specs (valid JSON object)<textarea name="specs" placeholder='{"Material":"Stainless steel"}'>{}</textarea></label>
+            <div class="actions wide"><button type="submit" id="save">Save product</button><button type="button" class="secondary" id="cancel" hidden>Cancel edit</button></div>
+          </form>
+        </section>
+        <section><h2>Products</h2><div class="products"><table><thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead><tbody id="product-list"></tbody></table></div></section>
+      </div>
+      <div class="layout" style="margin-top:24px">
+        <section><h2>Bulk import products</h2>
+          <p class="local">Required columns: <code>slug</code>, <code>name</code>. Existing products with the same slug are updated. Nothing is deleted.</p>
+          <form id="import-form">
+            <label class="wide">Public Google Sheet URL (optional)<input id="google-sheet-url" type="url" placeholder="https://docs.google.com/spreadsheets/d/.../edit#gid=0" /></label>
+            <label class="wide">Or paste CSV<textarea id="import-csv" placeholder="slug,name,category_slug,price,primary_image,affiliate_url&#10;example-product,Example Product,faucets,99.99,https://...,https://..."></textarea></label>
+            <div class="actions wide"><button type="button" class="secondary" id="load-sheet">Load Google Sheet</button><button type="button" id="preview-import">Preview import</button><button type="submit" id="confirm-import" hidden>Confirm import</button></div>
+          </form>
+        </section>
+        <section><h2>CSV columns</h2><p class="local"><code>slug,name,category_slug,price,original_price,discount_percent,rating,review_count,badge,types,primary_image,affiliate_url,description,features,specs</code></p><p class="local">Use semicolons for <code>features</code>. Use JSON object for <code>specs</code>. <code>category_slug</code> must already exist.</p><pre id="import-result" class="local" style="white-space:pre-wrap"></pre></section>
+      </div>
+      <div class="layout" style="margin-top:24px">
+        <section><h2>Product gallery & reviews</h2>
+          <form id="product-details-form">
+            <label class="wide">Choose product<select id="details-product" required><option value="">Select a product</option></select></label>
+            <label class="wide">Gallery image URLs (one URL per line)<textarea name="images" placeholder="https://...&#10;https://..."></textarea></label>
+            <label class="wide">Reviews (JSON array)<textarea name="reviews" placeholder='[{"author_name":"Sarah","rating":5,"text":"Excellent product.","avatar":"https://..."}]'>[]</textarea></label>
+            <div class="actions wide"><button type="submit">Save gallery & reviews</button></div>
+          </form>
+        </section>
+        <section><h2>How this works</h2><p class="local">Choose a product to load its current gallery and reviews. Saving replaces its gallery and review list with the values you enter.</p></section>
+      </div>
+      <div class="layout" style="margin-top:24px">
+        <section><h2 id="category-form-title">Add category</h2>
+          <form id="category-form">
+            <label>Category name<input name="name" required maxlength="160" /></label>
+            <label>Slug<input name="slug" required maxlength="160" pattern="[a-z0-9]+(-[a-z0-9]+)*" /></label>
+            <label class="wide">Hero image URL<input name="hero_image" maxlength="2000" /></label>
+            <label class="wide">Description<textarea name="description" maxlength="2000"></textarea></label>
+            <label class="wide">Product filters (comma-separated)<input name="sub_filters" placeholder="Pull-down, Touchless" /></label>
+            <div class="actions wide"><button type="submit">Save category</button><button type="button" class="secondary" id="category-cancel" hidden>Cancel edit</button></div>
+          </form>
+        </section>
+        <section><h2>Categories</h2><div class="products"><table><thead><tr><th>Name</th><th>Slug</th><th>Filters</th><th>Actions</th></tr></thead><tbody id="category-list"></tbody></table></div></section>
+      </div>
+      <div class="layout" style="margin-top:24px">
+        <section><h2 id="style-form-title">Add inspiration style</h2>
+          <form id="style-form">
+            <label>Style title<input name="title" required maxlength="240" /></label>
+            <label>Slug<input name="slug" required maxlength="160" pattern="[a-z0-9]+(-[a-z0-9]+)*" /></label>
+            <label class="wide">Subtitle<input name="subtitle" maxlength="500" /></label>
+            <label class="wide">Hero image URL<input name="hero_image" maxlength="2000" /></label>
+            <label class="wide">Description<textarea name="description" maxlength="5000"></textarea></label>
+            <label class="wide">Tags (comma-separated)<input name="tags" placeholder="Warm wood, Open shelving" /></label>
+            <label class="wide">Gallery image URLs (one URL per line)<textarea name="gallery" placeholder="https://...&#10;https://..."></textarea></label>
+            <label class="wide">Shop This Look products (use Ctrl / Cmd to choose multiple)<select id="style-products" multiple size="8"></select></label>
+            <div class="actions wide"><button type="submit">Save style</button><button type="button" class="secondary" id="style-cancel" hidden>Cancel edit</button></div>
+          </form>
+        </section>
+        <section><h2>Inspiration styles</h2><div class="products"><table><thead><tr><th>Style</th><th>Gallery</th><th>Products</th><th>Actions</th></tr></thead><tbody id="style-list"></tbody></table></div></section>
+      </div>
+      <div class="layout" style="margin-top:24px">
+        <section><h2 id="guide-form-title">Add guide</h2>
+          <form id="guide-form">
+            <label>Guide title<input name="title" required maxlength="300" /></label>
+            <label>Slug<input name="slug" required maxlength="160" pattern="[a-z0-9]+(-[a-z0-9]+)*" /></label>
+            <label>Badge<input name="badge" maxlength="80" placeholder="Buying Guides" /></label>
+            <label>Read time<input name="read_time" maxlength="80" placeholder="8 min read" /></label>
+            <label class="wide">Cover image URL<input name="image" maxlength="2000" /></label>
+            <label class="wide">Description<textarea name="description" maxlength="5000"></textarea></label>
+            <label>Author name<input name="author_name" maxlength="160" /></label>
+            <label>Author role<input name="author_role" maxlength="160" /></label>
+            <label class="wide">Author avatar URL<input name="author_avatar" maxlength="2000" /></label>
+            <label class="wide">Quick tip<textarea name="quick_tip" maxlength="2000"></textarea></label>
+            <label class="wide">Comparison options (JSON array)<textarea name="comparison_types" placeholder='[{"name":"Pull-down","desc":"Flexible spray reach"}]'>[]</textarea></label>
+            <label class="wide">Materials / finishes (JSON array)<textarea name="comparison_finishes" placeholder='[{"finish":"Brushed nickel","durability":"Spot resistant"}]'>[]</textarea></label>
+            <label class="wide">FAQs (JSON array)<textarea name="faqs" placeholder='[{"question":"What should I choose?","answer":"Choose based on your needs."}]'>[]</textarea></label>
+            <label class="wide">Recommended products (use Ctrl / Cmd to choose multiple)<select id="guide-products" multiple size="8"></select></label>
+            <div class="actions wide"><button type="submit">Save guide</button><button type="button" class="secondary" id="guide-cancel" hidden>Cancel edit</button></div>
+          </form>
+        </section>
+        <section><h2>Guides</h2><div class="products"><table><thead><tr><th>Title</th><th>FAQs</th><th>Products</th><th>Actions</th></tr></thead><tbody id="guide-list"></tbody></table></div></section>
+      </div>
+      <div class="layout" style="margin-top:24px">
+        <section><h2 id="collection-form-title">Add collection</h2>
+          <form id="collection-form">
+            <label>Collection name<input name="name" required maxlength="240" /></label>
+            <label>Slug<input name="slug" required maxlength="160" pattern="[a-z0-9]+(-[a-z0-9]+)*" /></label>
+            <label>Badge<input name="badge" maxlength="80" placeholder="Editor's Pick" /></label>
+            <label>Curator name<input name="curator_name" maxlength="160" /></label>
+            <label class="wide">Image URL<input name="image" maxlength="2000" /></label>
+            <label class="wide">Subtitle<input name="subtitle" maxlength="500" /></label>
+            <label class="wide">Introduction<textarea name="intro_text" maxlength="5000"></textarea></label>
+            <label class="wide">Products (use Ctrl / Cmd to choose multiple)<select id="collection-products" multiple size="8"></select></label>
+            <label class="wide" style="display:flex;grid-template-columns:auto 1fr;align-items:center;gap:8px"><input name="featured" type="checkbox" style="width:auto" /> Featured collection</label>
+            <div class="actions wide"><button type="submit">Save collection</button><button type="button" class="secondary" id="collection-cancel" hidden>Cancel edit</button></div>
+          </form>
+        </section>
+        <section><h2>Collections</h2><div class="products"><table><thead><tr><th>Name</th><th>Products</th><th>Featured</th><th>Actions</th></tr></thead><tbody id="collection-list"></tbody></table></div></section>
+      </div>
+    </main>
+    <script src="/admin.js"></script>
+  </body>
+</html>

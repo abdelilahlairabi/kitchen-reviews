@@ -1,0 +1,5 @@
+import { Link } from 'react-router-dom';
+
+const CollectionsGrid = ({ collections }) => <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16"><div className="grid grid-cols-1 md:grid-cols-2 gap-6">{collections.map((collection) => <Link key={collection.id} to={`/collections/${collection.slug}`} className="group block bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300"><div className="relative h-64 w-full overflow-hidden bg-gray-50"><img src={collection.image} alt={collection.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" /></div><div className="p-6 flex justify-between items-center bg-white"><div><h2 className="text-xl font-bold text-black mb-1 uppercase tracking-tight">{collection.name}</h2><p className="text-sm text-gray-500">{collection.subtitle}</p></div><span className="text-black group-hover:translate-x-2 transition-transform" aria-hidden="true">→</span></div></Link>)}</div></div>;
+
+export default CollectionsGrid;

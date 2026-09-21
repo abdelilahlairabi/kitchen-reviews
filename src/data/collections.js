@@ -1,0 +1,182 @@
+// src/data/collections.js
+
+export const collections = [
+  {
+    id: 1,
+    slug: "modern-farmhouse-essentials",
+    name: "Modern Farmhouse Essentials",
+    featured: true,
+    badge: "Featured Collection",
+    image: "/collections/collection-featured-modern-farmhouse.jpeg",
+    subtitle: "24 hand-picked products for a warm, welcoming kitchen",
+    introText:
+      "Our modern farmhouse collection brings together hand-picked essentials that add warmth, style, and everyday functionality to your kitchen.",
+    curator: { name: "Kitchen Reviews", avatar: "/product-details/avatar-sarah.jpeg" },
+    productSlugs: [
+      "kitchenaid-artisan-stand-mixer",
+      "vitamix-professional-blender",
+      "le-creuset-cast-iron-cocotte",
+      "fireclay-ceramic-farmhouse-sink",
+      "japanese-damascus-chef-knife",
+      "programmable-drip-coffee-maker",
+      "walnut-end-grain-cutting-board",
+      "classic-enameled-dutch-oven",
+      "gooseneck-electric-kettle",
+    ],
+  },
+  {
+    id: 2,
+    slug: "small-kitchen-essentials",
+    name: "Small Kitchen Essentials",
+    featured: false,
+    badge: "Popular",
+    image: "/collections/collection-small-kitchen-essentials.jpeg",
+    subtitle: "Space-saving solutions engineered for compact kitchens",
+    introText:
+      "Maximize your counter space with smart, multi-functional tools designed specifically for small spaces, apartments, and cozy kitchen nooks.",
+    curator: { name: "Space Saver Studio", avatar: "/product-details/avatar-sarah.jpeg" },
+    productSlugs: [
+      "vitamix-professional-blender",
+      "fireclay-ceramic-farmhouse-sink",
+      "programmable-drip-coffee-maker",
+      "classic-enameled-dutch-oven",
+      "semi-automatic-espresso-machine",
+      "indoor-hydroponic-herb-garden",
+    ],
+  },
+  {
+    id: 3,
+    slug: "budget-friendly-upgrades",
+    name: "Budget-Friendly Upgrades",
+    featured: false,
+    badge: "Best Value",
+    image: "/collections/collection-budget-friendly.jpeg",
+    subtitle: "High quality kitchen tools without the premium price tag",
+    introText:
+      "Transform your cooking space without breaking the bank. These affordable finds offer top tier functionality and sleek aesthetics.",
+    curator: { name: "Smart Shopper", avatar: "/product-details/avatar-sarah.jpeg" },
+    productSlugs: [
+      "kitchenaid-artisan-stand-mixer",
+      "le-creuset-cast-iron-cocotte",
+      "japanese-damascus-chef-knife",
+      "walnut-end-grain-cutting-board",
+      "gooseneck-electric-kettle",
+      "brushed-nickel-kitchen-faucet",
+    ],
+  },
+  {
+    id: 4,
+    slug: "luxury-kitchen-must-haves",
+    name: "Luxury Kitchen Must-Haves",
+    featured: false,
+    badge: "Premium Pick",
+    image: "/collections/collection-luxury-must-haves.jpeg",
+    subtitle: "Professional-grade cookware and high-end aesthetics",
+    introText:
+      "Elevate your culinary experience with craftsmanship, copper accents, and premium appliances built to last a lifetime.",
+    curator: { name: "Chef Selected", avatar: "/product-details/avatar-sarah.jpeg" },
+    productSlugs: [
+      "kitchenaid-artisan-stand-mixer",
+      "japanese-damascus-chef-knife",
+      "classic-enameled-dutch-oven",
+      "rolling-kitchen-island-cart",
+      "15-piece-knife-block-set",
+    ],
+  },
+  {
+    id: 5,
+    slug: "scandinavian-minimalist",
+    name: "Scandinavian Minimalist",
+    featured: false,
+    badge: "Trending",
+    image: "/collections/collection-scandinavian-minimalist.jpeg",
+    subtitle: "Clean lines, natural textures, and clutter-free living",
+    introText:
+      "Embrace Nordically inspired functionality with neutral tones, organic wooden details, and minimalist design.",
+    curator: { name: "Nordic Living", avatar: "/product-details/avatar-sarah.jpeg" },
+    productSlugs: [
+      "le-creuset-cast-iron-cocotte",
+      "fireclay-ceramic-farmhouse-sink",
+      "walnut-end-grain-cutting-board",
+      "semi-automatic-espresso-machine",
+      "brushed-nickel-kitchen-faucet",
+    ],
+  },
+  {
+    id: 6,
+    slug: "rustic-wood-accents",
+    name: "Rustic Wood Accents",
+    featured: false,
+    badge: null,
+    image: "/collections/collection-rustic-wood-accents.jpeg",
+    subtitle: "Warm timber tones and natural wooden kitchen essentials",
+    introText:
+      "Bring natural warmth into your home with organic butcher blocks, handcrafted wooden utensils, and rustic storage accessories.",
+    curator: { name: "Crafted Home", avatar: "/product-details/avatar-sarah.jpeg" },
+    productSlugs: [
+      "vitamix-professional-blender",
+      "programmable-drip-coffee-maker",
+      "gooseneck-electric-kettle",
+      "indoor-hydroponic-herb-garden",
+    ],
+  },
+  {
+    id: 7,
+    slug: "smart-kitchen-tech",
+    name: "Smart Kitchen Tech",
+    featured: false,
+    badge: "Innovation",
+    image: "/collections/collection-smart-kitchen-tech.jpeg",
+    subtitle: "Cutting-edge appliances to streamline your daily cooking",
+    introText:
+      "Upgrade your cooking routines with touchless faucets, precision temperature controllers, and intelligent appliances.",
+    curator: { name: "Tech Digest", avatar: "/product-details/avatar-sarah.jpeg" },
+    productSlugs: [
+      "kitchenaid-artisan-stand-mixer",
+      "japanese-damascus-chef-knife",
+      "gooseneck-electric-kettle",
+      "brushed-nickel-kitchen-faucet",
+    ],
+  },
+  {
+    id: 8,
+    slug: "coffee-espresso-corner",
+    name: "Coffee & Espresso Corner",
+    featured: false,
+    badge: "Coffee Lovers",
+    image: "/collections/collection-coffee-espresso-corner.jpeg",
+    subtitle: "Everything you need for the ultimate home barista setup",
+    introText:
+      "Brew café-quality coffee at home with our curated selection of espresso machines, manual pour-overs, and stylish mugs.",
+    curator: { name: "Barista Choice", avatar: "/product-details/avatar-sarah.jpeg" },
+    productSlugs: [
+      "fireclay-ceramic-farmhouse-sink",
+      "walnut-end-grain-cutting-board",
+      "semi-automatic-espresso-machine",
+      "rolling-kitchen-island-cart",
+    ],
+  },
+  {
+    id: 9,
+    slug: "eco-friendly-kitchen",
+    name: "Eco-Friendly Kitchen",
+    featured: false,
+    badge: "Sustainable",
+    image: "/collections/collection-eco-friendly-kitchen.jpeg",
+    subtitle: "Sustainable, reusable, and zero-waste kitchen products",
+    introText:
+      "Reduce single-use plastic and waste with durable glass storage, bamboo utensils, and energy-efficient water filters.",
+    curator: { name: "Green Living", avatar: "/product-details/avatar-sarah.jpeg" },
+    productSlugs: [
+      "vitamix-professional-blender",
+      "le-creuset-cast-iron-cocotte",
+      "programmable-drip-coffee-maker",
+      "classic-enameled-dutch-oven",
+      "indoor-hydroponic-herb-garden",
+    ],
+  },
+];
+
+export const getFeaturedCollection = () => collections.find((c) => c.featured);
+export const getRegularCollections = () => collections.filter((c) => !c.featured);
+export const getCollectionBySlug = (slug) => collections.find((c) => c.slug === slug);
