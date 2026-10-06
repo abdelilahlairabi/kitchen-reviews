@@ -21,16 +21,14 @@ const Inspiration = lazy(() => import('./pages/Inspiration'));
 const StyleDetails = lazy(() => import('./pages/StyleDetails'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
-function App() {
+export function AppContent() {
   return (
-    <Router>
-      <div className="min-h-screen flex flex-col font-sans bg-white">
-        
-        <Navbar />
+    <div className="min-h-screen flex flex-col font-sans bg-white">
+      <Navbar />
 
-        <main className="flex-grow w-full pb-12">
-          <Suspense fallback={<p className="py-16 text-center text-gray-500">Loading page...</p>}>
-            <Routes>
+      <main className="flex-grow w-full pb-12">
+        <Suspense fallback={<p className="py-16 text-center text-gray-500">Loading page...</p>}>
+          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<AllProducts />} /> {/* Ajout de la route */}
             <Route path="/category/:categoryName" element={<Category />} />
@@ -48,12 +46,19 @@ function App() {
             <Route path="/inspiration" element={<Inspiration />} />
             <Route path="/inspiration/:slug" element={<StyleDetails />} />
             <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </main>
+          </Routes>
+        </Suspense>
+      </main>
 
-        <Footer />
-      </div>
+      <Footer />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }
