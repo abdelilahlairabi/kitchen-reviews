@@ -6,6 +6,7 @@ import ProductRelated from '../components/product/ProductRelated';
 import { useProduct, useProducts } from '../hooks/useProducts';
 import { getCategoryBySlug } from '../data/categories';
 import NotFound from './NotFound';
+import PageMeta from '../components/PageMeta';
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -24,6 +25,10 @@ const ProductDetails = () => {
 
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen">
+      <PageMeta
+        title={`${product.name} Review & Product Details | Kitchen Reviews`}
+        description={product.description}
+      />
       <ProductHero key={product.id} product={product} category={category} />
       <ProductSpecs product={product} />
       <ProductReviews reviews={product.reviews} />
