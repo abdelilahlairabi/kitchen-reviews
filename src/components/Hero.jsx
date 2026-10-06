@@ -21,14 +21,11 @@ const Hero = () => {
         {/* Content */}
         <div className="relative z-10 p-8 sm:p-12 lg:p-16 max-w-xl">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-black leading-tight tracking-tight mb-4">
-            Find the best<br />
-            kitchen products<br />
-            Reviews to ldarn.
+            Find the right products for your kitchen.
           </h1>
           
           <p className="text-base sm:text-lg text-gray-700 mb-8 max-w-md">
-            Find our best kitchen products mlot to<br />
-            kitchen, and new years.
+            Explore practical kitchen product reviews, thoughtful buying guides, and ideas for creating a space that works for you.
           </p>
 
           <Link 

@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom';
+import { categories } from '../data/categories';
 
-const categories = [
-  { name: 'Cabinets', image: '/homepage/category-cabinets.jpeg', link: '/category/cabinets' },
-  { name: 'Countertops', image: '/homepage/category-countertops.jpeg', link: '/category/countertops' },
-  { name: 'Sinks', image: '/homepage/category-sinks.jpeg', link: '/category/sinks' },
-  { name: 'Faucets', image: '/homepage/category-faucets.jpeg', link: '/category/faucets' },
-  { name: 'Lighting', image: '/homepage/category-lighting.jpeg', link: '/category/lighting' },
-];
+const popularSlugs = ['cookware', 'small-appliances', 'sinks', 'faucets', 'storage-organization'];
+const popularCategories = popularSlugs
+  .map((slug) => categories.find((category) => category.slug === slug))
+  .filter(Boolean);
 
 const PopularCategories = () => {
   return (
@@ -17,15 +15,15 @@ const PopularCategories = () => {
       </h2>
 
       <div className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-12">
-        {categories.map((category) => (
+        {popularCategories.map((category) => (
           <Link 
             key={category.name}
-            to={category.link}
+            to={`/category/${category.slug}`}
             className="flex flex-col items-center group"
           >
             <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full border border-gray-200 bg-white flex items-center justify-center overflow-hidden group-hover:shadow-lg transition-all duration-300">
               <img
-                src={category.image}
+                src={category.heroImage}
                 alt={category.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
