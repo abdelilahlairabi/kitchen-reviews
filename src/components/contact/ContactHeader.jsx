@@ -13,7 +13,7 @@ const ContactHeader = () => {
         Get in Touch
       </h1>
       <p className="text-gray-600 text-sm max-w-sm mx-auto">
-        Have a question about a product or need kitchen advice? We're here to help.
+        Our support contact channel is being set up. In the meantime, explore our guides and site information below.
       </p>
     </div>
   );

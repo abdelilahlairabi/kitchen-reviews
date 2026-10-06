@@ -5,7 +5,7 @@ const faqs = [
   { question: 'What is KitchenTrusted?', answer: 'We are a platform dedicated to providing honest reviews and recommendations for kitchen products.' },
   { question: 'How do you choose products?', answer: 'We consider product features, customer feedback, value, and practical kitchen use when preparing our recommendations.' },
   { question: 'Do you earn commissions from recommendations?', answer: 'We may earn a commission when you purchase through certain links, at no extra cost to you. Read our affiliate disclosure for more details.' },
-  { question: 'How can I get more help?', answer: 'You can reach out through the contact form above and we will get back to you as soon as possible.' }
+  { question: 'How can I get more help?', answer: 'Our contact channel is being set up. For now, browse the buying guides and site information linked above; we will publish contact details here when they are ready.' }
 ];
 
 const ContactFaq = () => {
