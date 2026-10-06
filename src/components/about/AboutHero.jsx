@@ -9,7 +9,7 @@ const AboutHero = () => {
             We Help You Find the Perfect Kitchen Products
           </h2>
           <p className="text-gray-600 mb-8 text-lg">
-            Simplify your kitchen shopping journey with honest reviews, expert recommendations, and carefully curated selections designed for every home cook.
+            Explore product details, practical buying guides, and kitchen ideas in one place. We aim to make comparing options easier, without claiming hands-on testing we have not performed.
           </p>
           <Link 
             to="/products" 

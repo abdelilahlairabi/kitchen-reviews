@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Utensils, ChevronDown, Menu, Search, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { categories } from '../data/categories';
 
 const Navbar = () => {
   // État pour gérer l'ouverture du menu catégories
@@ -9,16 +10,6 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
-  const categories = [
-    { id: 'bakeware', name: 'Bakeware' }, { id: 'cabinets', name: 'Cabinets' },
-    { id: 'cookware', name: 'Cookware' }, { id: 'countertops', name: 'Countertops' },
-    { id: 'faucets', name: 'Faucets' }, { id: 'kitchen-islands', name: 'Kitchen Islands' },
-    { id: 'kitchen-stands', name: 'Kitchen Stands' }, { id: 'lighting', name: 'Lighting' },
-    { id: 'sinks', name: 'Sinks' }, { id: 'small-appliances', name: 'Small Appliances' },
-    { id: 'storage-organization', name: 'Storage Organization' }, { id: 'utensil-organizers', name: 'Utensil Organizers' },
-    { id: 'utensils', name: 'Utensils' }, { id: 'water-filters', name: 'Water Filters' },
-  ];
-
   // Fermer le menu si on clique en dehors
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -37,6 +28,7 @@ const Navbar = () => {
     event.preventDefault();
     const query = searchQuery.trim();
     navigate(query ? `/products?search=${encodeURIComponent(query)}` : '/products');
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -54,7 +46,7 @@ const Navbar = () => {
           <Link to="/" className="flex items-center gap-2.5 shrink-0 hover:opacity-90 transition-opacity">
             <Utensils className="w-6 h-6 text-black" strokeWidth={2.5} />
             <span className="text-2xl font-extrabold tracking-tight text-black">
-              KitchenTrusted
+              Kitchen Reviews
             </span>
           </Link>
 
@@ -85,10 +77,13 @@ const Navbar = () => {
               {isCategoryMenuOpen && (
                 <div className="absolute top-full left-0 mt-4 w-56 bg-white border border-gray-100 rounded-lg shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                   <div className="max-h-[60vh] overflow-y-auto custom-scrollbar">
+                    <Link to="/categories" onClick={() => setIsCategoryMenuOpen(false)} className="block border-b border-gray-100 px-4 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-50">
+                      View all categories
+                    </Link>
                     {categories.map((category) => (
                       <Link
-                        key={category.id}
-                        to={`/category/${category.id}`}
+                        key={category.slug}
+                        to={`/category/${category.slug}`}
                         onClick={() => setIsCategoryMenuOpen(false)}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
                       >
@@ -102,6 +97,12 @@ const Navbar = () => {
 
             <Link to="/guides" className="text-[15px] font-medium text-gray-900 hover:text-gray-600 transition-colors">
               Guides
+            </Link>
+            <Link to="/collections" className="text-[15px] font-medium text-gray-900 hover:text-gray-600 transition-colors">
+              Collections
+            </Link>
+            <Link to="/inspiration" className="text-[15px] font-medium text-gray-900 hover:text-gray-600 transition-colors">
+              Inspiration
             </Link>
             <Link to="/about" className="text-[15px] font-medium text-gray-900 hover:text-gray-600 transition-colors">
               About
@@ -128,7 +129,7 @@ const Navbar = () => {
               to="/products" 
               className="bg-[#E6DCC3] hover:bg-[#d8ceb5] text-black font-bold text-sm px-5 py-2.5 rounded-full transition-colors whitespace-nowrap"
             >
-              Best Deals
+              Browse Products
             </Link>
 
             <button
@@ -148,6 +149,18 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div id="mobile-navigation" className="lg:hidden border-t border-gray-200 bg-white">
             <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-4 flex flex-col">
+              <form onSubmit={handleSearchSubmit} className="relative mb-3">
+                <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                <input
+                  type="search"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  aria-label="Search products"
+                  className="w-full rounded-full border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm focus:border-gray-500 focus:outline-none"
+                />
+                <button type="submit" className="sr-only">Search</button>
+              </form>
               <Link to="/products" onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-sm font-medium text-gray-900 border-b border-gray-100">
                 Products
               </Link>
@@ -156,6 +169,12 @@ const Navbar = () => {
               </Link>
               <Link to="/guides" onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-sm font-medium text-gray-900 border-b border-gray-100">
                 Guides
+              </Link>
+              <Link to="/collections" onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-sm font-medium text-gray-900 border-b border-gray-100">
+                Collections
+              </Link>
+              <Link to="/inspiration" onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-sm font-medium text-gray-900 border-b border-gray-100">
+                Inspiration
               </Link>
               <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-sm font-medium text-gray-900">
                 About

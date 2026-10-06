@@ -17,7 +17,7 @@ const AboutHeader = () => {
         <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-5xl font-extrabold text-black mb-3">About Us</h1>
           <p className="text-gray-800 font-medium max-w-lg mx-auto">
-            Kitchen affiliate logans to trustign's space for kitchen e-commerce websites.
+            Clear information to help you compare kitchen products and plan your next upgrade.
           </p>
         </div>
       </div>

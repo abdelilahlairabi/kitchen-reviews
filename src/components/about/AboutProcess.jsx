@@ -10,9 +10,9 @@ const AboutProcess = () => {
           <div className="hidden md:block absolute top-8 left-[15%] right-[15%] h-px bg-gray-300 -z-10"></div>
           
           {[
-            { num: "1", title: "Research", desc: "In-depth market analysis & hands-on testing" },
-            { num: "2", title: "Compare", desc: "Detailed specification & performance evaluation" },
-            { num: "3", title: "Recommend", desc: "Curated selection based on quality & value" }
+            { num: "1", title: "Review the details", desc: "We organize product descriptions and specifications for easier reading." },
+            { num: "2", title: "Compare options", desc: "We highlight differences such as size, materials, features, and stated use." },
+            { num: "3", title: "Choose for your needs", desc: "Use the information as a starting point and confirm current details with the seller." }
           ].map((step, index) => (
             <div key={index} className="flex flex-col items-center w-full md:w-1/3 mb-10 md:mb-0 px-4 bg-white">
               <div className="w-16 h-16 rounded-full bg-[#ebd5b3] text-white text-2xl font-bold flex items-center justify-center mb-6">
