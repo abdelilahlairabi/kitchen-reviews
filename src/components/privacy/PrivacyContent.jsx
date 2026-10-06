@@ -1,80 +1,71 @@
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-const sidebarLinks = [
-  'Information We Collect',
-  'How We Use Your Data',
-  'Cookies',
-  'Third-Party Links',
-  'Your Rights',
-  'Contact Us'
+const sections = [
+  { id: 'information', label: 'Information involved' },
+  { id: 'use', label: 'How it is used' },
+  { id: 'cookies', label: 'Cookies and analytics' },
+  { id: 'third-parties', label: 'Third-party services' },
+  { id: 'choices', label: 'Your choices' },
+  { id: 'contact', label: 'Privacy contact' },
 ];
 
-const PrivacyContent = () => {
-  // Par défaut, "Cookies" est sélectionné pour correspondre à la maquette
-  const [activeTab, setActiveTab] = useState('Cookies');
+const PrivacyContent = () => (
+  <div className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-8 px-4 pb-20 sm:px-6 md:grid-cols-12 lg:px-8">
+    <nav aria-label="Privacy policy sections" className="md:sticky md:top-24 md:col-span-3">
+      <ul className="flex flex-wrap gap-2 md:flex-col md:gap-1">
+        {sections.map((section) => (
+          <li key={section.id}>
+            <a href={`#${section.id}`} className="block rounded-md border border-gray-200 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-black md:border-transparent">
+              {section.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
 
-  return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
-        
-        {/* Barre latérale (Sidebar) */}
-        <div className="md:col-span-3 flex flex-col space-y-1">
-          {sidebarLinks.map((link) => (
-            <button
-              key={link}
-              onClick={() => setActiveTab(link)}
-              className={`text-left px-4 py-3 text-sm transition-colors ${
-                activeTab === link 
-                  ? 'bg-[#e2d5c4] text-black font-medium' 
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-black'
-              }`}
-            >
-              {link}
-            </button>
-          ))}
-        </div>
+    <article className="max-w-3xl space-y-10 text-sm leading-7 text-gray-700 md:col-span-9">
+      <p className="rounded-xl border border-[#ebe4d8] bg-[#f8f5ef] p-5">
+        This notice describes the site as it currently operates. KitchenTrusted does not currently offer account registration, a working contact form, or an email newsletter. If those features are added, this notice should be updated before they collect information.
+      </p>
 
-        {/* Contenu principal */}
-        <div className="md:col-span-9 max-w-3xl">
-          
-          {/* Section 1 */}
-          <div className="mb-10">
-            <h2 className="text-2xl font-bold text-black mb-4">
-              1. Information We Collect
-            </h2>
-            <p className="text-gray-700 mb-4 leading-relaxed text-sm">
-              We collect information you provide directly to us, and westlect information you are vree used invionment or dear privacy collects:
-            </p>
-            <ul className="list-disc pl-5 mb-4 space-y-2 text-gray-700 text-sm">
-              <li>Name and contact information</li>
-              <li>Demographic data</li>
-              <li>Device and usage information</li>
-            </ul>
-            <p className="text-gray-700 leading-relaxed text-sm">
-              We collect information you provide directly to us, and averight provide sklinfecaulties, Cookies and usage-econeseabity contents.
-            </p>
-          </div>
+      <section id="information" className="scroll-mt-24 space-y-3">
+        <h2 className="text-2xl font-bold text-gray-950">Information involved when you use this site</h2>
+        <p>You do not need to provide your name, email address, or demographic information to browse KitchenTrusted. The current Contact page does not accept or send messages.</p>
+        <p>If you use product search, the search phrase is sent to our Supabase catalog service as part of a request to find matching products. Please do not enter sensitive or personal information in search.</p>
+        <p>Our site is hosted on Vercel. Like other web hosting services, Vercel may process technical request information to deliver, maintain, and secure the site. See <a className="underline underline-offset-2" href="https://vercel.com/legal/privacy-notice" target="_blank" rel="noreferrer">Vercel’s Privacy Notice</a> for its handling of that information.</p>
+      </section>
 
-          {/* Section 2 */}
-          <div>
-            <h2 className="text-2xl font-bold text-black mb-4">
-              2. How We Use Your Data
-            </h2>
-            <p className="text-gray-700 mb-4 leading-relaxed text-sm">
-              We collect information you provide directly to us, we collect information you provide esention, butkies We Use Links 1 for Blod and contacts.
-            </p>
-            <p className="text-gray-700 mb-4 leading-relaxed text-sm">
-              We collect information you provide directlly to us and information, but sign We all ther data and commetion of our information, anciey and contache data, Device and usage information.
-            </p>
-            <p className="text-gray-700 leading-relaxed text-sm">
-              We collect information you provide directly to us, 1Now We\Wie Use our Data, informations tne related data to contiiain collect ffoodeston woathuting collect farmss, oversies, srog ternes, terms and contactions.
-            </p>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-  );
-};
+      <section id="use" className="scroll-mt-24 space-y-3">
+        <h2 className="text-2xl font-bold text-gray-950">How information is used</h2>
+        <p>Search phrases are used to return matching catalog results. Technical request information handled by our hosting and database providers supports delivery, reliability, and security of their services.</p>
+        <p>The site currently has no visitor account system, advertising pixel, newsletter signup, or integrated audience analytics. We do not use search phrases to build visitor profiles or personalize advertising.</p>
+      </section>
+
+      <section id="cookies" className="scroll-mt-24 space-y-3">
+        <h2 className="text-2xl font-bold text-gray-950">Cookies and analytics</h2>
+        <p>The current site code does not integrate an analytics or advertising tracker and does not intentionally set first-party analytics or advertising cookies. In a local browser check on October 6, 2026, opening the site created no first-party cookies or browser-storage entries. Hosting or browser behavior can differ in production, and this statement will be revisited if site features change.</p>
+        <p>When you follow an Amazon affiliate link, Amazon may receive referral information and use cookies or similar technologies on its own services. Amazon’s practices are governed by its <a className="underline underline-offset-2" href="https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ" target="_blank" rel="noreferrer">Privacy Notice</a>. You can review Amazon’s <a className="underline underline-offset-2" href="https://www.amazon.com/cookies" target="_blank" rel="noreferrer">Cookies Notice</a> and <a className="underline underline-offset-2" href="https://www.amazon.com/privacyprefs" target="_blank" rel="noreferrer">advertising privacy choices</a>.</p>
+      </section>
+
+      <section id="third-parties" className="scroll-mt-24 space-y-3">
+        <h2 className="text-2xl font-bold text-gray-950">Third-party services and links</h2>
+        <p>Supabase provides the database used to retrieve public catalog content such as categories, products, guides, collections, and kitchen-design inspiration. Its <a className="underline underline-offset-2" href="https://supabase.com/privacy" target="_blank" rel="noreferrer">Privacy Notice</a> describes its own services; its processing of customer data is addressed separately from that notice.</p>
+        <p>Some product links may take you to Amazon or another third-party website. Those sites have their own privacy practices. Amazon may associate a visit with an affiliate referral when you follow a tagged link. KitchenTrusted does not control what a third party collects after you leave this site.</p>
+        <p>KitchenTrusted participates in the Amazon Associates Program. As an Amazon Associate I earn from qualifying purchases. More detail is available in our <Link className="underline underline-offset-2" to="/affiliate-disclosure">Affiliate Disclosure</Link>.</p>
+      </section>
+
+      <section id="choices" className="scroll-mt-24 space-y-3">
+        <h2 className="text-2xl font-bold text-gray-950">Your choices</h2>
+        <p>You can browse without creating an account. You can choose not to use product search or follow external links. Once you leave KitchenTrusted, review the relevant third party’s privacy controls and notices directly.</p>
+        <p>Privacy rights depend on where you live and the circumstances of processing. This notice does not promise a particular statutory right or response deadline for every visitor.</p>
+      </section>
+
+      <section id="contact" className="scroll-mt-24 space-y-3">
+        <h2 className="text-2xl font-bold text-gray-950">Privacy questions</h2>
+        <p>The KitchenTrusted contact channel is still being set up and the Contact page currently does not accept messages. A privacy contact method and operator details need to be added before this notice can be treated as final or before the site starts collecting information directly from visitors.</p>
+      </section>
+    </article>
+  </div>
+);
 
 export default PrivacyContent;
