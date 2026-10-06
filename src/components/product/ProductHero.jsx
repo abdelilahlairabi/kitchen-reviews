@@ -30,7 +30,7 @@ const ProductHero = ({ product, category }) => {
           <p className="text-gray-600 text-sm mb-6 line-clamp-3">{product.description}</p>
           <ul className="space-y-3 mb-8">{product.features.map((feature) => <li key={feature} className="flex items-start gap-2 text-sm text-gray-700"><span className="text-black">✓</span>{feature}</li>)}</ul>
           <AffiliateLink href={product.affiliateUrl} className="block w-full text-center bg-[#ebd5b3] hover:bg-[#dcb589] text-black font-bold py-3 rounded-lg transition-colors mb-2 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed" fallback="Product link coming soon">View on Amazon</AffiliateLink>
-          <p className="text-center text-xs text-gray-500 mb-6">As an Amazon Associate we earn from qualifying purchases</p>
+          <p className="text-center text-xs text-gray-500 mb-6">As an Amazon Associate I earn from qualifying purchases.</p>
         </div>
       </div>
     </div>

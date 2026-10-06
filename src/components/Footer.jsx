@@ -60,7 +60,7 @@ const Footer = () => (
 
       <div className="flex flex-col items-center gap-4 border-t border-gray-300 pt-6 text-center">
         <p className="max-w-2xl text-xs leading-relaxed text-gray-600">
-          As an Amazon Associate, we earn from qualifying purchases.
+          As an Amazon Associate I earn from qualifying purchases.
         </p>
         <p className="text-[11px] text-gray-500">© {new Date().getFullYear()} Kitchen Reviews.</p>
       </div>

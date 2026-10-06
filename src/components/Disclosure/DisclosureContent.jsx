@@ -1,30 +1,23 @@
 const sections = [
   {
-    title: "How Our Affiliate Links Work",
+    title: "How Amazon Affiliate Links Work",
     paragraphs: [
-      "When you click on a product link on our site and make a purchase, we may earn a small commission from the retailer at no additional cost to you. Our affiliate links are clearly marked and used only for products we've genuinely researched and recommend.",
-      "This commission structure allows us to keep our content free and continue providing detailed, honest kitchen product reviews and buying guides.",
+      "Some links to Amazon on this site are affiliate links. If you make a qualifying purchase after following one of these links, I may earn a commission at no additional cost to you.",
+      "Amazon handles the order, payment, delivery, returns, and customer service under its own policies. Prices and availability can change, so check the current details on Amazon before purchasing.",
     ],
   },
   {
-    title: "Why We Use Affiliate Links",
+    title: "How We Present Product Information",
     paragraphs: [
-      "Affiliate partnerships let us dedicate time to researching, testing, and comparing kitchen products so you don't have to. Every recommendation is based on our own evaluation criteria, not on which brand pays the highest commission.",
-      "This means we may receive a small commission at no extra cost to you if you make a purchase through these links.",
+      "This site organizes product information, specifications, comparisons, buying guides, and kitchen design ideas to help readers research their options.",
+      "Unless a page explicitly says otherwise, we do not claim to have purchased or hands-on tested a product. Check important specifications, compatibility, safety details, and current claims with the manufacturer or retailer.",
     ],
   },
   {
-    title: "Our Commitment to Honest Reviews",
+    title: "What an Affiliate Link Means",
     paragraphs: [
-      "Our affiliate relationships never influence our opinions or ratings. We recommend products based on quality, value, and real-world performance, regardless of commission rates.",
-      "If a product doesn't meet our standards, we won't recommend it — even if it's part of an affiliate program.",
-    ],
-  },
-  {
-    title: "Transparency and Integrity",
-    paragraphs: [
-      "We believe in full transparency with our readers. Any sponsored content, paid partnership, or affiliate relationship will always be clearly disclosed on the relevant page.",
-      "If you have any questions about our affiliate relationships or how we select products, feel free to reach out through our Contact page.",
+      "An affiliate link identifies a link through which a commission may be earned. It is not a claim that we tested or personally used the product.",
+      "Amazon's product page is the source to confirm current price, availability, product description, and purchase terms.",
     ],
   },
 ];

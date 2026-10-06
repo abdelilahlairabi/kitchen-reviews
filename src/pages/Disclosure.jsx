@@ -12,7 +12,7 @@ export default function Disclosure() {
           Affiliate Disclosure
         </h1>
         <p className="text-gray-500 text-sm mt-2">
-          Last updated: January 2025
+          Last updated: October 2026
         </p>
       </div>
 
