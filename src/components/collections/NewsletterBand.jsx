@@ -1,51 +1,16 @@
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-const NewsletterBand = () => {
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // TODO: brancher à un vrai service (Mailchimp, ConvertKit, etc.) plus tard
-    console.log('Newsletter signup:', email);
-    setSubmitted(true);
-    setEmail('');
-  };
-
-  return (
-    <div className="w-full bg-[#f4f4f2] py-16 mb-10">
-      <div className="max-w-3xl mx-auto px-4 text-center">
-        <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Newsletter Band</p>
-        <h2 className="text-3xl font-bold text-black mb-3">
-          New Collections Every Month
-        </h2>
-        <p className="text-gray-600 mb-8">
-          Subscribe to get notified when we launch a new curated collection
-        </p>
-        
-        {submitted ? (
-          <p className="text-green-700 font-medium">Thanks for subscribing! 🎉</p>
-        ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row max-w-lg mx-auto gap-2">
-            <input 
-              type="email" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com" 
-              className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-black"
-              required
-            />
-            <button 
-              type="submit" 
-              className="bg-[#ebd5b3] hover:bg-[#dcb589] text-black font-bold px-8 py-3 rounded-lg transition-colors uppercase text-sm tracking-wide"
-            >
-              Subscribe
-            </button>
-          </form>
-        )}
+const NewsletterBand = () => (
+  <section className="max-w-6xl mx-auto px-4 mb-16" aria-labelledby="collection-next-step">
+    <div className="rounded-3xl bg-[#f5f1e9] border border-[#ebe4d8] p-8 md:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div className="max-w-2xl">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#86623d] mb-3">Choose with a plan</p>
+        <h2 id="collection-next-step" className="text-2xl md:text-3xl font-bold tracking-tight text-gray-950 mb-3">Compare the details that matter to your kitchen.</h2>
+        <p className="text-gray-600 leading-relaxed">Use the buying guides to check dimensions, materials, installation, and care before you buy.</p>
       </div>
+      <Link to="/guides" className="inline-flex justify-center items-center gap-2 rounded-full bg-gray-950 hover:bg-gray-800 text-white font-semibold px-6 py-3 transition-colors shrink-0">Read buying guides <span aria-hidden="true">→</span></Link>
     </div>
-  );
-};
+  </section>
+);
 
 export default NewsletterBand;
