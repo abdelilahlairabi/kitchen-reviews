@@ -156,7 +156,7 @@ export default function GuideContent({ guide }) {
             {guide.author?.avatar ? <img src={guide.author.avatar} alt="" className="w-12 h-12 rounded-full object-cover border border-gray-200" loading="lazy" /> : <div className="w-12 h-12 rounded-full bg-[#f5eee5] text-[#795632] flex items-center justify-center font-bold" aria-hidden="true">K</div>}
             <div>
               <p className="text-xs text-gray-500">Prepared by</p>
-              <p className="font-bold text-gray-950 text-sm">{guide.author?.name || 'Kitchen Reviews Editorial Team'}</p>
+              <p className="font-bold text-gray-950 text-sm">{guide.author?.name || 'KitchenTrusted Editorial'}</p>
               {guide.author?.role && <p className="text-xs text-gray-500 mt-0.5">{guide.author.role}</p>}
             </div>
           </div>

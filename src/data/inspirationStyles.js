@@ -4,7 +4,7 @@ export const stylesData = {
   "modern-farmhouse": {
     slug: "modern-farmhouse",
     title: "Modern Farmhouse",
-    seoTitle: "Modern Farmhouse Kitchen Ideas | Kitchen Reviews",
+    seoTitle: "Modern Farmhouse Kitchen Ideas | KitchenTrusted",
     subtitle: "Warm wood, timeless cabinetry, and practical details for a kitchen that feels inviting every day.",
     heroImage: "/styles/modern-farmhouse-hero.webp",
     description: "Modern farmhouse kitchens balance classic materials with clean lines: painted cabinetry, natural wood, practical storage, and a few contrasting metal accents. The result feels relaxed and welcoming without becoming overly rustic.",
@@ -63,7 +63,7 @@ export const stylesData = {
   "minimalist-white": {
     slug: "minimalist-white",
     title: "Minimalist White",
-    seoTitle: "Minimalist White Kitchen Ideas | Kitchen Reviews",
+    seoTitle: "Minimalist White Kitchen Ideas | KitchenTrusted",
     subtitle: "Clean lines, soft light, and thoughtful storage for a bright kitchen that stays calm and functional.",
     heroImage: "/styles/minimalist-white-hero.webp",
     description: "A minimalist white kitchen is not about making every surface stark or empty. It uses simple forms, a limited material palette, and concealed storage to create a light, practical space that feels easy to live with.",
@@ -121,7 +121,7 @@ export const stylesData = {
   "warm-scandinavian": {
     slug: "warm-scandinavian",
     title: "Warm Scandinavian",
-    seoTitle: "Warm Scandinavian Kitchen Ideas | Kitchen Reviews",
+    seoTitle: "Warm Scandinavian Kitchen Ideas | KitchenTrusted",
     subtitle: "Natural wood, gentle colors, and useful details for a bright, relaxed kitchen.",
     heroImage: "/styles/warm-scandinavian-hero.webp",
     description: "Warm Scandinavian kitchens pair simple shapes with tactile natural materials. Pale wood, soft neutral colors, daylight, and well-planned storage create a welcoming room that feels calm while supporting everyday cooking.",

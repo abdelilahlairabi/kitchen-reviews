@@ -6,7 +6,7 @@ import PageMeta from '../components/PageMeta';
 const Categories = () => {
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen">
-      <PageMeta title="Kitchen Product Categories | Kitchen Reviews" description="Browse kitchen product categories, from cookware and small appliances to sinks, faucets, storage, and more." />
+      <PageMeta title="Kitchen Product Categories | KitchenTrusted" description="Browse kitchen product categories, from cookware and small appliances to sinks, faucets, storage, and more." />
       <CategoriesHeader />
       <CategoriesGrid />
       <CategoriesCallToAction />

@@ -21,7 +21,7 @@ export default function GuideDetails() {
   return (
     <main className="bg-white min-h-screen pb-16">
       <PageMeta
-        title={guide.seoTitle || `${guide.title} | Kitchen Reviews`}
+        title={guide.seoTitle || `${guide.title} | KitchenTrusted`}
         description={guide.desc}
       />
       <GuideHeader guide={guideWithProducts} />

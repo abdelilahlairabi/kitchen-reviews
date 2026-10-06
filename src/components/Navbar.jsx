@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Utensils, ChevronDown, Menu, Search, X } from 'lucide-react';
+import { ChevronDown, Menu, Search, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { categories } from '../data/categories';
 
@@ -43,11 +43,8 @@ const Navbar = () => {
         <nav className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           
           {/* Logo (Gauche) */}
-          <Link to="/" className="flex items-center gap-2.5 shrink-0 hover:opacity-90 transition-opacity">
-            <Utensils className="w-6 h-6 text-black" strokeWidth={2.5} />
-            <span className="text-2xl font-extrabold tracking-tight text-black">
-              Kitchen Reviews
-            </span>
+          <Link to="/" aria-label="KitchenTrusted home" className="flex shrink-0 items-center hover:opacity-90 transition-opacity">
+            <img src="/logo.png" alt="" className="h-12 w-48 object-cover object-center" width="512" height="512" />
           </Link>
 
           {/* Liens de navigation (Centre - masqués sur mobile) */}

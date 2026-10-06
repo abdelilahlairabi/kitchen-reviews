@@ -26,7 +26,7 @@ const ProductDetails = () => {
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen">
       <PageMeta
-        title={`${product.name} Review & Product Details | Kitchen Reviews`}
+        title={`${product.name} Review & Product Details | KitchenTrusted`}
         description={product.description}
       />
       <ProductHero key={product.id} product={product} category={category} />

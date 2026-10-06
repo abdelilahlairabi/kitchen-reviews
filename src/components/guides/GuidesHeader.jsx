@@ -13,7 +13,7 @@ const GuidesHeader = ({ activeCategory, onCategoryChange, search, onSearchChange
       </nav>
 
       <div className="max-w-3xl mx-auto text-center">
-      <p className="text-xs uppercase tracking-[0.2em] text-[#9b7049] font-semibold mb-3">Kitchen Reviews learning center</p>
+      <p className="text-xs uppercase tracking-[0.2em] text-[#9b7049] font-semibold mb-3">KitchenTrusted learning center</p>
       <h1 className="text-4xl md:text-5xl font-extrabold text-gray-950 mb-4 tracking-tight">
         Kitchen Buying Guides & Tips
       </h1>

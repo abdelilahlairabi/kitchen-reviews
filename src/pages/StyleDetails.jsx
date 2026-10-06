@@ -21,7 +21,7 @@ export default function StyleDetails() {
   return (
     <main className="bg-white min-h-screen pb-16">
       <PageMeta
-        title={styleData.seoTitle || `${styleData.title} Kitchen Ideas | Kitchen Reviews`}
+        title={styleData.seoTitle || `${styleData.title} Kitchen Ideas | KitchenTrusted`}
         description={styleData.description}
       />
       {/* Hero & Description */}

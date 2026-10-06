@@ -29,7 +29,7 @@ const Category = () => {
 
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen" aria-busy={isFetching}>
-      <PageMeta title={`${category.name} Products & Reviews | Kitchen Reviews`} description={category.description} />
+      <PageMeta title={`${category.name} Products & Reviews | KitchenTrusted`} description={category.description} />
       <CategoryHero category={category} productCount={data?.total || 0} />
       <CategoryFilters category={category} />
       {isLoadingProducts ? <p className="py-16 text-center text-gray-500">Loading products...</p> : <CategoryProductGrid products={data?.products || []} total={data?.total || 0} pageSize={PRODUCT_PAGE_SIZE} page={requestedPage} />}

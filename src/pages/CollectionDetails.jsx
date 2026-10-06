@@ -20,7 +20,7 @@ export default function CollectionDetails() {
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <PageMeta title={`${collection.name} | Kitchen Reviews`} description={collection.introText || collection.subtitle} />
+      <PageMeta title={`${collection.name} | KitchenTrusted`} description={collection.introText || collection.subtitle} />
       <CollectionHero collection={collection} />
       <CollectionIntro collection={collection} />
       <CollectionProductGrid products={products} isError={productsError} />

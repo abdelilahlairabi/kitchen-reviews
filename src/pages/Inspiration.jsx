@@ -36,7 +36,7 @@ export default function Inspiration() {
   return (
     <main className="bg-white min-h-screen pb-16">
       <PageMeta
-        title="Kitchen Design Inspiration and Ideas | Kitchen Reviews"
+        title="Kitchen Design Inspiration and Ideas | KitchenTrusted"
         description="Explore modern farmhouse, minimalist white, and warm Scandinavian kitchen ideas. Browse practical design details, materials, storage, lighting, and product picks."
       />
       <InspirationHeader

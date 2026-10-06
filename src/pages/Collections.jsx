@@ -22,7 +22,7 @@ const Collections = () => {
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen">
       <PageMeta
-        title="Kitchen Product Collections for Every Home | Kitchen Reviews"
+        title="Kitchen Product Collections for Every Home | KitchenTrusted"
         description="Browse curated kitchen product collections for small spaces, farmhouse kitchens, coffee corners, budget updates, and more."
       />
       <CollectionsHeader search={search} onSearchChange={setSearch} resultCount={filteredCollections.length} />

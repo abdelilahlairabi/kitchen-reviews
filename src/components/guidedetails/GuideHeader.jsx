@@ -43,7 +43,7 @@ export default function GuideHeader({ guide }) {
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between border-y border-gray-200 py-4 gap-4">
         <div className="text-sm text-gray-600 flex flex-wrap items-center gap-x-2 gap-y-1">
-          <span>By <strong className="text-gray-900">{guide.author?.name || 'Kitchen Reviews Editorial Team'}</strong></span>
+          <span>By <strong className="text-gray-900">{guide.author?.name || 'KitchenTrusted Editorial'}</strong></span>
           <span aria-hidden="true">·</span>
           <span>{guide.time}</span>
           {guide.date && <><span aria-hidden="true">·</span><time>{guide.date}</time></>}

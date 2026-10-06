@@ -24,7 +24,7 @@ const Guides = () => {
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen">
       <PageMeta
-        title="Kitchen Buying Guides and How-To Advice | Kitchen Reviews"
+        title="Kitchen Buying Guides and How-To Advice | KitchenTrusted"
         description="Read practical kitchen buying guides and how-to advice on faucets, sinks, cookware, appliances, knives, and everyday kitchen care."
       />
       <GuidesHeader

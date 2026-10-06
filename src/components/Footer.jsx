@@ -19,7 +19,7 @@ const footerGroups = [
   {
     title: 'About',
     links: [
-      { label: 'About Kitchen Reviews', to: '/about' },
+      { label: 'About KitchenTrusted', to: '/about' },
       { label: 'Contact', to: '/contact' },
     ],
   },
@@ -38,7 +38,7 @@ const Footer = () => (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
       <div className="mb-8 flex flex-col items-center text-center">
         <Link to="/" className="text-xl font-extrabold tracking-tight text-black hover:opacity-80">
-          Kitchen Reviews
+          KitchenTrusted
         </Link>
         <p className="mt-2 max-w-md text-sm text-gray-600">
           Practical kitchen product information, buying guides, and design ideas.
@@ -62,7 +62,7 @@ const Footer = () => (
         <p className="max-w-2xl text-xs leading-relaxed text-gray-600">
           As an Amazon Associate I earn from qualifying purchases.
         </p>
-        <p className="text-[11px] text-gray-500">© {new Date().getFullYear()} Kitchen Reviews.</p>
+        <p className="text-[11px] text-gray-500">© {new Date().getFullYear()} KitchenTrusted.</p>
       </div>
     </div>
   </footer>
