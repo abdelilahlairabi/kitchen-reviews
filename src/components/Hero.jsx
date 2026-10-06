@@ -11,6 +11,8 @@ const Hero = () => {
           src="/homepage/hero-modern-kitchen.jpeg" 
           alt="Modern Kitchen" 
           className="absolute inset-0 w-full h-full object-cover object-center"
+          fetchPriority="high"
+          decoding="async"
         />
 
         {/* Gradient Overlay for Text Readability */}

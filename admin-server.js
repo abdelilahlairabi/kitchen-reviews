@@ -377,7 +377,7 @@ const saveGalleryImages = async (styleId, images) => {
   const { error: deleteError } = await supabase.from('inspiration_gallery_images').delete().eq('style_id', styleId);
   if (deleteError) throw deleteError;
   if (images.length === 0) return;
-  const { error } = await supabase.from('inspiration_gallery_images').insert(images.map((image, sortOrder) => ({ style_id: styleId, image, sort_order })));
+  const { error } = await supabase.from('inspiration_gallery_images').insert(images.map((image, sortOrder) => ({ style_id: styleId, image, sort_order: sortOrder })));
   if (error) throw error;
 };
 

@@ -12,6 +12,8 @@ const FeaturedSection = () => {
               src="/homepage/featured-kitchen.jpeg" 
               alt="Kitchen interior" 
               className="w-full h-full object-cover object-center"
+              loading="lazy"
+              decoding="async"
             />
           </div>
 
@@ -34,25 +36,15 @@ const FeaturedSection = () => {
               create a space that feels like your own.
             </p>
 
-            {/* Small Product Images Row */}
             <div className="flex items-center gap-6 sm:gap-10">
               <Link to="/category/cabinets" className="group">
                 <div className="w-32 h-32 sm:w-40 sm:h-40 bg-white rounded-xl shadow-sm flex items-center justify-center p-4 group-hover:shadow-md transition-shadow">
-                  <img 
-                    src="/homepage/cat-cabinets.jpeg" 
-                    alt="Cabinet" 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src="/homepage/cat-cabinets.jpeg" alt="Cabinet" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy" decoding="async" />
                 </div>
               </Link>
-              
               <Link to="/category/faucets" className="group">
                 <div className="w-32 h-32 sm:w-40 sm:h-40 bg-white rounded-xl shadow-sm flex items-center justify-center p-4 group-hover:shadow-md transition-shadow">
-                  <img 
-                    src="/homepage/cat-faucets.jpeg" 
-                    alt="Faucet" 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <img src="/homepage/cat-faucets.jpeg" alt="Faucet" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy" decoding="async" />
                 </div>
               </Link>
             </div>

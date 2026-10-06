@@ -1,9 +1,8 @@
 import { Link, useSearchParams } from 'react-router-dom';
-import { useCategories } from '../hooks/useCategories';
+import { categories } from '../data/categories';
 
 const ProductFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data: categories = [], isPending: isLoadingCategories } = useCategories();
   const category = searchParams.get('category') || '';
   const price = searchParams.get('price') || '';
   const rating = searchParams.get('rating') || '';
@@ -43,9 +42,9 @@ const ProductFilters = () => {
           </label>
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <select value={category} onChange={(event) => updateFilter('category', event.target.value)} aria-label="Filter by category" disabled={isLoadingCategories} className="bg-white border border-gray-300 rounded-full px-4 py-2 text-sm font-medium focus:outline-none focus:border-gray-500 disabled:text-gray-400">
-            <option value="">{isLoadingCategories ? 'Loading categories...' : 'All categories'}</option>
-            {categories.map((item) => <option key={item.id} value={item.slug}>{item.name}</option>)}
+          <select value={category} onChange={(event) => updateFilter('category', event.target.value)} aria-label="Filter by category" className="bg-white border border-gray-300 rounded-full px-4 py-2 text-sm font-medium focus:outline-none focus:border-gray-500">
+            <option value="">All categories</option>
+            {categories.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}
           </select>
           <select value={price} onChange={(event) => updateFilter('price', event.target.value)} aria-label="Filter by price range" className="bg-white border border-gray-300 rounded-full px-4 py-2 text-sm font-medium focus:outline-none focus:border-gray-500">
             <option value="">Any price</option><option value="under-100">Under $100</option><option value="100-200">$100–$200</option><option value="200-500">$200–$500</option><option value="over-500">Over $500</option>

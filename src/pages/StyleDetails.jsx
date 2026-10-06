@@ -1,34 +1,40 @@
 import { useParams } from 'react-router-dom';
-import { useStyle, useStyles } from '../hooks/useStyles';
+import { getStyleBySlug, otherStylesList } from '../data/inspirationStyles';
+import { useProductsBySlugs } from '../hooks/useProducts';
 
 import StyleHero from '../components/style/StyleHero';
 import StyleGallery from '../components/style/StyleGallery';
 import ShopThisLook from '../components/style/ShopThisLook';
 import ExploreOtherStyles from '../components/style/ExploreOtherStyles';
 import NotFound from './NotFound';
+import PageMeta from '../components/PageMeta';
 
 export default function StyleDetails() {
   const { slug } = useParams();
-  const { data: styleData, isLoading, isError } = useStyle(slug);
-  const { data: styles = [] } = useStyles();
+  const styleData = getStyleBySlug(slug);
+  const { data: fetchedProducts = [] } = useProductsBySlugs(styleData?.productSlugs || []);
 
-  if (isLoading) return <main className="min-h-screen bg-white p-8 text-center text-gray-600">Loading style…</main>;
-  if (isError) return <main className="min-h-screen bg-white p-8 text-center text-gray-600">Unable to load this style. Please try again.</main>;
   if (!styleData) return <NotFound />;
+  const productsBySlug = new Map(fetchedProducts.map((product) => [product.slug, product]));
+  const styleWithProducts = { ...styleData, products: (styleData.productSlugs || []).map((productSlug) => productsBySlug.get(productSlug)).filter(Boolean) };
 
   return (
     <main className="bg-white min-h-screen pb-16">
+      <PageMeta
+        title={styleData.seoTitle || `${styleData.title} Kitchen Ideas | Kitchen Reviews`}
+        description={styleData.description}
+      />
       {/* Hero & Description */}
-      <StyleHero styleData={styleData} />
+      <StyleHero styleData={styleWithProducts} />
 
       {/* Photo Gallery Grid */}
-      <StyleGallery gallery={styleData.gallery} />
+      <StyleGallery gallery={styleWithProducts.gallery} />
 
       {/* Shop This Look */}
-      {styleData.products.length > 0 && <ShopThisLook products={styleData.products} />}
+      {styleWithProducts.products.length > 0 && <ShopThisLook products={styleWithProducts.products} />}
 
       {/* Explore Other Styles */}
-      <ExploreOtherStyles otherStyles={styles.filter((style) => style.slug !== styleData.slug)} />
+      <ExploreOtherStyles otherStyles={otherStylesList.filter((style) => style.slug !== styleData.slug)} />
 
       {/* Newsletter Section */}
       <section className="max-w-4xl mx-auto px-4 my-12">

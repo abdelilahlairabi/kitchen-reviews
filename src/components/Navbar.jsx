@@ -9,23 +9,14 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
-
-  // Liste des catégories basée sur l'image
   const categories = [
-    { id: 'bakeware', name: 'Bakeware' },
-    { id: 'cabinets', name: 'Cabinets' },
-    { id: 'cookware', name: 'Cookware' },
-    { id: 'countertops', name: 'Countertops' },
-    { id: 'faucets', name: 'Faucets' },
-    { id: 'kitchen-islands', name: 'Kitchen Islands' },
-    { id: 'kitchen-stands', name: 'Kitchen Stands' },
-    { id: 'lighting', name: 'Lighting' },
-    { id: 'sinks', name: 'Sinks' },
-    { id: 'small-appliances', name: 'Small Appliances' },
-    { id: 'storage-organization', name: 'Storage Organization' },
-    { id: 'utensil-organizers', name: 'Utensil Organizers' },
-    { id: 'utensils', name: 'Utensils' },
-    { id: 'water-filters', name: 'Water Filters' },
+    { id: 'bakeware', name: 'Bakeware' }, { id: 'cabinets', name: 'Cabinets' },
+    { id: 'cookware', name: 'Cookware' }, { id: 'countertops', name: 'Countertops' },
+    { id: 'faucets', name: 'Faucets' }, { id: 'kitchen-islands', name: 'Kitchen Islands' },
+    { id: 'kitchen-stands', name: 'Kitchen Stands' }, { id: 'lighting', name: 'Lighting' },
+    { id: 'sinks', name: 'Sinks' }, { id: 'small-appliances', name: 'Small Appliances' },
+    { id: 'storage-organization', name: 'Storage Organization' }, { id: 'utensil-organizers', name: 'Utensil Organizers' },
+    { id: 'utensils', name: 'Utensils' }, { id: 'water-filters', name: 'Water Filters' },
   ];
 
   // Fermer le menu si on clique en dehors

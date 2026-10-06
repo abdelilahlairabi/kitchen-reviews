@@ -3,24 +3,23 @@ import ProductHero from '../components/product/ProductHero';
 import ProductSpecs from '../components/product/ProductSpecs';
 import ProductReviews from '../components/product/ProductReviews';
 import ProductRelated from '../components/product/ProductRelated';
-import { useCategories } from '../hooks/useCategories';
 import { useProduct, useProducts } from '../hooks/useProducts';
+import { getCategoryBySlug } from '../data/categories';
 import NotFound from './NotFound';
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const { data: product, isPending, isError } = useProduct(productId);
-  const { data: categories = [] } = useCategories();
   const { data: relatedData } = useProducts(
-    { categoryId: product?.categoryId, page: 1, pageSize: 4, sort: 'popularity' },
-    { enabled: Boolean(product?.categoryId) },
+    { categorySlug: product?.categorySlug, page: 1, pageSize: 4, sort: 'popularity' },
+    { enabled: Boolean(product?.categorySlug) },
   );
 
   if (isPending) return <p className="py-16 text-center text-gray-500">Loading product...</p>;
   if (isError) return <p className="py-16 text-center text-gray-500">We could not load this product right now. Please refresh and try again.</p>;
   if (!product) return <NotFound />;
 
-  const category = categories.find((item) => item.id === product.categoryId);
+  const category = getCategoryBySlug(product.categorySlug);
   const relatedProducts = (relatedData?.products || []).filter((item) => item.id !== product.id).slice(0, 3);
 
   return (

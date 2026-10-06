@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 
 const needs = [
-  { id: 1, title: 'Small Kitchens', image: '/homepage/need-small-kitchens.jpeg', link: '/collections/small-kitchens' },
-  { id: 2, title: 'Storage Solutions', image: '/homepage/need-storage-solutions.jpeg', link: '/collections/storage' },
-  { id: 3, title: 'Modern Upgrades', image: '/homepage/need-modern-upgrades.jpeg', link: '/collections/modern' },
-  { id: 4, title: 'Budget Friendly', image: '/homepage/need-budget-friendly.jpeg', link: '/collections/budget' },
+  { id: 1, title: 'Small Kitchens', image: '/homepage/need-small-kitchens.jpeg', link: '/collections/small-kitchen-essentials' },
+  { id: 2, title: 'Storage Solutions', image: '/homepage/need-storage-solutions.jpeg', link: '/collections/smart-kitchen-tech' },
+  { id: 3, title: 'Modern Upgrades', image: '/homepage/need-modern-upgrades.jpeg', link: '/collections/luxury-kitchen-must-haves' },
+  { id: 4, title: 'Budget Friendly', image: '/homepage/need-budget-friendly.jpeg', link: '/collections/budget-friendly-upgrades' },
 ];
 
 const ShopByNeed = () => {
@@ -17,26 +17,24 @@ const ShopByNeed = () => {
           Shop by Kitchen Need
         </h2>
 
-        {/* Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
           {needs.map((need) => (
             <Link 
-              key={need.id} 
+              key={need.id}
               to={need.link}
               className="flex flex-col items-center group"
             >
-              {/* Image with thick white border effect */}
               <div className="w-full bg-white p-2 rounded-2xl shadow-sm group-hover:shadow-md transition-shadow duration-300">
                 <div className="relative w-full h-48 sm:h-56 md:h-64 lg:h-72 rounded-xl overflow-hidden">
-                  <img 
-                    src={need.image} 
-                    alt={need.title} 
+                  <img
+                    src={need.image}
+                    alt={need.title}
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>
-              
-              {/* Label */}
               <span className="mt-4 text-base font-semibold text-black group-hover:text-gray-600 transition-colors">
                 {need.title}
               </span>

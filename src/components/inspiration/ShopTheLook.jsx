@@ -28,7 +28,7 @@ export default function ShopTheLook({ products }) {
                 />
               </div>
               <div>
-                <Link to={`/products/${product.slug}`} className="font-bold text-gray-900 text-xs md:text-sm line-clamp-2 hover:underline">
+                <Link to={`/product/${product.slug}`} className="font-bold text-gray-900 text-xs md:text-sm line-clamp-2 hover:underline">
                   {product.name}
                 </Link>
                 <p className="text-xs md:text-sm font-semibold text-gray-800 mt-1">

@@ -1,5 +1,9 @@
 export default function StyleGallery({ gallery }) {
-  const cleanedGallery = (gallery || []).filter(Boolean);
+  const cleanedGallery = (gallery || []).filter(Boolean).map((image) => (
+    typeof image === 'string'
+      ? { src: image, alt: 'Kitchen design inspiration' }
+      : image
+  ));
   const topImages = cleanedGallery.slice(0, 2);
   const bottomImages = cleanedGallery.slice(2, 6);
 
@@ -26,8 +30,8 @@ export default function StyleGallery({ gallery }) {
                 className="rounded-2xl md:rounded-3xl overflow-hidden h-[260px] md:h-[340px] bg-gray-200 shadow-sm hover:shadow-md transition-shadow"
               >
                 <img
-                  src={img}
-                  alt={`Gallery top ${idx + 1}`}
+                  src={img.src}
+                  alt={img.alt || `Gallery image ${idx + 1}`}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                 />
@@ -43,8 +47,8 @@ export default function StyleGallery({ gallery }) {
                 className="rounded-2xl overflow-hidden h-[180px] md:h-[220px] bg-gray-200 shadow-sm hover:shadow-md transition-shadow"
               >
                 <img
-                  src={img}
-                  alt={`Gallery bottom ${idx + 1}`}
+                  src={img.src}
+                  alt={img.alt || `Gallery image ${idx + 3}`}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                 />

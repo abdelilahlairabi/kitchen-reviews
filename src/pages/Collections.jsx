@@ -2,19 +2,19 @@ import CollectionsHeader from '../components/collections/CollectionsHeader';
 import FeaturedCollection from '../components/collections/FeaturedCollection';
 import CollectionsGrid from '../components/collections/CollectionsGrid';
 import NewsletterBand from '../components/collections/NewsletterBand';
-import { useCollections } from '../hooks/useCollections';
+import { getFeaturedCollection, getRegularCollections } from '../data/collections';
+import PageMeta from '../components/PageMeta';
 
 const Collections = () => {
-  const { data: collections = [], isPending, isError } = useCollections();
-
-  if (isPending) return <p className="py-16 text-center text-gray-500">Loading collections...</p>;
-  if (isError) return <p className="py-16 text-center text-gray-500">We could not load collections right now. Please refresh and try again.</p>;
-
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen">
+      <PageMeta
+        title="Kitchen Product Collections for Every Home | Kitchen Reviews"
+        description="Browse curated kitchen product collections for small spaces, farmhouse kitchens, coffee corners, budget updates, and more."
+      />
       <CollectionsHeader />
-      <FeaturedCollection collection={collections.find((collection) => collection.featured)} />
-      <CollectionsGrid collections={collections.filter((collection) => !collection.featured)} />
+      <FeaturedCollection collection={getFeaturedCollection()} />
+      <CollectionsGrid collections={getRegularCollections()} />
       <NewsletterBand />
     </div>
   );

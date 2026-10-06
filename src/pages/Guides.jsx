@@ -2,17 +2,21 @@ import GuidesHeader from '../components/guides/GuidesHeader';
 import FeaturedGuide from '../components/guides/FeaturedGuide';
 import GuidesGrid from '../components/guides/GuidesGrid';
 import GuidesNewsletter from '../components/guides/GuidesNewsletter';
-import { useGuides } from '../hooks/useGuides';
+import { guidesData } from '../data/guides';
+import PageMeta from '../components/PageMeta';
 
 const Guides = () => {
-  const { data: guides = [], isLoading, isError } = useGuides();
-  const featuredGuide = guides.find((guide) => guide.slug === 'choosing-a-kitchen-faucet') || guides[0];
+  const featuredGuide = guidesData.find((guide) => guide.slug === 'choosing-a-kitchen-faucet') || guidesData[0];
 
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen">
+      <PageMeta
+        title="Kitchen Buying Guides and How-To Advice | Kitchen Reviews"
+        description="Read practical kitchen buying guides and how-to advice on faucets, sinks, cookware, appliances, knives, and everyday kitchen care."
+      />
       <GuidesHeader />
-      <FeaturedGuide guide={featuredGuide} isLoading={isLoading} />
-      <GuidesGrid guides={guides} isLoading={isLoading} isError={isError} />
+      <FeaturedGuide guide={featuredGuide} />
+      <GuidesGrid guides={guidesData} />
       <GuidesNewsletter />
     </div>
   );

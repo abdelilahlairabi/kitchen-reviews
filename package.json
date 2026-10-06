@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "admin": "node admin-server.js",
-    "build": "vite build",
+    "build": "vite build && node scripts/generate-sitemap.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },

@@ -4,70 +4,45 @@ export const inspirationCategories = [
   "All Styles",
   "Modern Farmhouse",
   "Minimalist White",
-  "Warm Scandinavian",
-  "Industrial",
-  "Coastal",
-  "Mediterranean"
+  "Warm Scandinavian"
 ];
 
 export const inspirationGallery = [
   {
     id: 1,
     category: "Modern Farmhouse",
+    slug: "modern-farmhouse",
     title: "Modern Farmhouse",
-    image: "/guides/guide-featured-faucet.jpeg",
+    description: "Explore warm wood, classic cabinetry, farmhouse sinks, and balanced black accents.",
+    image: "/styles/modern-farmhouse-hero.webp",
     featured: true,
     size: "large"
   },
   {
     id: 2,
     category: "Minimalist White",
+    slug: "minimalist-white",
     title: "Minimalist White",
-    image: "/guides/guide-kitchen-sink-style.jpeg",
+    description: "See bright white kitchens with clean cabinetry, pale stone, and concealed storage.",
+    image: "/styles/minimalist-white-hero.webp",
     size: "medium"
   },
   {
     id: 3,
     category: "Warm Scandinavian",
+    slug: "warm-scandinavian",
     title: "Warm Scandinavian",
-    image: "/guides/guide-kitchen-island-design.jpeg",
+    description: "Browse calm Nordic kitchens with light wood, soft neutrals, and functional details.",
+    image: "/styles/warm-scandinavian-hero.webp",
     size: "medium"
   },
-  {
-    id: 4,
-    category: "Industrial",
-    title: "Industrial Edge",
-    image: "/guides/guide-lighting-ideas.jpeg",
-    size: "medium"
-  },
-  {
-    id: 5,
-    category: "Coastal",
-    title: "Coastal Breeze",
-    image: "/guides/guide-cookware-sets.jpeg",
-    size: "medium"
-  },
-  {
-    id: 6,
-    category: "Mediterranean",
-    title: "Mediterranean Warmth",
-    image: "/guides/guide-cutting-board-care.jpeg",
-    size: "medium"
-  },
-  {
-    id: 7,
-    category: "Mediterranean",
-    title: "Rustic Terracotta Kitchen",
-    image: "/guides/guide-toaster-vs-airfryer.jpeg",
-    size: "medium"
-  }
 ];
 
 export const styleSpotlight = {
   title: "This Month's Spotlight: Modern Farmhouse",
   subtitle: "STYLE SPOTLIGHT SECTION",
   description: "The modern farmhouse look blends rustic character with clean, contemporary lines. Natural wood accents, open shelving, and apron-front sinks create an inviting workspace for home chefs.",
-  image: "/guides/guide-kitchen-island-design.jpeg",
+  image: "/styles/modern-farmhouse-hero.webp",
   featuredItems: [
     {
       id: "item-1",
@@ -88,32 +63,8 @@ export const styleSpotlight = {
 };
 
 export const shopTheLookProducts = [
-  {
-    id: 201,
-    name: "Industrial Black Pendant Light",
-    price: 149.00,
-    image: "/guides/guide-lighting-ideas.jpeg",
-    affiliateUrl: "#"
-  },
-  {
-    id: 202,
-    name: "Oak Farmhouse Bar Stool",
-    price: 215.00,
-    image: "/guides/guide-stand-mixers.jpeg",
-    affiliateUrl: "#"
-  },
-  {
-    id: 203,
-    name: "Walnut Cutting Board",
-    price: 75.00,
-    image: "/guides/guide-cutting-board-care.jpeg",
-    affiliateUrl: "#"
-  },
-  {
-    id: 204,
-    name: "Brass Pull-Down Faucet",
-    price: 389.00,
-    image: "/guides/guide-featured-faucet.jpeg",
-    affiliateUrl: "#"
-  }
+  { slug: "brushed-nickel-kitchen-faucet" },
+  { slug: "walnut-end-grain-cutting-board" },
+  { slug: "fireclay-ceramic-farmhouse-sink" },
+  { slug: "gooseneck-electric-kettle" },
 ];

@@ -14,33 +14,30 @@ const categoriesData = [
   { name: 'Storage & Organization', count: '214 Items', image: '/categories/category-storage-organization.jpeg' },
   { name: 'Utensil Organizers', count: '150 Items', image: '/categories/category-utensil-organizers.jpeg' },
   { name: 'Utensils', count: '270 Items', image: '/categories/category-utensils.jpeg' },
-  { name: 'Water Filters', count: '58 Items', image: '/categories/category-water-filters.jpeg' }
+  { name: 'Water Filters', count: '58 Items', image: '/categories/category-water-filters.jpeg' },
 ];
 
 const CategoriesGrid = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
       <h2 className="text-xl font-bold text-black mb-6">All Categories</h2>
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {categoriesData.map((cat, index) => (
+        {categoriesData.map((cat) => (
           <Link 
-            key={index} 
-            to={`/category/${cat.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`} 
+            key={cat.name}
+            to={`/category/${cat.name.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
             className="group block bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300"
           >
-            {/* Image Container */}
             <div className="relative h-64 w-full bg-gray-100 overflow-hidden">
-              <img 
-                src={cat.image} 
-                alt={cat.name} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+              <img
+                src={cat.image}
+                alt={cat.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              {/* Subtle gradient overlay at the bottom of the image */}
               <div className="absolute bottom-0 w-full h-1/3 bg-gradient-to-t from-white/80 to-transparent"></div>
             </div>
-            
-            {/* Text Content */}
+
             <div className="p-5 flex justify-between items-center bg-white relative z-10">
               <div>
                 <h3 className="text-lg font-bold text-black mb-1">{cat.name}</h3>

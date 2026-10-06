@@ -9,7 +9,7 @@ export default function InspirationGrid({ items, onProductClick }) {
         <div className="relative group rounded-3xl overflow-hidden bg-gray-100 shadow-sm h-[380px] md:h-[480px]">
           <img
             src={featuredItem.image}
-            alt={featuredItem.title}
+            alt={featuredItem.imageAlt || `${featuredItem.title} kitchen design inspiration`}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
           />
@@ -17,6 +17,7 @@ export default function InspirationGrid({ items, onProductClick }) {
             <h2 className="text-white text-2xl md:text-4xl font-bold mb-3">
               {featuredItem.title}
             </h2>
+            <p className="max-w-2xl text-sm text-white/90 mb-4">{featuredItem.description}</p>
             <div>
               <button 
                 onClick={() => onProductClick(featuredItem)}
@@ -38,7 +39,7 @@ export default function InspirationGrid({ items, onProductClick }) {
           >
             <img
               src={item.image}
-              alt={item.title}
+              alt={item.imageAlt || `${item.title} kitchen design inspiration`}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
             />
@@ -46,6 +47,7 @@ export default function InspirationGrid({ items, onProductClick }) {
               <h3 className="text-white text-xl md:text-2xl font-bold mb-3">
                 {item.title}
               </h3>
+              <p className="text-sm text-white/90 mb-4">{item.description}</p>
               <div>
                 <button
                   onClick={() => onProductClick(item)}

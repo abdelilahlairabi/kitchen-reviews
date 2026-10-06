@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchProductBySlug, fetchProducts } from '../services/products';
+import { fetchProductBySlug, fetchProducts, fetchProductsBySlugs } from '../services/products';
 
 export const productKeys = {
   all: ['products'],
@@ -7,6 +7,7 @@ export const productKeys = {
   list: (filters) => [...productKeys.lists(), filters],
   details: () => [...productKeys.all, 'detail'],
   detail: (slug) => [...productKeys.details(), slug],
+  selected: (slugs) => [...productKeys.all, 'selected', slugs],
 };
 
 export const useProducts = (filters, options = {}) => useQuery({
@@ -20,4 +21,10 @@ export const useProduct = (slug) => useQuery({
   queryKey: productKeys.detail(slug),
   queryFn: () => fetchProductBySlug(slug),
   enabled: Boolean(slug),
+});
+
+export const useProductsBySlugs = (slugs) => useQuery({
+  queryKey: productKeys.selected(slugs),
+  queryFn: () => fetchProductsBySlugs(slugs),
+  enabled: Array.isArray(slugs) && slugs.length > 0,
 });

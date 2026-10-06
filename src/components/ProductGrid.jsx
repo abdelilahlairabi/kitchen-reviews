@@ -1,5 +1,4 @@
 import { Link, useSearchParams } from 'react-router-dom';
-import { useCategories } from '../hooks/useCategories';
 import { useProducts } from '../hooks/useProducts';
 import { PRODUCT_PAGE_SIZE } from '../services/products';
 
@@ -18,25 +17,21 @@ const StarIcon = ({ filled }) => (
 
 const ProductGrid = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data: categories = [], isPending: isLoadingCategories } = useCategories();
   const search = searchParams.get('search') || '';
   const categorySlug = searchParams.get('category') || '';
   const price = searchParams.get('price') || '';
   const rating = Number(searchParams.get('rating')) || undefined;
   const sort = searchParams.get('sort') || 'popularity';
   const requestedPage = Math.max(1, Number(searchParams.get('page')) || 1);
-  const selectedCategory = categories.find((category) => category.slug === categorySlug);
-  const categoryIsResolved = !categorySlug || Boolean(selectedCategory);
-
   const { data, isPending, isFetching, isError } = useProducts({
     page: requestedPage,
     pageSize: PRODUCT_PAGE_SIZE,
-    categoryId: selectedCategory?.id,
+    categorySlug: categorySlug || undefined,
     minimumRating: rating,
     ...priceRanges[price],
     search,
     sort,
-  }, { enabled: !isLoadingCategories && categoryIsResolved });
+  });
 
   const products = data?.products || [];
   const total = data?.total || 0;
@@ -48,7 +43,7 @@ const ProductGrid = () => {
     setSearchParams(params);
   };
 
-  if (isPending || isLoadingCategories) return <p className="py-16 text-center text-gray-500">Loading products...</p>;
+  if (isPending) return <p className="py-16 text-center text-gray-500">Loading products...</p>;
   if (isError) return <p className="py-16 text-center text-gray-500">We could not load products right now. Please refresh and try again.</p>;
 
   return (

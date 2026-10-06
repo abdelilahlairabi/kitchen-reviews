@@ -20,12 +20,14 @@ export const productColumns = `
 const normalizePage = (value) => Math.max(1, Number.parseInt(value, 10) || 1);
 const normalizePageSize = (value) => Math.min(MAX_PAGE_SIZE, Math.max(1, Number.parseInt(value, 10) || PRODUCT_PAGE_SIZE));
 const normalizeSearch = (value) => String(value || '').trim().slice(0, 80);
+const normalizeCategorySlug = (value) => String(value || '').trim().toLowerCase().slice(0, 160);
 
 export const toProduct = (row) => ({
   id: row.id,
   slug: row.slug,
   name: row.name,
   categoryId: row.category_id,
+  categorySlug: row.categories?.slug || null,
   image: row.primary_image,
   price: row.price,
   originalPrice: row.original_price,
@@ -47,6 +49,7 @@ export async function fetchProducts({
   page = 1,
   pageSize = PRODUCT_PAGE_SIZE,
   categoryId,
+  categorySlug,
   productType,
   badge,
   hasDiscount = false,
@@ -59,18 +62,20 @@ export async function fetchProducts({
   const safePage = normalizePage(page);
   const safePageSize = normalizePageSize(pageSize);
   const safeSearch = normalizeSearch(search);
+  const safeCategorySlug = normalizeCategorySlug(categorySlug);
   const sortRule = sortColumns[sort] || sortColumns.popularity;
   const from = (safePage - 1) * safePageSize;
   const to = from + safePageSize - 1;
 
   let query = supabase
     .from('products')
-    .select(productColumns, { count: 'exact' })
+    .select(`${productColumns}, categories!inner(slug)`, { count: 'exact' })
     .order(sortRule.column, { ascending: sortRule.ascending })
     .order('id', { ascending: true })
     .range(from, to);
 
   if (categoryId) query = query.eq('category_id', categoryId);
+  if (safeCategorySlug) query = query.eq('categories.slug', safeCategorySlug);
   if (productType) query = query.contains('type', [productType]);
   if (badge) query = query.eq('badge', badge);
   if (hasDiscount) query = query.not('discount_percent', 'is', null).gt('discount_percent', 0);
@@ -96,7 +101,7 @@ export async function fetchProductBySlug(slug) {
 
   const { data: product, error: productError } = await supabase
     .from('products')
-    .select(productColumns)
+    .select(`${productColumns}, categories(slug)`)
     .eq('slug', safeSlug)
     .maybeSingle();
 
@@ -131,4 +136,22 @@ export async function fetchProductBySlug(slug) {
       text: review.text,
     })),
   };
+}
+
+export async function fetchProductsBySlugs(slugs) {
+  const safeSlugs = [...new Set(
+    (Array.isArray(slugs) ? slugs : [])
+      .map((slug) => String(slug || '').trim().slice(0, 160))
+      .filter(Boolean),
+  )].slice(0, MAX_PAGE_SIZE);
+
+  if (safeSlugs.length === 0) return [];
+
+  const { data, error } = await supabase
+    .from('products')
+    .select(productColumns)
+    .in('slug', safeSlugs);
+
+  throwIfError(error, 'Unable to load products. Please try again.');
+  return (data || []).map(toProduct);
 }

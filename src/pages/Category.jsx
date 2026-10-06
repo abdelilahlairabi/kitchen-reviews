@@ -3,29 +3,26 @@ import CategoryHero from '../components/category/CategoryHero';
 import CategoryFilters from '../components/category/CategoryFilters';
 import CategoryProductGrid from '../components/category/CategoryProductGrid';
 import RelatedCategories from '../components/category/RelatedCategories';
-import { useCategories } from '../hooks/useCategories';
 import { useProducts } from '../hooks/useProducts';
 import { PRODUCT_PAGE_SIZE } from '../services/products';
+import { categories, getCategoryBySlug } from '../data/categories';
 import NotFound from './NotFound';
 
 const Category = () => {
   const { categoryName } = useParams();
   const [searchParams] = useSearchParams();
-  const { data: categories = [], isPending: isLoadingCategories, isError: categoriesError } = useCategories();
-  const category = categories.find((item) => item.slug === categoryName);
+  const category = getCategoryBySlug(categoryName);
   const activeType = searchParams.get('type') || '';
   const sort = searchParams.get('sort') || 'popularity';
   const requestedPage = Math.max(1, Number(searchParams.get('page')) || 1);
   const { data, isPending: isLoadingProducts, isFetching, isError: productsError } = useProducts({
-    categoryId: category?.id,
+    categorySlug: category?.slug,
     productType: activeType || undefined,
     page: requestedPage,
     pageSize: PRODUCT_PAGE_SIZE,
     sort,
-  }, { enabled: Boolean(category?.id) });
+  }, { enabled: Boolean(category?.slug) });
 
-  if (isLoadingCategories) return <p className="py-16 text-center text-gray-500">Loading category...</p>;
-  if (categoriesError) return <p className="py-16 text-center text-gray-500">We could not load this category right now. Please refresh and try again.</p>;
   if (!category) return <NotFound />;
   if (productsError) return <p className="py-16 text-center text-gray-500">We could not load products right now. Please refresh and try again.</p>;
 

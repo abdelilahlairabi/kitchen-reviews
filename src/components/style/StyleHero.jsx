@@ -53,6 +53,29 @@ export default function StyleHero({ styleData }) {
           ))}
         </div>
       </div>
+
+      {styleData.contentSections?.length > 0 && (
+        <section className="max-w-3xl mx-auto px-4 mb-14 space-y-10">
+          {styleData.contentSections.map((section) => (
+            <div key={section.heading} className="space-y-3">
+              <h2 className="text-2xl font-extrabold text-gray-900">{section.heading}</h2>
+              {section.paragraphs?.map((paragraph) => (
+                <p key={paragraph} className="text-sm md:text-base leading-relaxed text-gray-600">{paragraph}</p>
+              ))}
+              {section.bullets?.length > 0 && (
+                <ul className="space-y-2 pt-1">
+                  {section.bullets.map((bullet) => (
+                    <li key={bullet} className="flex gap-3 text-sm md:text-base text-gray-600">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#D4A373]" aria-hidden="true" />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </section>
+      )}
     </div>
   );
 }

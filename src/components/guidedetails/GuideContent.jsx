@@ -28,6 +28,25 @@ export default function GuideContent({ guide }) {
         )}
       </section>
 
+      {guide.contentSections?.map((section) => (
+        <section key={section.heading} className="space-y-4">
+          <h2 className="text-2xl font-bold text-gray-900">{section.heading}</h2>
+          {section.paragraphs?.map((paragraph) => (
+            <p key={paragraph} className="text-gray-700">{paragraph}</p>
+          ))}
+          {section.bullets?.length > 0 && (
+            <ul className="space-y-3 pt-1">
+              {section.bullets.map((bullet) => (
+                <li key={bullet} className="flex items-start gap-3 text-gray-700">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#D4A373]" aria-hidden="true" />
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      ))}
+
       {guide.types.length > 0 && (
         <section className="space-y-4">
           <h2 className="text-2xl font-bold text-gray-900">Key options compared</h2>
@@ -87,7 +106,7 @@ export default function GuideContent({ guide }) {
                   <img src={prod.image} alt={prod.name} className="max-h-full max-w-full object-contain" loading="lazy" />
                 </div>
                 <div>
-                  <Link to={`/products/${prod.slug}`} className="font-bold text-gray-900 text-sm hover:underline">{prod.name}</Link>
+                  <Link to={`/product/${prod.slug}`} className="font-bold text-gray-900 text-sm hover:underline">{prod.name}</Link>
                   <div className="text-sm font-semibold text-gray-900 mt-1">${prod.price?.toFixed(2)}</div>
                   <div className="flex text-amber-400 mt-1">
                     {[...Array(5)].map((_, i) => (
