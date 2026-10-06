@@ -24,7 +24,7 @@ const ProductDetails = () => {
 
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen">
-      <ProductHero product={product} category={category} />
+      <ProductHero key={product.id} product={product} category={category} />
       <ProductSpecs product={product} />
       <ProductReviews reviews={product.reviews} />
       <ProductRelated products={relatedProducts} />

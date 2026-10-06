@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import AffiliateLink from '../AffiliateLink';
 
 export default function ShopTheLook({ products, styleTitle, isError = false }) {
   if (isError && products.length === 0) {
@@ -25,11 +26,7 @@ export default function ShopTheLook({ products, styleTitle, isError = false }) {
             {Number.isFinite(product.price) && <p className="text-sm font-semibold text-gray-900 mt-2">${product.price.toFixed(2)}</p>}
             {Number.isFinite(product.rating) && product.rating > 0 && <p className="text-xs text-gray-600 mt-1">Rated {product.rating.toFixed(1)}{product.reviewCount ? ` · ${product.reviewCount.toLocaleString()} reviews` : ''}</p>}
             <div className="mt-auto pt-4">
-              {product.affiliateUrl ? (
-                <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer nofollow sponsored" className="block text-center bg-gray-950 hover:bg-gray-800 text-white text-sm font-semibold py-2.5 px-3 rounded-full transition-colors">Check current price</a>
-              ) : (
-                <Link to={`/product/${product.slug}`} className="block text-center border border-gray-300 hover:border-gray-950 text-gray-900 text-sm font-semibold py-2.5 px-3 rounded-full transition-colors">View details</Link>
-              )}
+              <AffiliateLink href={product.affiliateUrl} className="block text-center bg-gray-950 hover:bg-gray-800 text-white text-sm font-semibold py-2.5 px-3 rounded-full transition-colors aria-disabled:opacity-50 aria-disabled:cursor-not-allowed" fallback="Link coming soon">Check current price</AffiliateLink>
             </div>
           </article>
         ))}

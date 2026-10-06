@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import AffiliateLink from '../AffiliateLink';
 
 const ProductHero = ({ product, category }) => {
   const gallery = product.images.length > 0 ? product.images : [{ url: product.image, alt: product.name }];
@@ -28,7 +29,7 @@ const ProductHero = ({ product, category }) => {
           <div className="flex items-end gap-3 mb-4"><span className="text-3xl font-extrabold text-black">${product.price.toFixed(2)}</span>{product.originalPrice && <><span className="text-lg text-gray-400 line-through mb-1">${product.originalPrice.toFixed(2)}</span><span className="text-sm text-red-500 font-medium mb-2">-{product.discountPercent}%</span></>}</div>
           <p className="text-gray-600 text-sm mb-6 line-clamp-3">{product.description}</p>
           <ul className="space-y-3 mb-8">{product.features.map((feature) => <li key={feature} className="flex items-start gap-2 text-sm text-gray-700"><span className="text-black">✓</span>{feature}</li>)}</ul>
-          <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer nofollow sponsored" className="block w-full text-center bg-[#ebd5b3] hover:bg-[#dcb589] text-black font-bold py-3 rounded-lg transition-colors mb-2">View on Amazon</a>
+          <AffiliateLink href={product.affiliateUrl} className="block w-full text-center bg-[#ebd5b3] hover:bg-[#dcb589] text-black font-bold py-3 rounded-lg transition-colors mb-2 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed" fallback="Product link coming soon">View on Amazon</AffiliateLink>
           <p className="text-center text-xs text-gray-500 mb-6">As an Amazon Associate we earn from qualifying purchases</p>
         </div>
       </div>

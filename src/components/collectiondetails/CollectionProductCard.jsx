@@ -1,20 +1,11 @@
 import { Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const isUsableAffiliateUrl = (value) => {
-  if (!value || /placeholder|xxxxx|yourtag/i.test(value)) return false;
-  try {
-    const url = new URL(value);
-    return url.protocol === 'https:' && (url.hostname === 'amzn.to' || /(^|\.)amazon\.[a-z.]+$/i.test(url.hostname));
-  } catch {
-    return false;
-  }
-};
+import { isValidAmazonProductUrl } from '../../utils/affiliate';
 
 export default function CollectionProductCard({ product }) {
   const hasRating = Number.isFinite(product.rating) && product.rating > 0;
   const filledStars = hasRating ? Math.round(product.rating) : 0;
-  const hasAffiliateUrl = isUsableAffiliateUrl(product.affiliateUrl);
+  const hasAffiliateUrl = isValidAmazonProductUrl(product.affiliateUrl);
 
   return (
     <article className="bg-white rounded-2xl border border-gray-200 p-4 md:p-5 flex flex-col shadow-sm hover:shadow-md transition-shadow">

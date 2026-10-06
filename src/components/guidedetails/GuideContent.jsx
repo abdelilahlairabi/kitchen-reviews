@@ -1,5 +1,6 @@
 import { Check, Lightbulb, Minus, Plus, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import AffiliateLink from '../AffiliateLink';
 
 const sectionId = (heading) => `guide-${heading.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-')}`;
 
@@ -122,7 +123,7 @@ export default function GuideContent({ guide }) {
                     </div>
                   </div>
                   {product.affiliateUrl ? (
-                    <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer nofollow sponsored" className="w-full sm:w-auto text-center bg-gray-950 hover:bg-gray-800 text-white text-sm font-semibold px-5 py-3 rounded-full transition-colors shrink-0">Check current price</a>
+                    <AffiliateLink href={product.affiliateUrl} className="w-full sm:w-auto text-center bg-gray-950 hover:bg-gray-800 text-white text-sm font-semibold px-5 py-3 rounded-full transition-colors shrink-0 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed" fallback="Link coming soon">Check current price</AffiliateLink>
                   ) : (
                     <Link to={`/product/${product.slug}`} className="w-full sm:w-auto text-center border border-gray-300 hover:border-gray-950 text-gray-900 text-sm font-semibold px-5 py-3 rounded-full transition-colors shrink-0">View details</Link>
                   )}
