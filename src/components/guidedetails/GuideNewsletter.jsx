@@ -1,39 +1,19 @@
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function GuideNewsletter() {
-  const [email, setEmail] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Subscribed: ${email}`);
-    setEmail('');
-  };
-
   return (
-    <section className="my-12 max-w-2xl mx-auto px-4 text-center">
-      <h3 className="text-2xl font-bold text-gray-900 mb-2">
-        Never Miss a Kitchen Tip
-      </h3>
-      <p className="text-gray-600 text-xs md:text-sm mb-6">
-        Get new guides and buying tips delivered to your inbox
-      </p>
-
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 justify-center max-w-md mx-auto">
-        <input
-          type="email"
-          placeholder="Email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="px-4 py-2.5 rounded-xl border border-gray-300 bg-gray-100/80 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373] flex-1"
-        />
-        <button
-          type="submit"
-          className="bg-[#D4A373] hover:bg-[#b8895b] text-white text-xs font-bold px-6 py-2.5 rounded-xl transition-colors"
-        >
-          Subscribe
-        </button>
-      </form>
+    <section className="max-w-5xl mx-auto px-4 mt-16 mb-16" aria-labelledby="guide-next-step">
+      <div className="rounded-3xl bg-gray-950 text-white p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div className="max-w-2xl">
+          <p className="text-xs uppercase tracking-[0.18em] text-[#dfc39f] font-semibold mb-3">Keep exploring</p>
+          <h2 id="guide-next-step" className="text-2xl md:text-3xl font-bold tracking-tight mb-3">Put the guide to work in your kitchen.</h2>
+          <p className="text-gray-300 leading-relaxed">Compare the available catalog with the measurements and requirements you just reviewed.</p>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+          <Link to="/products" className="inline-flex justify-center items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-gray-950 hover:bg-gray-100 transition-colors">Explore products <span aria-hidden="true">→</span></Link>
+          <Link to="/guides" className="inline-flex justify-center items-center rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors">More guides</Link>
+        </div>
+      </div>
     </section>
   );
 }

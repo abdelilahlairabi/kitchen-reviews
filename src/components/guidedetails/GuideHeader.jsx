@@ -1,81 +1,93 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Link2, Share2 } from 'lucide-react';
-const TwitterIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-  </svg>
-);
 
 export default function GuideHeader({ guide }) {
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    alert('Link copied to clipboard!');
+  const [shareMessage, setShareMessage] = useState('');
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setShareMessage('Link copied');
+    } catch {
+      setShareMessage('Copying is not available in this browser.');
+    }
+  };
+
+  const handleShare = async () => {
+    if (!navigator.share) return handleCopyLink();
+    try {
+      await navigator.share({ title: guide.title, text: guide.desc, url: window.location.href });
+    } catch (error) {
+      if (error.name !== 'AbortError') setShareMessage('Sharing is not available right now.');
+    }
   };
 
   return (
-    <header className="max-w-4xl mx-auto px-4 pt-6 pb-8">
-      {/* Breadcrumbs */}
-      <nav className="text-xs text-gray-500 mb-6 flex items-center gap-2">
-        <Link to="/" className="hover:underline">Home</Link>
-        <span>/</span>
-        <Link to="/guides" className="hover:underline">Guides</Link>
-        <span>/</span>
+    <header className="max-w-5xl mx-auto px-4 pt-7 pb-8">
+      <nav aria-label="Breadcrumb" className="text-xs text-gray-500 mb-8 flex items-center gap-2">
+        <Link to="/" className="hover:text-gray-950 hover:underline">Home</Link>
+        <span aria-hidden="true">/</span>
+        <Link to="/guides" className="hover:text-gray-950 hover:underline">Guides</Link>
+        <span aria-hidden="true">/</span>
         <span className="text-gray-800 font-medium line-clamp-1">{guide.title}</span>
       </nav>
 
-      {/* Badge */}
-      <span className="inline-block bg-[#D4A373] text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">
+      <span className="inline-block bg-[#f5eee5] text-[#795632] text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
         {guide.badge}
       </span>
-
-      {/* Title */}
-      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight mb-4">
+      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-950 tracking-tight leading-tight mb-5 max-w-4xl">
         {guide.title}
       </h1>
+      <p className="text-base md:text-lg text-gray-600 leading-relaxed max-w-3xl mb-6">{guide.desc}</p>
 
-      {/* Meta Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-200 pb-6 gap-4">
-        <div className="text-xs md:text-sm text-gray-600 flex items-center gap-2">
-          <span>By <strong className="text-gray-900">{guide.author?.name || "Kitchen Experts"}</strong></span>
-          <span>·</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-y border-gray-200 py-4 gap-4">
+        <div className="text-sm text-gray-600 flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span>By <strong className="text-gray-900">{guide.author?.name || 'Kitchen Reviews Editorial Team'}</strong></span>
+          <span aria-hidden="true">·</span>
           <span>{guide.time}</span>
+          {guide.date && <><span aria-hidden="true">·</span><time>{guide.date}</time></>}
         </div>
 
-        {/* Social Share Icons */}
-        <div className="flex items-center gap-3 text-gray-600">
-          <button 
-            onClick={handleCopyLink} 
-            title="Copy Link" 
-            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+        <div className="flex items-center gap-2 text-gray-700">
+          <button
+            onClick={handleCopyLink}
+            type="button"
+            aria-label="Copy guide link"
+            className="inline-flex items-center gap-2 border border-gray-200 rounded-full px-3 py-2 text-xs font-medium hover:bg-gray-50 transition-colors"
           >
-            <Link2 size={18} />
+            <Link2 size={15} /> Copy link
           </button>
-          <a 
-            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(guide.title)}`} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+          <a
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(guide.title)}&url=${encodeURIComponent(window.location.href)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share guide on X"
+            className="border border-gray-200 rounded-full px-3 py-2 text-xs font-medium hover:bg-gray-50 transition-colors"
           >
-            <TwitterIcon size={18} />
+            Share on X
           </a>
-          <button 
-            onClick={handleCopyLink} 
-            title="Share" 
-            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+          <button
+            onClick={handleShare}
+            type="button"
+            aria-label="Share guide"
+            className="p-2.5 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors"
           >
-            <Share2 size={18} />
+            <Share2 size={16} />
           </button>
         </div>
       </div>
+      <p aria-live="polite" className="text-xs text-gray-500 mt-2 min-h-4">{shareMessage}</p>
 
-      {/* Hero Featured Image */}
-      <div className="mt-6 rounded-3xl overflow-hidden bg-gray-100 shadow-sm max-h-[480px]">
+      <figure className="mt-6 rounded-3xl overflow-hidden bg-gray-100 shadow-sm aspect-[16/9] max-h-[520px]">
         <img
           src={guide.image}
-          alt={guide.title}
+          alt={`${guide.title} — kitchen guide`}
           className="w-full h-full object-cover"
+          fetchPriority="high"
+          decoding="async"
         />
-      </div>
+      </figure>
     </header>
   );
 }

@@ -10,9 +10,8 @@ export const guidesData = [
     time: "9 min read",
     date: "Updated October 2026",
     author: {
-      name: "Kitchen Experts",
-      role: "Kitchen Product Specialist",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      name: "Kitchen Reviews Editorial Team",
+      role: "Editorial guide",
     },
     desc: "Learn how to choose a kitchen faucet that fits your sink, work habits, water connections, and kitchen style.",
     image: "/guides/choosing-kitchen-faucet.webp",
@@ -67,29 +66,29 @@ export const guidesData = [
     ],
     types: [
       { name: "Pull-Down", desc: "Offers the most flexible spray hose reach for large sinks." },
-      { name: "Touchless", desc: "Hands-free sensor technology for ultimate cooking hygiene." },
-      { name: "Bridge", desc: "Classic two-handle design with timeless period aesthetics." },
-      { name: "Wall-Mount", desc: "Frees up counter space and makes sink cleaning effortless." },
+      { name: "Pull-Out", desc: "A lower-profile spray head that can be comfortable in compact sinks or kitchens with limited overhead clearance." },
+      { name: "Touch-Activated or Touchless", desc: "Can reduce handle contact during messy prep; check sensor placement, power source, and manual override." },
+      { name: "Bridge or Wall-Mount", desc: "Distinctive traditional or space-saving styles that require careful checking of hole spacing and plumbing position." },
     ],
     finishes: [
-      { finish: "Brushed Nickel", durability: "Very high durability & spot resistant." },
-      { finish: "Matte Black", durability: "High durability, modern smudge-proof coating." },
-      { finish: "Chrome", durability: "Very high durability & budget-friendly classic." },
-      { finish: "Brass", durability: "High durability with rich vintage patina potential." },
+      { finish: "Brushed Nickel", durability: "A soft sheen can make everyday water marks less conspicuous than a mirror finish; cleaning performance depends on the coating." },
+      { finish: "Matte Black", durability: "Creates strong contrast, but water deposits and coating care vary by manufacturer." },
+      { finish: "Chrome", durability: "A familiar reflective finish that is widely available; fingerprints and droplets may show between cleanings." },
+      { finish: "Brass or Gold Tones", durability: "Warm appearance across several sheens; compare the finish warranty and approved cleaners before purchase." },
     ],
     recommendedProductSlugs: ["brushed-nickel-kitchen-faucet"],
     faqs: [
       {
-        q: "What is an arc height on a kitchen faucet?",
-        a: "Arc height refers to the distance between the sink deck and the highest point of the spout. High-arc spouts (8-10 inches) give extra room for big pots.",
+        q: "How do I measure a kitchen faucet before buying?",
+        a: "Measure from the mounting surface to the underside of any shelf or window, then compare the faucet’s overall height, spout reach, handle movement, and spray-hose range with your sink and countertop.",
       },
       {
-        q: "Are touchless faucets worth the investment?",
-        a: "Yes! They reduce cross-contamination when handling raw meat and help keep your faucet handle clean while baking or cooking.",
+        q: "Are touchless kitchen faucets worth considering?",
+        a: "They can be convenient when your hands are messy, but check how the sensor activates, whether it has a manual control, how it is powered, and what replacement parts cost. They are not essential for every kitchen.",
       },
       {
-        q: "How hard is it to install a new kitchen faucet yourself?",
-        a: "Most modern faucets feature single-hole quick-connect fittings and can be installed in under 45 minutes with basic tools like a wrench and plumber's tape.",
+        q: "Can I install a faucet myself?",
+        a: "It depends on access, plumbing condition, and the faucet connections. Follow the model’s instructions, shut off and verify the water supply, and use a qualified plumber if valves are corroded, access is difficult, or you are unsure.",
       },
     ],
   },
@@ -150,7 +149,11 @@ export const guidesData = [
     types: [],
     finishes: [],
     recommendedProductSlugs: ["kitchenaid-artisan-stand-mixer"],
-    faqs: [],
+    faqs: [
+      { q: "What bowl size should I choose?", a: "Base capacity on your most common recipes and batch sizes, not the largest number on the box. Check the maker’s stated capacity for flour or dough because usable capacity is not the same as the bowl’s total volume." },
+      { q: "Is a higher wattage always better?", a: "No. Wattage alone does not predict mixing quality. Gear design, speed control, stability, bowl shape, and the manufacturer’s guidance for heavy dough all matter." },
+      { q: "Should I keep a stand mixer on the counter?", a: "If you use it often and have a stable, accessible spot, keeping it out can make it easier to use. Measure its footprint and height, including room to tilt the head or lift the bowl." },
+    ],
   },
   {
     id: 3,
@@ -209,7 +212,11 @@ export const guidesData = [
     types: [],
     finishes: [],
     recommendedProductSlugs: ["walnut-end-grain-cutting-board"],
-    faqs: [],
+    faqs: [
+      { q: "Can a wooden cutting board go in the dishwasher?", a: "No. Prolonged heat and moisture can warp, split, or damage joints in a wooden board. Wash it by hand and dry it promptly." },
+      { q: "What oil is safe for a cutting board?", a: "Use food-grade mineral oil or a conditioner explicitly intended for food-contact wooden boards. Avoid ordinary cooking oils that can oxidize or leave sticky residue." },
+      { q: "How often should I oil a wooden board?", a: "There is no universal schedule. Reapply a light coat when the wood looks dry or absorbs water quickly, following the board maker’s care instructions." },
+    ],
   },
   {
     id: 4,
@@ -268,7 +275,11 @@ export const guidesData = [
     types: [],
     finishes: [],
     recommendedProductSlugs: ["fireclay-ceramic-farmhouse-sink"],
-    faqs: [],
+    faqs: [
+      { q: "Is a single-bowl or double-bowl sink better?", a: "A single bowl gives more uninterrupted room for large pans. A double bowl can separate washing, rinsing, or prep tasks. Choose according to cookware size, dishwasher use, and how you work at the sink." },
+      { q: "Which kitchen sink material is easiest to maintain?", a: "There is no one answer: stainless steel, fireclay, enamel, and composite surfaces have different care needs and can react differently to impact, scratches, and hard water. Compare the maker’s cleaning instructions and warranty." },
+      { q: "How do I know what sink size fits?", a: "Measure the inside cabinet width, counter cutout, sink depth, drain and disposal clearance, and faucet-hole layout. Confirm the minimum cabinet size in the product’s installation sheet." },
+    ],
   },
   {
     id: 5,
@@ -331,8 +342,21 @@ export const guidesData = [
     ],
     types: [],
     finishes: [],
-    recommendedProductSlugs: ["programmable-pressure-cooker"],
-    faqs: [],
+    comparisonTable: {
+      columns: ["Air fryer", "Toaster oven"],
+      rows: [
+        { label: "Best fit", values: ["Small portions where quick, crisp results are the priority.", "Toast, tray-style cooking, reheating, and more oven-like tasks."] },
+        { label: "Cooking space", values: ["Often a compact basket; capacity and shape limit larger foods.", "A wider rack or tray can fit flatter foods, but takes more counter depth."] },
+        { label: "Cleanup", values: ["Basket and drawer collect crumbs and grease; check coating and dishwasher guidance.", "Crumb tray, rack, and pans need cleaning; check access around the heating elements."] },
+        { label: "Before buying", values: ["Check basket capacity, usable cooking area, and space to pull out the drawer.", "Measure door swing, tray dimensions, ventilation clearance, and counter footprint."] },
+      ],
+    },
+    recommendedProductSlugs: [],
+    faqs: [
+      { q: "Is an air fryer just a small convection oven?", a: "Both use circulating hot air, but the cooking chamber, airflow, controls, and usable space differ by model. Compare the foods you cook and the actual tray or basket dimensions rather than relying on the label." },
+      { q: "Which one is better for a small kitchen?", a: "Neither category is automatically smaller. Measure the appliance, required ventilation clearance, door or drawer movement, and where it will be stored before choosing." },
+      { q: "Can one appliance replace both?", a: "Some toaster ovens include an air-fry setting, but results and capacity vary. Check the manufacturer’s instructions and choose a combination unit only if its footprint and functions suit your regular meals." },
+    ],
   },
   {
     id: 6,
@@ -392,7 +416,11 @@ export const guidesData = [
     types: [],
     finishes: [],
     recommendedProductSlugs: ["japanese-damascus-chef-knife", "15-piece-knife-block-set"],
-    faqs: [],
+    faqs: [
+      { q: "How many kitchen knives do I really need?", a: "Many home cooks can cover most tasks with a chef’s knife, a paring knife, and a serrated knife. Add specialty blades only when you have recurring tasks that need them." },
+      { q: "How can I tell when a knife needs sharpening?", a: "If honing no longer restores a clean, controlled cut, the edge may need sharpening. Use a method appropriate for the knife and its manufacturer’s guidance; some blade geometries need specialized care." },
+      { q: "Can quality knives go in the dishwasher?", a: "Hand-washing and drying promptly is the safer routine for most kitchen knives. Dishwasher heat, moisture, and contact with other items can damage edges or handles." },
+    ],
   },
   {
     id: 7,
@@ -451,7 +479,11 @@ export const guidesData = [
     types: [],
     finishes: [],
     recommendedProductSlugs: [],
-    faqs: [],
+    faqs: [
+      { q: "How can I tell whether my cookware works on induction?", a: "Try a magnet on the flat base. If it holds firmly, the pan is generally magnetic enough, but still confirm compatibility and minimum pan size in the cooktop manual." },
+      { q: "Will I need new cookware for an induction cooktop?", a: "Not necessarily. Many cast-iron and magnetic stainless-steel pans work, while some aluminum, copper, glass, or ceramic pieces do not unless they have a compatible magnetic base." },
+      { q: "Can I replace a gas cooktop with induction myself?", a: "Installation requirements depend on the cooktop, electrical service, cabinetry, and local rules. Check the installation manual and have a qualified professional assess wiring and fit before purchase." },
+    ],
   },
 ];
 

@@ -1,30 +1,18 @@
-const GuidesNewsletter = () => {
-  return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-      <div className="bg-[#e9e9e9] rounded-3xl p-10 md:p-14 text-center">
-        <h2 className="text-2xl font-bold text-black mb-2">
-          Never Miss a Kitchen Tip
-        </h2>
-        <p className="text-gray-600 text-sm mb-6">
-          Get new guides and buying tips delivered to your inbox
-        </p>
-        <form className="flex flex-col sm:flex-row justify-center max-w-md mx-auto gap-3">
-          <input 
-            type="email" 
-            placeholder="Your email address" 
-            className="flex-1 px-4 py-3 rounded-lg border-none focus:ring-2 focus:ring-[#dcb589] outline-none"
-            required
-          />
-          <button 
-            type="submit" 
-            className="bg-[#ebd5b3] hover:bg-[#dcb589] text-black font-bold px-6 py-3 rounded-lg transition-colors"
-          >
-            Subscribe
-          </button>
-        </form>
+import { Link } from 'react-router-dom';
+
+const GuidesNewsletter = () => (
+  <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-20" aria-labelledby="guides-next-step">
+    <div className="rounded-3xl bg-[#f5f1e9] border border-[#ebe4d8] p-8 md:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div className="max-w-2xl">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#86623d] mb-3">Make your next choice with confidence</p>
+        <h2 id="guides-next-step" className="text-2xl md:text-3xl font-bold tracking-tight text-gray-950 mb-3">Turn what you learned into a practical shortlist.</h2>
+        <p className="text-gray-600 leading-relaxed">Browse the kitchen catalog and compare products against the measurements, materials, and features that matter to your home.</p>
       </div>
+      <Link to="/products" className="inline-flex justify-center items-center gap-2 bg-gray-950 hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded-full transition-colors shrink-0">
+        Explore kitchen products <span aria-hidden="true">→</span>
+      </Link>
     </div>
-  );
-};
+  </section>
+);
 
 export default GuidesNewsletter;

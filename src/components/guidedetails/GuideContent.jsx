@@ -1,176 +1,186 @@
-import { useState } from 'react';
+import { Check, Lightbulb, Minus, Plus, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Lightbulb, Check, Plus, Minus, Star } from 'lucide-react';
+
+const sectionId = (heading) => `guide-${heading.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-')}`;
 
 export default function GuideContent({ guide }) {
-  const [openFaq, setOpenFaq] = useState(0);
-
-  const toggleFaq = (index) => {
-    setOpenFaq(openFaq === index ? null : index);
-  };
+  const sections = guide.contentSections || [];
 
   return (
-    <article className="max-w-2xl mx-auto px-4 text-gray-800 leading-relaxed text-base space-y-10">
-      
-      <section className="space-y-4">
-        <p className="text-lg text-gray-700">{guide.desc}</p>
+    <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_270px] gap-10 lg:gap-14 items-start">
+      <article className="min-w-0 max-w-3xl text-gray-700 leading-8 text-base md:text-[17px]">
+        <section className="mb-10">
+          <p className="text-lg md:text-xl text-gray-800 leading-relaxed">{guide.desc}</p>
+          {guide.quickTip && (
+            <aside className="mt-6 rounded-2xl bg-[#f8f4ed] border border-[#eadfce] p-5 md:p-6 flex items-start gap-4">
+              <span className="p-2.5 bg-white rounded-full text-[#8e633c] shadow-sm shrink-0" aria-hidden="true"><Lightbulb size={20} /></span>
+              <div>
+                <h2 className="font-bold text-gray-950 text-sm mb-1">Quick tip</h2>
+                <p className="text-sm text-gray-700 leading-relaxed">{guide.quickTip}</p>
+              </div>
+            </aside>
+          )}
+        </section>
 
-        {guide.quickTip && (
-          <div className="bg-[#F7F4EE] rounded-2xl p-5 border border-[#EBE5D8] flex items-start gap-4 my-6">
-            <div className="p-2 bg-white rounded-full text-amber-600 shadow-sm shrink-0">
-              <Lightbulb size={20} />
+        {guide.comparisonTable && (
+          <section aria-labelledby="comparison-title" className="mb-10 rounded-2xl border border-gray-200 overflow-hidden">
+            <div className="px-5 py-4 bg-gray-50 border-b border-gray-200">
+              <h2 id="comparison-title" className="font-bold text-gray-950">At a glance</h2>
+              <p className="text-sm text-gray-600 mt-1">A quick comparison before the detailed buying advice.</p>
             </div>
-            <div>
-              <h4 className="font-bold text-gray-900 text-sm mb-1">Quick Tip</h4>
-              <p className="text-sm text-gray-700 leading-snug">{guide.quickTip}</p>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[540px] text-left text-sm">
+                <thead className="bg-white text-gray-900">
+                  <tr>
+                    <th scope="col" className="p-3 md:p-4 font-semibold">What matters</th>
+                    {guide.comparisonTable.columns.map((column) => <th scope="col" key={column} className="p-3 md:p-4 font-semibold">{column}</th>)}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 text-gray-700">
+                  {guide.comparisonTable.rows.map((row) => (
+                    <tr key={row.label}>
+                      <th scope="row" className="p-3 md:p-4 font-semibold text-gray-900 align-top">{row.label}</th>
+                      {row.values.map((value, index) => <td key={`${row.label}-${index}`} className="p-3 md:p-4 align-top leading-relaxed">{value}</td>)}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          </div>
+          </section>
         )}
-      </section>
 
-      {guide.contentSections?.map((section) => (
-        <section key={section.heading} className="space-y-4">
-          <h2 className="text-2xl font-bold text-gray-900">{section.heading}</h2>
-          {section.paragraphs?.map((paragraph) => (
-            <p key={paragraph} className="text-gray-700">{paragraph}</p>
-          ))}
-          {section.bullets?.length > 0 && (
-            <ul className="space-y-3 pt-1">
-              {section.bullets.map((bullet) => (
-                <li key={bullet} className="flex items-start gap-3 text-gray-700">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#D4A373]" aria-hidden="true" />
-                  <span>{bullet}</span>
+        {sections.map((section) => (
+          <section id={sectionId(section.heading)} key={section.heading} className="scroll-mt-24 mb-10 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-950 tracking-tight leading-snug mb-4">{section.heading}</h2>
+            <div className="space-y-4">
+              {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            </div>
+            {section.bullets?.length > 0 && (
+              <ul className="mt-5 space-y-3 rounded-2xl bg-gray-50 p-5 md:p-6">
+                {section.bullets.map((bullet) => (
+                  <li key={bullet} className="flex items-start gap-3 text-gray-700 leading-relaxed">
+                    <Check size={18} className="mt-1 shrink-0 text-emerald-700" aria-hidden="true" />
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))}
+
+        {guide.types?.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-950 tracking-tight mb-5">Kitchen faucet types at a glance</h2>
+            <ul className="grid sm:grid-cols-2 gap-3">
+              {guide.types.map((type) => (
+                <li key={type.name} className="rounded-2xl border border-gray-200 p-5">
+                  <h3 className="font-bold text-gray-950 mb-2">{type.name}</h3>
+                  <p className="text-sm leading-relaxed text-gray-600">{type.desc}</p>
                 </li>
               ))}
             </ul>
-          )}
-        </section>
-      ))}
+          </section>
+        )}
 
-      {guide.types.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-gray-900">Key options compared</h2>
+        {guide.finishes?.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-950 tracking-tight mb-4">Finish and everyday care</h2>
+            <p className="mb-5">Finish performance varies by brand and coating. Use this as a starting point, then check the faucet maker’s cleaning and warranty guidance before choosing.</p>
+            <div className="overflow-x-auto border border-gray-200 rounded-2xl">
+              <table className="w-full min-w-[440px] text-left text-sm">
+                <thead className="bg-gray-50 border-b border-gray-200 text-gray-950">
+                  <tr><th scope="col" className="p-4">Finish</th><th scope="col" className="p-4">What to consider</th></tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 text-gray-700">
+                  {guide.finishes.map((finish) => <tr key={finish.finish}><th scope="row" className="p-4 font-semibold text-gray-900 align-top">{finish.finish}</th><td className="p-4 leading-relaxed">{finish.durability}</td></tr>)}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
 
-          <ul className="space-y-4 pt-2">
-            {guide.types.map((type, idx) => (
-              <li key={idx} className="flex items-start gap-3">
-                <span className="p-1 bg-emerald-100 text-emerald-700 rounded-full shrink-0 mt-1"><Check size={14} /></span>
-                <div><strong className="text-gray-900 font-semibold">{type.name}:</strong>{' '}<span className="text-gray-600">{type.desc}</span></div>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {guide.finishes.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold text-gray-900">Materials & durability</h2>
-
-        {/* Comparison Table */}
-        <div className="overflow-hidden border border-gray-200 rounded-xl my-4">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-[#F8F7F4] border-b border-gray-200 font-semibold text-gray-900">
-              <tr>
-                <th className="p-3">Finish</th>
-                <th className="p-3">Durability</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 text-gray-700">
-              {guide.finishes.map((f, i) => (
-                <tr key={i} className="hover:bg-gray-50/50">
-                  <td className="p-3 font-medium text-gray-900">{f.finish}</td>
-                  <td className="p-3">{f.durability}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        </section>
-      )}
-
-      {guide.recommendedProducts.length > 0 && (
-        <section className="space-y-6 pt-4">
-        <h2 className="text-2xl font-bold text-gray-900">Our Top Recommendations</h2>
-        <p className="text-gray-600 text-sm">
-          Our top recommendations based on performance, design, and user reviews:
-        </p>
-
-        <div className="space-y-4">
-          {guide.recommendedProducts.map((prod) => (
-            <div 
-              key={prod.id} 
-              className="bg-white rounded-xl border border-gray-200 p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-center gap-4 w-full sm:w-auto">
-                <div className="w-20 h-20 bg-gray-50 rounded-lg p-2 shrink-0 border border-gray-100 flex items-center justify-center">
-                  <img src={prod.image} alt={prod.name} className="max-h-full max-w-full object-contain" loading="lazy" />
-                </div>
-                <div>
-                  <Link to={`/product/${prod.slug}`} className="font-bold text-gray-900 text-sm hover:underline">{prod.name}</Link>
-                  <div className="text-sm font-semibold text-gray-900 mt-1">${prod.price?.toFixed(2)}</div>
-                  <div className="flex text-amber-400 mt-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={12} fill="currentColor" />
-                    ))}
+        {guide.recommendedProducts?.length > 0 && (
+          <section id="recommended-products" className="scroll-mt-24 my-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-950 tracking-tight mb-2">Products mentioned in this guide</h2>
+            <p className="text-sm text-gray-600 mb-5 leading-relaxed">These catalog picks are included because they relate to the topic. Check current specifications, compatibility, price, and availability with the seller before buying.</p>
+            <div className="space-y-4">
+              {guide.recommendedProducts.map((product) => (
+                <article key={product.id} className="bg-white rounded-2xl border border-gray-200 p-4 md:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+                  <div className="flex items-center gap-4 min-w-0">
+                    <div className="w-20 h-20 bg-gray-50 rounded-xl p-2 shrink-0 border border-gray-100 flex items-center justify-center">
+                      <img src={product.image} alt={product.name} className="max-h-full max-w-full object-contain" loading="lazy" decoding="async" />
+                    </div>
+                    <div className="min-w-0">
+                      <Link to={`/product/${product.slug}`} className="font-bold text-gray-950 text-sm hover:underline underline-offset-4">{product.name}</Link>
+                      {Number.isFinite(product.price) && <p className="text-sm font-semibold text-gray-900 mt-1">${product.price.toFixed(2)}</p>}
+                      {Number.isFinite(product.rating) && product.rating > 0 && (
+                        <div className="flex items-center gap-1.5 mt-1 text-amber-600" aria-label={`${product.rating.toFixed(1)} out of 5 stars${product.reviewCount ? `, based on ${product.reviewCount} reviews` : ''}`}>
+                          <span className="flex" aria-hidden="true">{Array.from({ length: 5 }, (_, index) => <Star key={index} size={12} fill={index < Math.round(product.rating) ? 'currentColor' : 'none'} />)}</span>
+                          <span className="text-xs text-gray-600">{product.rating.toFixed(1)}{product.reviewCount ? ` · ${product.reviewCount.toLocaleString()} reviews` : ''}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </div>
-
-              <a
-                href={prod.affiliateUrl}
-                target="_blank"
-                rel="noopener noreferrer nofollow sponsored"
-                className="w-full sm:w-auto text-center bg-[#D4A373] hover:bg-[#b8895b] text-white text-xs font-semibold px-5 py-2.5 rounded-lg transition-colors shrink-0"
-              >
-                Check Price
-              </a>
+                  {product.affiliateUrl ? (
+                    <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer nofollow sponsored" className="w-full sm:w-auto text-center bg-gray-950 hover:bg-gray-800 text-white text-sm font-semibold px-5 py-3 rounded-full transition-colors shrink-0">Check current price</a>
+                  ) : (
+                    <Link to={`/product/${product.slug}`} className="w-full sm:w-auto text-center border border-gray-300 hover:border-gray-950 text-gray-900 text-sm font-semibold px-5 py-3 rounded-full transition-colors shrink-0">View details</Link>
+                  )}
+                </article>
+              ))}
             </div>
-          ))}
-        </div>
-        </section>
-      )}
+          </section>
+        )}
 
-      {guide.faqs.length > 0 && (
-        <section className="space-y-4 pt-6 border-t border-gray-200">
-        <h2 className="text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
-
-        <div className="divide-y divide-gray-200">
-          {guide.faqs.map((faq, index) => (
-            <div key={index} className="py-4">
-              <button
-                onClick={() => toggleFaq(index)}
-                className="w-full flex items-center justify-between text-left font-semibold text-gray-900 hover:text-[#D4A373] transition-colors"
-              >
-                <span>{faq.q}</span>
-                {openFaq === index ? <Minus size={18} /> : <Plus size={18} />}
-              </button>
-              {openFaq === index && (
-                <p className="mt-3 text-sm text-gray-600 leading-relaxed pl-1">
-                  {faq.a}
-                </p>
-              )}
+        {guide.faqs?.length > 0 && (
+          <section id="frequently-asked-questions" className="scroll-mt-24 border-t border-gray-200 pt-9 mt-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-950 tracking-tight mb-5">Frequently asked questions</h2>
+            <div className="divide-y divide-gray-200 border-y border-gray-200">
+              {guide.faqs.map((faq, index) => (
+                <details key={faq.q} open={index === 0} className="group py-4">
+                  <summary className="list-none cursor-pointer flex items-center justify-between gap-4 font-semibold text-gray-900 marker:hidden">
+                    <span>{faq.q}</span>
+                    <span className="text-gray-500 group-open:hidden" aria-hidden="true"><Plus size={18} /></span>
+                    <span className="text-gray-500 hidden group-open:inline" aria-hidden="true"><Minus size={18} /></span>
+                  </summary>
+                  <p className="mt-3 pr-8 text-sm md:text-base text-gray-600 leading-relaxed">{faq.a}</p>
+                </details>
+              ))}
             </div>
-          ))}
-        </div>
-        </section>
-      )}
+          </section>
+        )}
 
-      {guide.author && (
-        <section className="pt-6 border-t border-gray-200">
-        <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl border border-gray-200/80">
-          {guide.author.avatar ? (
-            <img src={guide.author.avatar} alt={guide.author.name} className="w-12 h-12 rounded-full object-cover border border-gray-300" />
-          ) : (
-            <div className="w-12 h-12 rounded-full bg-[#D4A373] text-white flex items-center justify-center font-bold">{guide.author.name?.charAt(0)}</div>
-          )}
-          <div>
-            <h4 className="font-bold text-gray-900 text-sm">{guide.author.name}</h4>
-            {guide.author.role && <p className="text-xs text-gray-500">{guide.author.role}</p>}
+        <section className="border-t border-gray-200 pt-6 mt-12">
+          <div className="flex items-center gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-200">
+            {guide.author?.avatar ? <img src={guide.author.avatar} alt="" className="w-12 h-12 rounded-full object-cover border border-gray-200" loading="lazy" /> : <div className="w-12 h-12 rounded-full bg-[#f5eee5] text-[#795632] flex items-center justify-center font-bold" aria-hidden="true">K</div>}
+            <div>
+              <p className="text-xs text-gray-500">Prepared by</p>
+              <p className="font-bold text-gray-950 text-sm">{guide.author?.name || 'Kitchen Reviews Editorial Team'}</p>
+              {guide.author?.role && <p className="text-xs text-gray-500 mt-0.5">{guide.author.role}</p>}
+            </div>
           </div>
-        </div>
+          <p className="text-xs text-gray-500 mt-4 leading-relaxed">Product details and availability can change. Always confirm current information with the manufacturer or seller before purchase.</p>
         </section>
-      )}
+      </article>
 
-    </article>
+      {sections.length > 0 && (
+        <aside className="lg:sticky lg:top-24 order-first lg:order-last">
+          <nav aria-label="In this guide" className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <h2 className="font-bold text-gray-950 mb-3">In this guide</h2>
+            <ol className="space-y-2.5 border-l border-gray-200 ml-1">
+              {sections.map((section, index) => (
+                <li key={section.heading} className="pl-4 -ml-px border-l border-transparent hover:border-gray-950">
+                  <a href={`#${sectionId(section.heading)}`} className="block text-sm text-gray-600 hover:text-gray-950 leading-snug">{String(index + 1).padStart(2, '0')} <span className="ml-1">{section.heading}</span></a>
+                </li>
+              ))}
+              {guide.comparisonTable && <li className="pl-4"><a href="#comparison-title" className="text-sm text-gray-600 hover:text-gray-950">At-a-glance comparison</a></li>}
+              {guide.recommendedProducts?.length > 0 && <li className="pl-4"><a href="#recommended-products" className="text-sm text-gray-600 hover:text-gray-950">Related products</a></li>}
+              {guide.faqs?.length > 0 && <li className="pl-4"><a href="#frequently-asked-questions" className="text-sm text-gray-600 hover:text-gray-950">FAQs</a></li>}
+            </ol>
+            <Link to="/guides" className="block border-t border-gray-100 mt-5 pt-4 text-sm font-semibold text-gray-900 hover:underline underline-offset-4">Browse all guides <span aria-hidden="true">→</span></Link>
+          </nav>
+        </aside>
+      )}
+    </div>
   );
 }
