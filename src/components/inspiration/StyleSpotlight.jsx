@@ -1,49 +1,21 @@
+import { Link } from 'react-router-dom';
+
 export default function StyleSpotlight({ spotlight }) {
   return (
-    <section className="max-w-5xl mx-auto px-4 my-16">
-      <div className="bg-[#EFECE6] rounded-3xl p-6 md:p-10">
-        <div className="text-center mb-8">
-          <span className="text-[10px] md:text-xs font-bold tracking-widest text-gray-500 uppercase">
-            {spotlight.subtitle}
-          </span>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">
-            {spotlight.title}
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-white/70 backdrop-blur-sm p-6 rounded-2xl border border-white">
-          {/* Image */}
-          <div className="md:col-span-5 h-64 md:h-72 rounded-2xl overflow-hidden bg-gray-200">
-            <img
-              src={spotlight.image}
-              alt={spotlight.title}
-              className="w-full h-full object-cover"
-            />
+    <section className="max-w-6xl mx-auto px-4 my-16" aria-labelledby="style-spotlight-title">
+      <div className="rounded-3xl bg-[#f5f1e9] p-5 md:p-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center bg-white rounded-2xl border border-white p-4 md:p-6">
+          <div className="md:col-span-5 aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100">
+            <img src={spotlight.image} alt="" aria-hidden="true" className="w-full h-full object-cover" loading="lazy" decoding="async" />
           </div>
-
-          {/* Text & Icon List */}
-          <div className="md:col-span-7 space-y-6">
-            <p className="text-gray-600 text-xs md:text-sm leading-relaxed">
-              {spotlight.description}
-            </p>
-
-            {/* Pastilles d'éléments circulaires */}
-            {spotlight.featuredItems.length > 0 && <div className="flex flex-wrap items-center gap-6 pt-2">
-              {spotlight.featuredItems.map((item) => (
-                <div key={item.id} className="flex flex-col items-center gap-2 group cursor-pointer">
-                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-white shadow-sm bg-gray-100 group-hover:scale-105 transition-transform">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <span className="text-[11px] font-semibold text-gray-800">
-                    {item.name}
-                  </span>
-                </div>
-              ))}
-            </div>}
+          <div className="md:col-span-7 py-2 md:py-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8c6744] mb-3">{spotlight.subtitle}</p>
+            <h2 id="style-spotlight-title" className="text-2xl md:text-3xl font-bold tracking-tight text-gray-950 mb-4">{spotlight.title}</h2>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-5">{spotlight.description}</p>
+            <ul className="flex flex-wrap gap-2 mb-6" aria-label="Style characteristics">
+              {spotlight.tags?.map((tag) => <li key={tag} className="rounded-full bg-[#f5f1e9] text-gray-700 text-xs font-medium px-3 py-1.5">{tag}</li>)}
+            </ul>
+            <Link to={`/inspiration/${spotlight.slug}`} className="inline-flex items-center gap-2 rounded-full bg-gray-950 hover:bg-gray-800 text-white text-sm font-semibold px-5 py-3 transition-colors">Explore this style <span aria-hidden="true">→</span></Link>
           </div>
         </div>
       </div>

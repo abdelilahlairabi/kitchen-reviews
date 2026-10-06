@@ -35,6 +35,18 @@ export const stylesData = {
           "Choose durable surfaces that can handle daily family cooking and cleanup.",
         ],
       },
+      {
+        heading: "Choose surfaces for daily wear, not just appearance",
+        paragraphs: [
+          "A farmhouse kitchen often combines a hard-working main countertop with a visually distinct island or wood accent. Before choosing stone, wood, or another surface, compare how it handles heat, stains, scratches, sealing, and routine cleaning in your household.",
+          "Use a sample beside your cabinet and flooring choices in both daylight and evening light. Warm whites can read yellow beside a cool gray, while a strong wood grain can become the focal point faster than expected.",
+        ],
+        bullets: [
+          "Repeat one wood tone in two or three places so the room feels connected.",
+          "Use open shelves for a small set of frequently used or meaningful items.",
+          "Choose hardware and fixtures by finish-care instructions as well as appearance.",
+        ],
+      },
     ],
     gallery: [
       { src: "/styles/modern-farmhouse-gallery-01.webp", alt: "Modern farmhouse kitchen island with warm wood stools" },
@@ -45,56 +57,6 @@ export const stylesData = {
       { src: "/styles/modern-farmhouse-gallery-06.webp", alt: "Cozy modern farmhouse breakfast nook with natural wood" },
     ],
 
-    products: [
-      {
-        id: 301,
-        name: "Dome Pendant Light",
-        price: 28.00,
-        rating: 5,
-        image: "/guides/guide-lighting-ideas.jpeg",
-        affiliateUrl: "#"
-      },
-      {
-        id: 302,
-        name: "Farmhouse Wooden Bar Stool",
-        price: 41.00,
-        rating: 5,
-        image: "/guides/guide-stand-mixers.jpeg",
-        affiliateUrl: "#"
-      },
-      {
-        id: 303,
-        name: "Farmhouse Sink Stoneware",
-        price: 57.00,
-        rating: 5,
-        image: "/guides/guide-kitchen-sink-style.jpeg",
-        affiliateUrl: "#"
-      },
-      {
-        id: 304,
-        name: "Brass Faucet Plumber Faucet",
-        price: 35.00,
-        rating: 5,
-        image: "/guides/guide-featured-faucet.jpeg",
-        affiliateUrl: "#"
-      },
-      {
-        id: 305,
-        name: "Open Shelf Bracket Wood Shelving",
-        price: 32.00,
-        rating: 5,
-        image: "/guides/guide-cutting-board-care.jpeg",
-        affiliateUrl: "#"
-      },
-      {
-        id: 306,
-        name: "Ceramic Dish Set & Dish Set",
-        price: 33.00,
-        rating: 5,
-        image: "/guides/guide-cookware-sets.jpeg",
-        affiliateUrl: "#"
-      }
-    ],
     productSlugs: ["brushed-nickel-kitchen-faucet", "walnut-end-grain-cutting-board", "fireclay-ceramic-farmhouse-sink"]
   },
   
@@ -133,6 +95,18 @@ export const stylesData = {
           "Add a small natural accent, such as a wood stool or ceramic vase, for warmth.",
         ],
       },
+      {
+        heading: "Choose details that make white practical to live with",
+        paragraphs: [
+          "White surfaces vary in undertone, sheen, texture, and maintenance. Compare physical samples together before ordering, and check how visible fingerprints, cooking splashes, and water marks are on the actual finish you plan to use.",
+          "A low-contrast palette still needs a clear visual hierarchy. Use lighting, edge details, a limited metal finish, or a small natural accent to distinguish work zones without filling the room with competing features.",
+        ],
+        bullets: [
+          "Choose cabinet and wall whites under the lighting conditions in your home.",
+          "Prioritize durable, easy-to-clean materials in high-use prep zones.",
+          "Keep a small amount of counter space open for daily work, not decoration.",
+        ],
+      },
     ],
     gallery: [
       { src: "/styles/minimalist-white-gallery-01.webp", alt: "Minimalist white kitchen island with waterfall quartz counter" },
@@ -141,32 +115,6 @@ export const stylesData = {
       { src: "/styles/minimalist-white-gallery-04.webp", alt: "White marble counter with ceramic cup and soft natural shadows" },
       { src: "/styles/minimalist-white-gallery-05.webp", alt: "Simple pendant light over a minimalist white kitchen island" },
       { src: "/styles/minimalist-white-gallery-06.webp", alt: "Flush white kitchen storage with pale wood accent" },
-    ],
-    products: [
-      {
-        id: 307,
-        name: "Minimalist White Pendant",
-        price: 45.00,
-        rating: 5,
-        image: "/guides/guide-lighting-ideas.jpeg",
-        affiliateUrl: "#"
-      },
-      {
-        id: 308,
-        name: "Matte White Faucet",
-        price: 89.00,
-        rating: 5,
-        image: "/guides/guide-featured-faucet.jpeg",
-        affiliateUrl: "#"
-      },
-      {
-        id: 309,
-        name: "White Ceramic Cookware",
-        price: 120.00,
-        rating: 5,
-        image: "/guides/guide-cookware-sets.jpeg",
-        affiliateUrl: "#"
-      }
     ],
     productSlugs: ["brushed-nickel-kitchen-faucet", "classic-enameled-dutch-oven", "gooseneck-electric-kettle"]
   },
@@ -210,6 +158,18 @@ export const stylesData = {
         paragraphs: [
           "Scandinavian design makes thoughtful use of daylight, but kitchens also need reliable light after sunset. Combine general ceiling lighting with focused task lights over counters and a warm pendant above an island or table.",
           "Choose warm, comfortable color temperatures for dining and general use, with brighter task lighting where you chop, read recipes, and clean. Dimmers can make one room work for both meal preparation and relaxed evenings.",
+        ],
+      },
+      {
+        heading: "Keep the room warm without making counters busy",
+        paragraphs: [
+          "Natural textures make a restrained palette feel welcoming: wood grain, woven fibers, linen, and handmade-looking ceramics can add softness without introducing many colors. Choose a few accents with a clear purpose and leave the rest of the work surface free.",
+          "For a compact kitchen, use pale finishes and consistent cabinet fronts to reduce visual breaks, then bring in warmth through a stool, dining table, or movable accessories. A coherent small palette is easier to update than a collection of permanent statement finishes.",
+        ],
+        bullets: [
+          "Use task lighting where food is prepared, not only decorative pendants.",
+          "Repeat a small number of natural materials rather than mixing many textures.",
+          "Keep everyday objects accessible and store occasional equipment out of sight.",
         ],
       },
     ],

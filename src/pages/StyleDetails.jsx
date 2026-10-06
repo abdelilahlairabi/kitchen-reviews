@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getStyleBySlug, otherStylesList } from '../data/inspirationStyles';
 import { useProductsBySlugs } from '../hooks/useProducts';
 
@@ -12,7 +12,7 @@ import PageMeta from '../components/PageMeta';
 export default function StyleDetails() {
   const { slug } = useParams();
   const styleData = getStyleBySlug(slug);
-  const { data: fetchedProducts = [] } = useProductsBySlugs(styleData?.productSlugs || []);
+  const { data: fetchedProducts = [], isError: productsError } = useProductsBySlugs(styleData?.productSlugs || []);
 
   if (!styleData) return <NotFound />;
   const productsBySlug = new Map(fetchedProducts.map((product) => [product.slug, product]));
@@ -31,41 +31,22 @@ export default function StyleDetails() {
       <StyleGallery gallery={styleWithProducts.gallery} />
 
       {/* Shop This Look */}
-      {styleWithProducts.products.length > 0 && <ShopThisLook products={styleWithProducts.products} />}
+      {styleWithProducts.products.length > 0 || productsError ? <ShopThisLook products={styleWithProducts.products} styleTitle={styleWithProducts.title} isError={productsError} /> : null}
 
       {/* Explore Other Styles */}
       <ExploreOtherStyles otherStyles={otherStylesList.filter((style) => style.slug !== styleData.slug)} />
 
-      {/* Newsletter Section */}
-      <section className="max-w-4xl mx-auto px-4 my-12">
-        <div className="bg-[#EFECE6] rounded-3xl p-8 md:p-10 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">
-            Get Weekly Kitchen Inspiration
-          </h3>
-          <p className="text-xs md:text-sm text-gray-600 mb-6">
-            Receive fresh kitchen ideas and curated product picks in your inbox.
-          </p>
-
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert("Subscribed!");
-            }}
-            className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto"
-          >
-            <input
-              type="email"
-              placeholder="Enter your email"
-              required
-              className="px-4 py-2.5 rounded-xl text-xs md:text-sm bg-white border border-gray-300 flex-1 focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
-            />
-            <button
-              type="submit"
-              className="bg-[#D4A373] hover:bg-[#b8895b] text-white text-xs font-bold px-6 py-2.5 rounded-xl transition-colors shrink-0"
-            >
-              Subscribe
-            </button>
-          </form>
+      <section className="max-w-6xl mx-auto px-4 my-16">
+        <div className="rounded-3xl bg-gray-950 text-white p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#dfc39f] mb-3">Explore more design ideas</p>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-3">Build a kitchen that feels like yours.</h2>
+            <p className="text-gray-300 leading-relaxed">Compare other style guides or browse the current catalog to find details that fit your space and budget.</p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+            <Link to="/inspiration" className="inline-flex justify-center items-center rounded-full bg-white px-5 py-3 text-sm font-semibold text-gray-950 hover:bg-gray-100 transition-colors">All style guides</Link>
+            <Link to="/products" className="inline-flex justify-center items-center rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors">Browse products</Link>
+          </div>
         </div>
       </section>
     </main>

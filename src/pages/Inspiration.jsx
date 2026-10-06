@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useProductsBySlugs } from '../hooks/useProducts';
-import { inspirationCategories, inspirationGallery, shopTheLookProducts, styleSpotlight } from '../data/inspiration';
+import { inspirationCategories, inspirationGallery } from '../data/inspiration';
+import { stylesData } from '../data/inspirationStyles';
 
 import InspirationHeader from '../components/inspiration/InspirationHeader';
 import InspirationGrid from '../components/inspiration/InspirationGrid';
@@ -11,9 +12,6 @@ import PageMeta from '../components/PageMeta';
 
 export default function Inspiration() {
   const [selectedCategory, setSelectedCategory] = useState("All Styles");
-  const navigate = useNavigate();
-  const productSlugs = ['brushed-nickel-kitchen-faucet', 'walnut-end-grain-cutting-board', 'fireclay-ceramic-farmhouse-sink', 'gooseneck-electric-kettle'];
-  const { data: fetchedProducts = [] } = useProductsBySlugs(productSlugs);
   const categories = inspirationCategories;
 
   // Filtrage des éléments selon la catégorie
@@ -21,10 +19,19 @@ export default function Inspiration() {
     ? inspirationGallery
     : inspirationGallery.filter((style) => style.category === selectedCategory);
 
-  const handleProductClick = (style) => navigate(`/inspiration/${style.slug}`);
-  const productsBySlug = new Map(fetchedProducts.map((product) => [product.slug, product]));
-  const spotlightProducts = ['brushed-nickel-kitchen-faucet', 'walnut-end-grain-cutting-board', 'fireclay-ceramic-farmhouse-sink'].map((slug) => productsBySlug.get(slug)).filter(Boolean);
-  const shopProducts = shopTheLookProducts.map((product) => productsBySlug.get(product.slug)).filter(Boolean);
+  const activeGalleryStyle = selectedCategory === 'All Styles'
+    ? inspirationGallery.find((style) => style.featured) || inspirationGallery[0]
+    : inspirationGallery.find((style) => style.category === selectedCategory);
+  const activeStyle = stylesData[activeGalleryStyle?.slug];
+  const { data: shopProducts = [], isError: productsError } = useProductsBySlugs(activeStyle?.productSlugs || []);
+  const spotlight = activeStyle ? {
+    title: `Design notes: ${activeStyle.title}`,
+    subtitle: 'A CLOSER LOOK AT THE STYLE',
+    description: activeStyle.description,
+    image: activeStyle.heroImage,
+    slug: activeStyle.slug,
+    tags: activeStyle.tags,
+  } : null;
 
   return (
     <main className="bg-white min-h-screen pb-16">
@@ -32,61 +39,36 @@ export default function Inspiration() {
         title="Kitchen Design Inspiration and Ideas | Kitchen Reviews"
         description="Explore modern farmhouse, minimalist white, and warm Scandinavian kitchen ideas. Browse practical design details, materials, storage, lighting, and product picks."
       />
-      {/* En-tête et Filtres */}
       <InspirationHeader
         categories={categories}
         activeCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
       />
 
-      {/* Galerie Masonry */}
       <InspirationGrid
         items={filteredGallery}
-        onProductClick={handleProductClick}
       />
 
-      <section className="max-w-3xl mx-auto px-4 mt-12 text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-3">Find a kitchen style that works for your home</h2>
-        <p className="text-sm md:text-base leading-relaxed text-gray-600">
-          Explore kitchen design ideas by comparing the materials, colors, storage, and lighting that define each look. Open a style guide for practical details, then browse related kitchen products when you are ready to plan an update.
+      <section className="max-w-4xl mx-auto px-4 mt-12 text-center">
+        <p className="text-xs uppercase tracking-[0.18em] font-semibold text-[#8c6744] mb-3">Ideas you can adapt</p>
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-950 mb-3">Find a kitchen style that works for your home</h2>
+        <p className="text-sm md:text-base leading-relaxed text-gray-600 max-w-3xl mx-auto">
+          Compare the colors, materials, storage, and lighting behind each look. Every style opens a practical guide with design choices and related catalog products. The gallery images are illustrative concepts, not photographs of completed customer projects.
         </p>
       </section>
 
-      <StyleSpotlight spotlight={{ ...styleSpotlight, featuredItems: spotlightProducts }} />
+      {spotlight && <StyleSpotlight spotlight={spotlight} />}
 
-      {/* Section Shop The Look */}
-      {shopProducts.length > 0 && <div id="shop-the-look"><ShopTheLook products={shopProducts} /></div>}
+      {activeStyle && (shopProducts.length > 0 || productsError) && <div id="shop-the-look"><ShopTheLook products={shopProducts} styleTitle={activeStyle.title} isError={productsError} /></div>}
 
-      {/* Formulaire Newsletter */}
-      <section className="max-w-3xl mx-auto px-4 my-16">
-        <div className="bg-[#EFECE6] rounded-3xl p-8 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">
-            Get Weekly Kitchen Inspiration
-          </h3>
-          <p className="text-xs md:text-sm text-gray-600 mb-6">
-            New styles, design guides, and product picks delivered to your inbox.
-          </p>
-
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert("Subscribed!");
-            }}
-            className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto"
-          >
-            <input
-              type="email"
-              placeholder="Your email address"
-              required
-              className="px-4 py-2.5 rounded-xl text-xs md:text-sm bg-white border border-gray-300 flex-1 focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
-            />
-            <button
-              type="submit"
-              className="bg-[#D4A373] hover:bg-[#b8895b] text-white text-xs font-bold px-6 py-2.5 rounded-xl transition-colors shrink-0"
-            >
-              Subscribe
-            </button>
-          </form>
+      <section className="max-w-6xl mx-auto px-4 my-16">
+        <div className="rounded-3xl bg-gray-950 text-white p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#dfc39f] mb-3">Make a plan</p>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-3">Bring the ideas into your kitchen.</h2>
+            <p className="text-gray-300 leading-relaxed">Use the style guides to define your palette and priorities, then compare items in the current product catalog.</p>
+          </div>
+          <Link to="/products" className="inline-flex justify-center items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-gray-950 hover:bg-gray-100 transition-colors shrink-0">Browse products <span aria-hidden="true">→</span></Link>
         </div>
       </section>
     </main>

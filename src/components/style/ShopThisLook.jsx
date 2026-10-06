@@ -1,19 +1,24 @@
-import { Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-export default function ShopThisLook({ products }) {
+export default function ShopThisLook({ products, styleTitle, isError = false }) {
+  if (isError && products.length === 0) {
+    return <section role="status" className="max-w-6xl mx-auto px-4 my-16 rounded-2xl border border-amber-200 bg-amber-50 p-6 text-center"><h2 className="font-bold text-gray-950">Related products are temporarily unavailable</h2><p className="text-sm text-gray-600 mt-2">The style guide is available, but the catalog could not be reached right now.</p><Link to="/products" className="inline-block mt-4 text-sm font-semibold underline underline-offset-4">Browse the catalog</Link></section>;
+  }
+
   return (
-    <section className="max-w-5xl mx-auto px-4 my-16">
-      <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 text-center mb-10">
-        Shop This Look
-      </h2>
+    <section className="max-w-6xl mx-auto px-4 my-16" aria-labelledby="style-products-heading">
+      <div className="text-center max-w-2xl mx-auto mb-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#8c6744]">Selected from the product catalog</p>
+        <h2 id="style-products-heading" className="text-2xl md:text-3xl font-bold tracking-tight text-gray-950 mt-2">Products to consider for {styleTitle}</h2>
+        <p className="text-sm text-gray-600 mt-3 leading-relaxed">These related products can complement this design direction. Check current finishes, dimensions, specifications, and price before deciding.</p>
+      </div>
 
       {/* Grille de 3 colonnes de produits */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {products?.map((product) => (
-          <div
+          <article
             key={product.id}
-            className="bg-white rounded-2xl border border-gray-200/90 p-4 flex flex-col justify-between shadow-xs hover:shadow-md transition-shadow"
+            className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col shadow-sm hover:shadow-md transition-shadow"
           >
             <div>
               {/* Conteneur Image Produit */}
@@ -23,6 +28,7 @@ export default function ShopThisLook({ products }) {
                   alt={product.name}
                   className="max-h-full max-w-full object-contain rounded-lg"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
 
@@ -31,11 +37,7 @@ export default function ShopThisLook({ products }) {
                 {product.name}
               </Link>
               
-              <div className="flex text-amber-400 mb-2">
-                {[...Array(product.rating || 5)].map((_, i) => (
-                  <Star key={i} size={12} fill="currentColor" />
-                ))}
-              </div>
+              {Number.isFinite(product.rating) && product.rating > 0 && <p className="text-xs text-gray-600 mb-2">Rated {product.rating.toFixed(1)}{product.reviewCount ? ` · ${product.reviewCount.toLocaleString()} reviews` : ''}</p>}
 
               {/* Prix */}
               <p className="text-sm font-bold text-gray-900">
@@ -44,15 +46,12 @@ export default function ShopThisLook({ products }) {
             </div>
 
             {/* Bouton d'action */}
-            <a
-              href={product.affiliateUrl || "#"}
-              target="_blank"
-              rel="noopener noreferrer nofollow sponsored"
-              className="mt-4 block text-center bg-[#D4A373] hover:bg-[#b8895b] text-white text-xs font-bold py-2.5 rounded-xl transition-colors"
-            >
-              Check Price
-            </a>
-          </div>
+            {product.affiliateUrl ? (
+              <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer nofollow sponsored" className="mt-auto pt-4 block text-center bg-gray-950 hover:bg-gray-800 text-white text-sm font-semibold py-2.5 rounded-full transition-colors">Check current price</a>
+            ) : (
+              <Link to={`/product/${product.slug}`} className="mt-auto pt-4 block text-center border border-gray-300 hover:border-gray-950 text-gray-900 text-sm font-semibold py-2.5 rounded-full transition-colors">View details</Link>
+            )}
+          </article>
         ))}
       </div>
     </section>

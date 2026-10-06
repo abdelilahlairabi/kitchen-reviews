@@ -7,7 +7,7 @@ export default function ExploreOtherStyles({ otherStyles }) {
         Explore Other Styles
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
         {otherStyles.map((item) => (
           <Link
             key={item.slug}
@@ -18,6 +18,8 @@ export default function ExploreOtherStyles({ otherStyles }) {
               src={item.image}
               alt={item.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center p-4">
               <span className="text-white font-bold text-base md:text-lg text-center drop-shadow-md">

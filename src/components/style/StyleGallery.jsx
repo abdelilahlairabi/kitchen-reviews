@@ -8,16 +8,13 @@ export default function StyleGallery({ gallery }) {
   const bottomImages = cleanedGallery.slice(2, 6);
 
   return (
-    <section className="bg-gray-50/80 py-12 my-8 border-y border-gray-100">
+    <section id="style-gallery" aria-labelledby="style-gallery-heading" className="scroll-mt-20 bg-gray-50 py-12 md:py-16 my-8 border-y border-gray-100">
       <div className="max-w-5xl mx-auto px-4">
         {/* Titres */}
         <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900">
-            Photo Gallery
-          </h2>
-          <span className="text-xs md:text-sm font-medium text-gray-500 block mt-1">
-            The Look
-          </span>
+          <p className="text-xs uppercase tracking-[0.18em] font-semibold text-[#8c6744] mb-2">Visual references</p>
+          <h2 id="style-gallery-heading" className="text-2xl md:text-3xl font-bold tracking-tight text-gray-950">Explore the details</h2>
+          <p className="text-sm text-gray-600 mt-2">Illustrative kitchen concepts for this design direction.</p>
         </div>
 
         {/* Structure exacte de la galerie */}
@@ -27,13 +24,14 @@ export default function StyleGallery({ gallery }) {
             {topImages.map((img, idx) => (
               <div
                 key={idx}
-                className="rounded-2xl md:rounded-3xl overflow-hidden h-[260px] md:h-[340px] bg-gray-200 shadow-sm hover:shadow-md transition-shadow"
+                className="rounded-2xl md:rounded-3xl overflow-hidden aspect-[4/3] bg-gray-200 shadow-sm hover:shadow-md transition-shadow"
               >
                 <img
                   src={img.src}
                   alt={img.alt || `Gallery image ${idx + 1}`}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
             ))}
@@ -44,13 +42,14 @@ export default function StyleGallery({ gallery }) {
             {bottomImages.map((img, idx) => (
               <div
                 key={idx}
-                className="rounded-2xl overflow-hidden h-[180px] md:h-[220px] bg-gray-200 shadow-sm hover:shadow-md transition-shadow"
+                className="rounded-2xl overflow-hidden aspect-[4/3] bg-gray-200 shadow-sm hover:shadow-md transition-shadow"
               >
                 <img
                   src={img.src}
                   alt={img.alt || `Gallery image ${idx + 3}`}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
             ))}
