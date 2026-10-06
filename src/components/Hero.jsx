@@ -8,7 +8,7 @@ const Hero = () => {
         {/* Background Image */}
         {/* Assure-toi que le nom du fichier correspond à ton image dans le dossier public */}
         <img 
-          src="/homepage/hero-modern-kitchen.jpeg" 
+          src="/homepage/hero-modern-kitchen.webp"
           alt="Modern Kitchen" 
           className="absolute inset-0 w-full h-full object-cover object-center"
           fetchPriority="high"

@@ -6,7 +6,7 @@ export const categories = [
     slug: "faucets",
     name: "Kitchen Faucets",
     description: "Explore our top-rated faucets for every kitchen style",
-    heroImage: "/categories/category-faucets.jpeg",
+    heroImage: "/categories/category-faucets.webp",
     subFilters: ["Pull-Down", "Touchless", "Bridge", "Wall-Mount", "Commercial-Style"],
     buyingGuide: {
       title: "How to Choose the Right Kitchen Faucet",
@@ -21,7 +21,7 @@ export const categories = [
     slug: "sinks",
     name: "Kitchen Sinks",
     description: "Durable, stylish sinks for every kitchen layout",
-    heroImage: "/categories/category-sinks.jpeg",
+    heroImage: "/categories/category-sinks.webp",
     subFilters: ["Undermount", "Farmhouse", "Drop-In", "Double-Bowl", "Stainless Steel", "Fireclay"],
     buyingGuide: {
       title: "How to Choose the Right Kitchen Sink",
@@ -36,7 +36,7 @@ export const categories = [
     slug: "cookware",
     name: "Cookware",
     description: "Pots, pans and everything you need to cook well",
-    heroImage: "/categories/category-cookware.jpeg",
+    heroImage: "/categories/category-cookware.webp",
     subFilters: ["Cookware Sets", "Dutch Ovens", "Skillets & Pans", "Stainless Steel", "Cast Iron", "Non-Stick"],
     buyingGuide: {
       title: "How to Choose Quality Cookware",
@@ -51,7 +51,7 @@ export const categories = [
     slug: "small-appliances",
     name: "Small Appliances",
     description: "Mixers, blenders, coffee makers and more",
-    heroImage: "/categories/category-small-appliances.jpeg",
+    heroImage: "/categories/category-small-appliances.webp",
     subFilters: ["Stand Mixers", "Blenders", "Coffee Makers", "Toasters", "Air Fryers", "Slow Cookers"],
     buyingGuide: {
       title: "How to Choose Small Appliances",
@@ -173,7 +173,7 @@ export const categories = [
     slug: "storage-organization",
     name: "Storage Organization",
     description: "Smart solutions to keep your kitchen tidy",
-    heroImage: "/categories/category-storage-organization.jpeg",
+    heroImage: "/categories/category-storage-organization.webp",
     subFilters: ["Food Storage Containers", "Spice Racks", "Pantry Bins", "Pot Racks", "Dish Racks"],
     buyingGuide: {
       title: "How to Choose Storage Solutions",
