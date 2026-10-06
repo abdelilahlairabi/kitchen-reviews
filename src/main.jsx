@@ -1,11 +1,22 @@
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
-import { QueryClientProvider } from '@tanstack/react-query'
+import { hydrate, QueryClientProvider } from '@tanstack/react-query'
 import './index.css'
 import App from './App.jsx'
 import { queryClient } from './lib/queryClient.js'
 
 const rootElement = document.getElementById('root')
+const queryStateElement = document.getElementById('react-query-state')
+
+if (queryStateElement) {
+  try {
+    hydrate(queryClient, JSON.parse(queryStateElement.textContent))
+  } catch (error) {
+    console.error('Could not restore pre-rendered product data:', error)
+  }
+  queryStateElement.remove()
+}
+
 const app = (
   <StrictMode>
     <QueryClientProvider client={queryClient}>

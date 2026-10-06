@@ -19,11 +19,15 @@ try {
     throw new Error('Could not find the root placeholder in dist/index.html');
   }
 
-  const appHtml = await renderHome();
+  const { html: appHtml, dehydratedState } = await renderHome();
   const spaHtml = template;
+  const serializedState = JSON.stringify(dehydratedState)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
   const homeHtml = template.replace(
     rootPlaceholder,
-    `<div id="root" data-ssr="true">${appHtml}</div>`,
+    `<div id="root" data-ssr="true">${appHtml}</div><script id="react-query-state" type="application/json">${serializedState}</script>`,
   );
 
   await Promise.all([

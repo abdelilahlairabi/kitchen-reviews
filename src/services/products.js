@@ -58,6 +58,7 @@ export async function fetchProducts({
   maximumPrice,
   search,
   sort = 'popularity',
+  signal,
 } = {}) {
   const safePage = normalizePage(page);
   const safePageSize = normalizePageSize(pageSize);
@@ -83,6 +84,7 @@ export async function fetchProducts({
   if (Number.isFinite(minimumPrice)) query = query.gte('price', minimumPrice);
   if (Number.isFinite(maximumPrice)) query = query.lte('price', maximumPrice);
   if (safeSearch) query = query.ilike('name', `%${safeSearch}%`);
+  if (signal) query = query.abortSignal(signal);
 
   const { data, error, count } = await query;
   throwIfError(error, 'Unable to load products. Please try again.');
