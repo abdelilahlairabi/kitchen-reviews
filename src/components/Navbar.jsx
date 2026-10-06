@@ -44,7 +44,7 @@ const Navbar = () => {
           
           {/* Logo (Gauche) */}
           <Link to="/" aria-label="KitchenTrusted home" className="flex shrink-0 items-center hover:opacity-90 transition-opacity">
-            <img src="/logo.png" alt="" className="h-12 w-48 object-cover object-center" width="512" height="512" />
+            <img src="/logo.png" alt="" className="h-12 w-36 object-cover object-center sm:w-48" width="512" height="512" />
           </Link>
 
           {/* Liens de navigation (Centre - masqués sur mobile) */}
@@ -107,7 +107,7 @@ const Navbar = () => {
           </div>
 
           {/* Recherche et Bouton d'action (Droite) */}
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-4">
             {/* Barre de recherche */}
             <form onSubmit={handleSearchSubmit} className="relative hidden md:block">
               <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" strokeWidth={2.5} />
@@ -124,7 +124,7 @@ const Navbar = () => {
             {/* Bouton Best Deals */}
             <Link 
               to="/products" 
-              className="bg-[#E6DCC3] hover:bg-[#d8ceb5] text-black font-bold text-sm px-5 py-2.5 rounded-full transition-colors whitespace-nowrap"
+              className="hidden bg-[#E6DCC3] px-5 py-2.5 text-sm font-bold text-black transition-colors hover:bg-[#d8ceb5] sm:inline-flex sm:whitespace-nowrap"
             >
               Browse Products
             </Link>
