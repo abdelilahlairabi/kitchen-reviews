@@ -6,31 +6,39 @@ import { categories } from '../src/data/categories.js';
 import { collections } from '../src/data/collections.js';
 import { guidesData } from '../src/data/guides.js';
 import { stylesData } from '../src/data/inspirationStyles.js';
+import { products as fallbackProducts } from '../src/data/products.js';
 
 const siteUrl = (process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://kitchen-reviews-seven.vercel.app')
   .trim()
   .replace(/\/$/, '');
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const supabaseKey = process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error('Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY to generate product sitemap URLs.');
-}
-
-const supabase = createClient(supabaseUrl, supabaseKey);
-const productSlugs = [];
+let productSlugs = fallbackProducts.map(({ slug }) => slug).filter(Boolean);
 const pageSize = 500;
 
-for (let offset = 0; ; offset += pageSize) {
-  const { data, error } = await supabase
-    .from('products')
-    .select('slug')
-    .order('id', { ascending: true })
-    .range(offset, offset + pageSize - 1);
+if (supabaseUrl && supabaseKey) {
+  try {
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    const liveProductSlugs = [];
 
-  if (error) throw new Error(`Could not load product slugs for sitemap: ${error.message}`);
-  productSlugs.push(...(data || []).map(({ slug }) => slug).filter(Boolean));
-  if (!data || data.length < pageSize) break;
+    for (let offset = 0; ; offset += pageSize) {
+      const { data, error } = await supabase
+        .from('products')
+        .select('slug')
+        .order('id', { ascending: true })
+        .range(offset, offset + pageSize - 1);
+
+      if (error) throw error;
+      liveProductSlugs.push(...(data || []).map(({ slug }) => slug).filter(Boolean));
+      if (!data || data.length < pageSize) break;
+    }
+
+    if (liveProductSlugs.length) productSlugs = liveProductSlugs;
+  } catch (error) {
+    console.warn(`Could not fetch current product URLs for sitemap; using bundled product slugs. ${error.message}`);
+  }
+} else {
+  console.warn('Supabase build environment variables are missing; using bundled product slugs for the sitemap.');
 }
 
 const staticPaths = [
