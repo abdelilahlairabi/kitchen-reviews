@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -23,6 +23,15 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 
 export function AppContent() {
   const location = useLocation();
+
+  useEffect(() => {
+    // SPA navigation doesn't trigger the browser's normal page-load scroll reset.
+    // Leave hash links alone so in-page anchors keep their expected behavior.
+    if (!location.hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }, [location.pathname, location.search, location.hash]);
+
   const pageLoadingFallback = location.pathname === '/'
     ? <Home />
     : <p className="py-16 text-center text-gray-500">Loading page...</p>;
