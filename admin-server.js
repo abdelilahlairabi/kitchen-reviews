@@ -6,7 +6,7 @@ import { createClient } from '@supabase/supabase-js';
 const HOST = '127.0.0.1';
 const PORT = Number.parseInt(process.env.ADMIN_PORT || '3001', 10);
 const MAX_BODY_BYTES = 2 * 1024 * 1024;
-const productColumns = 'id, slug, name, category_id, type, primary_image, price, original_price, discount_percent, rating, review_count, badge, affiliate_url, description, features, specs';
+const productColumns = 'id, slug, name, category_id, type, primary_image, price, original_price, discount_percent, rating, review_count, badge, affiliate_url, description, features, specs, source_marketplace, amazon_asin';
 
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SECRET_KEY) {
   throw new Error('SUPABASE_URL and SUPABASE_SECRET_KEY must be set in .env before running the local admin panel.');
@@ -55,9 +55,40 @@ const number = (value, field, { minimum = 0, maximum = Number.MAX_SAFE_INTEGER, 
   return result;
 };
 
+const asinFromAmazonUrl = (value) => String(value || '').match(/(?:\/dp\/|\/gp\/product\/|\/product\/|[?&]asin=)([a-z0-9]{10})(?:[/?&#]|$)/i)?.[1]?.toUpperCase() || null;
+
+const marketplaceFromAmazonUrl = (value) => {
+  try {
+    const hostname = new URL(String(value || '')).hostname.toLowerCase().replace(/^(?:www|smile)\./, '');
+    return hostname.startsWith('amazon.') ? hostname : null;
+  } catch {
+    return null;
+  }
+};
+
+const isEmptyProductValue = (value) => value == null
+  || value === ''
+  || (Array.isArray(value) && value.length === 0)
+  || (value && typeof value === 'object' && Object.keys(value).length === 0);
+
+const mergeProductUpdate = (existing, incoming) => {
+  const merged = { ...incoming, slug: existing.slug };
+  for (const field of ['name', 'category_id', 'type', 'primary_image', 'price', 'original_price', 'discount_percent', 'rating', 'review_count', 'badge', 'affiliate_url', 'description', 'features', 'specs']) {
+    if (isEmptyProductValue(incoming[field]) && !isEmptyProductValue(existing[field])) merged[field] = existing[field];
+  }
+  return merged;
+};
+
 const productPayload = (body) => {
   const slug = text(body.slug, 160, 'Slug', { required: true });
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) throw new Error('Slug may only contain lowercase letters, numbers, and hyphens.');
+
+  const affiliateUrl = text(body.affiliate_url, 2_000, 'Affiliate URL');
+  const sourceAsin = text(body.amazon_asin || body.source_asin || body.asin, 10, 'Amazon ASIN')?.toUpperCase() || asinFromAmazonUrl(affiliateUrl);
+  if (sourceAsin && !/^[A-Z0-9]{10}$/.test(sourceAsin)) throw new Error('Amazon ASIN must contain exactly 10 letters or numbers.');
+  const sourceMarketplace = sourceAsin
+    ? text(body.source_marketplace || body.marketplace || marketplaceFromAmazonUrl(affiliateUrl) || 'amazon.com', 100, 'Source marketplace')
+    : null;
 
   let specs = {};
   if (body.specs) {
@@ -81,6 +112,8 @@ const productPayload = (body) => {
     review_count: number(body.review_count, 'Review count', { integer: true }),
     badge: text(body.badge, 80, 'Badge'),
     affiliate_url: text(body.affiliate_url, 2_000, 'Affiliate URL'),
+    source_marketplace: sourceMarketplace,
+    amazon_asin: sourceAsin,
     description: text(body.description, 5_000, 'Description'),
     features,
     specs,
@@ -330,8 +363,76 @@ const productImportRows = async (csv) => {
 const importProducts = async (csv) => {
   const { rows, errors } = await productImportRows(csv);
   if (errors.length > 0) throw new Error('Fix the CSV errors shown in the preview before importing.');
-  for (let index = 0; index < rows.length; index += 100) {
-    const { error } = await supabase.from('products').upsert(rows.slice(index, index + 100), { onConflict: 'slug' });
+
+  const rowsWithoutAmazonIdentity = [];
+  for (const row of rows) {
+    if (!row.amazon_asin || !row.source_marketplace) {
+      rowsWithoutAmazonIdentity.push(row);
+      continue;
+    }
+
+    const identityLookup = await supabase.from('products')
+      .select(productColumns)
+      .eq('source_marketplace', row.source_marketplace)
+      .eq('amazon_asin', row.amazon_asin)
+      .maybeSingle();
+    if (identityLookup.error) throw identityLookup.error;
+
+    if (identityLookup.data) {
+      const update = mergeProductUpdate(identityLookup.data, row);
+      const { error } = await supabase.from('products').update(update).eq('id', identityLookup.data.id);
+      if (error) throw error;
+      continue;
+    }
+
+    const slugLookup = await supabase.from('products')
+      .select(productColumns)
+      .eq('slug', row.slug)
+      .maybeSingle();
+    if (slugLookup.error) throw slugLookup.error;
+
+    if (slugLookup.data && (!slugLookup.data.amazon_asin || slugLookup.data.amazon_asin === row.amazon_asin)) {
+      const update = mergeProductUpdate(slugLookup.data, row);
+      const { error } = await supabase.from('products').update(update).eq('id', slugLookup.data.id);
+      if (error) throw error;
+      continue;
+    }
+
+    let insertRow = row;
+    if (slugLookup.data) {
+      const identitySuffix = `${row.source_marketplace.replace(/[^a-z0-9]+/gi, '-')}-${row.amazon_asin.toLowerCase()}`;
+      const baseSlug = row.slug.replace(new RegExp(`-${row.amazon_asin.toLowerCase()}$`, 'i'), '');
+      let uniqueSlug = `${baseSlug.slice(0, 160 - identitySuffix.length - 1)}-${identitySuffix}`;
+      for (let suffix = 2; ; suffix += 1) {
+        const collision = await supabase.from('products').select('id').eq('slug', uniqueSlug).maybeSingle();
+        if (collision.error) throw collision.error;
+        if (!collision.data) break;
+        const numberedSuffix = `-${suffix}`;
+        uniqueSlug = `${baseSlug.slice(0, 160 - identitySuffix.length - numberedSuffix.length - 1)}-${identitySuffix}${numberedSuffix}`;
+      }
+      insertRow = { ...row, slug: uniqueSlug };
+    }
+
+    const { error } = await supabase.from('products').insert(insertRow);
+    if (error?.code === '23505') {
+      // A concurrent import may have inserted this source identity after the lookup.
+      const retryLookup = await supabase.from('products')
+        .select(productColumns)
+        .eq('source_marketplace', row.source_marketplace)
+        .eq('amazon_asin', row.amazon_asin)
+        .maybeSingle();
+      if (retryLookup.error) throw retryLookup.error;
+      if (!retryLookup.data) throw error;
+      const update = mergeProductUpdate(retryLookup.data, row);
+      const { error: updateError } = await supabase.from('products').update(update).eq('id', retryLookup.data.id);
+      if (updateError) throw updateError;
+    } else if (error) {
+      throw error;
+    }
+  }
+
+  for (let index = 0; index < rowsWithoutAmazonIdentity.length; index += 100) {
+    const { error } = await supabase.from('products').upsert(rowsWithoutAmazonIdentity.slice(index, index + 100), { onConflict: 'slug' });
     if (error) throw error;
   }
   return rows.length;
