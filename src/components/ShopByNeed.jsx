@@ -28,7 +28,8 @@ const ShopByNeed = () => {
                 <div className="relative w-full h-48 sm:h-56 md:h-64 lg:h-72 rounded-xl overflow-hidden">
                   <img
                     src={need.image}
-                    alt={need.title}
+                    alt=""
+                    aria-hidden="true"
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                     decoding="async"

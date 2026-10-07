@@ -1,0 +1,8 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "KitchenTrusted",
+    "documentationUrl": "https://kitchen-reviews-seven.vercel.app/"
+  },
+  "entries": []
+}

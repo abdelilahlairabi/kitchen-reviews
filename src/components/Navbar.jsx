@@ -44,7 +44,7 @@ const Navbar = () => {
           
           {/* Logo (Gauche) */}
           <Link to="/" aria-label="KitchenTrusted home" className="flex shrink-0 items-center hover:opacity-90 transition-opacity">
-            <img src="/logo.png" alt="" className="h-12 w-36 object-cover object-center sm:w-48" width="512" height="512" />
+            <img src="/logo.webp" alt="" className="h-12 w-36 object-contain object-center sm:w-48" width="500" height="167" />
           </Link>
 
           {/* Liens de navigation (Centre - masqués sur mobile) */}

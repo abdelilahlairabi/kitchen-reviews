@@ -10,6 +10,8 @@ const Hero = () => {
         <img 
           src="/homepage/hero-modern-kitchen.webp"
           alt="Modern Kitchen" 
+          width="1200"
+          height="896"
           className="absolute inset-0 w-full h-full object-cover object-center"
           fetchPriority="high"
         />

@@ -5,6 +5,13 @@ const popularSlugs = ['cookware', 'small-appliances', 'sinks', 'faucets', 'stora
 const popularCategories = popularSlugs
   .map((slug) => categories.find((category) => category.slug === slug))
   .filter(Boolean);
+const sourceDimensions = {
+  cookware: [672, 502],
+  'small-appliances': [672, 502],
+  sinks: [1024, 1024],
+  faucets: [1024, 1024],
+  'storage-organization': [672, 502],
+};
 
 const PopularCategories = () => {
   return (
@@ -24,7 +31,12 @@ const PopularCategories = () => {
             <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full border border-gray-200 bg-white flex items-center justify-center overflow-hidden group-hover:shadow-lg transition-all duration-300">
               <img
                 src={category.heroImage}
-                alt={category.name}
+                srcSet={`/categories/category-${category.slug}-card.webp 440w, ${category.heroImage} ${sourceDimensions[category.slug][0]}w`}
+                sizes="(min-width: 768px) 160px, 96px"
+                alt=""
+                aria-hidden="true"
+                width={sourceDimensions[category.slug][0]}
+                height={sourceDimensions[category.slug][1]}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
                 decoding="async"

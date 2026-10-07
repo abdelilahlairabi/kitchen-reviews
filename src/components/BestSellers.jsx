@@ -5,13 +5,52 @@ import { useProducts } from '../hooks/useProducts';
 import ProductGridSkeleton from './ProductGridSkeleton';
 import ProductGridError from './ProductGridError';
 
+const getProductImageSrcSet = (image) => {
+  if (!/^\/products\/product-(stand-mixer|pressure-cooker|coffee-maker)\.jpeg$/.test(image)) return undefined;
+  return `${image.replace('.jpeg', '-336.jpeg')} 336w, ${image} 672w`;
+};
+
 const BestSellers = () => {
   const { data, isPending, isError } = useProducts({ badge: 'Best Seller', page: 1, pageSize: 4, sort: 'popularity' });
   const products = data?.products || [];
 
-  return <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" aria-busy={isPending}><div className="text-center mb-16"><h2 className="text-3xl sm:text-4xl font-bold text-black mb-4">Curated Kitchen Furniture & Appliance Reviews</h2><p className="text-gray-600 text-lg">Discover Top Recommendations for a Beautiful, Functional Home</p></div><div className="text-center mb-8"><span className="text-xs font-bold tracking-widest text-gray-500 uppercase mb-2 block">BEST SELLERS / TRENDING</span><h3 className="text-2xl font-bold text-black">Best Sellers on Amazon</h3></div>
-    {isPending ? <><span className="sr-only" role="status">Loading best sellers</span><ProductGridSkeleton variant="bestSellers" /></> : isError ? <ProductGridError variant="bestSellers" message="Best sellers are unavailable right now." /> : <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">{products.length === 0 ? <p className="col-span-full text-center text-gray-500">No best sellers found.</p> : products.map((product) => <article key={product.id} className="min-h-[420px] bg-white border border-gray-200 rounded-xl p-5 flex flex-col relative hover:shadow-lg transition-shadow duration-300"><div className="absolute top-4 left-4 bg-[#f3dcb8] text-black text-xs font-bold px-2.5 py-1 rounded shadow-sm z-10">Bestseller</div><div className="w-full h-48 mb-6 mt-4 flex items-center justify-center"><img src={product.image} alt={product.name} className="max-w-full max-h-full object-contain" loading="lazy" /></div><Link to={`/product/${product.slug}`} className="text-sm font-bold text-black line-clamp-2 min-h-[40px] mb-3 hover:text-gray-600 transition-colors">{product.name}</Link><div className="flex items-center justify-between mb-4 mt-auto"><span className="font-extrabold text-lg text-black">${product.price.toFixed(2)}</span><div className="flex items-center gap-1"><Star className="w-4 h-4 fill-[#f3dcb8] text-[#e5b87f]" /><span className="font-bold text-sm text-gray-700">{product.rating}</span></div></div><div className="grid grid-cols-2 gap-2"><Link to={`/product/${product.slug}`} className="block text-center py-2.5 border border-gray-300 rounded-full text-sm font-bold text-black hover:bg-gray-50 transition-colors">Details</Link><AffiliateLink href={product.affiliateUrl} className="block text-center py-2.5 border-2 border-black rounded-full text-sm font-bold text-black hover:bg-gray-50 transition-colors aria-disabled:opacity-50 aria-disabled:cursor-not-allowed" fallback="Link soon">Amazon</AffiliateLink></div></article>)}</div>}
-  </section>;
+  return (
+    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" aria-busy={isPending}>
+      <div className="text-center mb-16">
+        <h2 className="text-3xl sm:text-4xl font-bold text-black mb-4">Curated Kitchen Furniture &amp; Appliance Reviews</h2>
+        <p className="text-gray-600 text-lg">Discover Top Recommendations for a Beautiful, Functional Home</p>
+      </div>
+      <div className="text-center mb-8">
+        <span className="text-xs font-bold tracking-widest text-gray-500 uppercase mb-2 block">BEST SELLERS / TRENDING</span>
+        <h3 className="text-2xl font-bold text-black">Best Sellers on Amazon</h3>
+      </div>
+      {isPending ? (
+        <><span className="sr-only" role="status">Loading best sellers</span><ProductGridSkeleton variant="bestSellers" /></>
+      ) : isError ? (
+        <ProductGridError variant="bestSellers" message="Best sellers are unavailable right now." />
+      ) : (
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {products.length === 0 ? <p className="col-span-full text-center text-gray-500">No best sellers found.</p> : products.map((product) => (
+            <article key={product.id} className="min-h-[420px] bg-white border border-gray-200 rounded-xl p-5 flex flex-col relative hover:shadow-lg transition-shadow duration-300">
+              <div className="absolute top-4 left-4 bg-[#f3dcb8] text-black text-xs font-bold px-2.5 py-1 rounded shadow-sm z-10">Bestseller</div>
+              <div className="w-full h-48 mb-6 mt-4 flex items-center justify-center">
+                <img src={product.image} srcSet={getProductImageSrcSet(product.image)} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 336px" alt={product.name} width="672" height="672" className="max-w-full max-h-full object-contain" loading="lazy" />
+              </div>
+              <Link to={`/product/${product.slug}`} className="text-sm font-bold text-black line-clamp-2 min-h-[40px] mb-3 hover:text-gray-600 transition-colors">{product.name}</Link>
+              <div className="flex items-center justify-between mb-4 mt-auto">
+                <span className="font-extrabold text-lg text-black">${product.price.toFixed(2)}</span>
+                <div className="flex items-center gap-1"><Star aria-hidden="true" className="w-4 h-4 fill-[#f3dcb8] text-[#e5b87f]" /><span className="font-bold text-sm text-gray-700">{product.rating}</span></div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <Link to={`/product/${product.slug}`} aria-label={`Details for ${product.name}`} className="block text-center py-2.5 border border-gray-300 rounded-full text-sm font-bold text-black hover:bg-gray-50 transition-colors">Details</Link>
+                <AffiliateLink href={product.affiliateUrl} className="block text-center py-2.5 border-2 border-black rounded-full text-sm font-bold text-black hover:bg-gray-50 transition-colors aria-disabled:opacity-50 aria-disabled:cursor-not-allowed" fallback="Link soon">Amazon</AffiliateLink>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
+  );
 };
 
 export default BestSellers;

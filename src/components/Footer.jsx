@@ -62,7 +62,7 @@ const Footer = () => (
         <p className="max-w-2xl text-xs leading-relaxed text-gray-600">
           As an Amazon Associate I earn from qualifying purchases.
         </p>
-        <p className="text-[11px] text-gray-500">© {new Date().getFullYear()} KitchenTrusted.</p>
+        <p className="text-[11px] text-gray-600">© {new Date().getFullYear()} KitchenTrusted.</p>
       </div>
     </div>
   </footer>

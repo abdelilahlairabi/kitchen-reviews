@@ -1,0 +1,15 @@
+# KitchenTrusted
+
+> KitchenTrusted publishes practical kitchen product reviews, buying guides, category pages, and design inspiration to help people compare options for their homes.
+
+## Browse the site
+
+- [Kitchen product categories](https://kitchen-reviews-seven.vercel.app/categories): Browse cookware, small appliances, sinks, faucets, storage, and other kitchen categories.
+- [Kitchen products](https://kitchen-reviews-seven.vercel.app/products): Explore product recommendations and compare options.
+- [Buying guides](https://kitchen-reviews-seven.vercel.app/guides): Read practical advice about kitchen products and care.
+- [Collections](https://kitchen-reviews-seven.vercel.app/collections): Browse curated kitchen product selections.
+- [Kitchen inspiration](https://kitchen-reviews-seven.vercel.app/inspiration): Explore kitchen styles and design ideas.
+- [About KitchenTrusted](https://kitchen-reviews-seven.vercel.app/about): Learn about the site's editorial approach.
+- [Affiliate disclosure](https://kitchen-reviews-seven.vercel.app/affiliate-disclosure): Learn how affiliate links may support the site.
+
+Product availability, specifications, and prices may change. Verify current details with the retailer before purchasing.

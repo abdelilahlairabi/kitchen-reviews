@@ -11,6 +11,8 @@ const FeaturedSection = () => {
             <img 
               src="/homepage/featured-kitchen.webp"
               alt="Kitchen interior" 
+              width="896"
+              height="1200"
               className="w-full h-full object-cover object-center"
               loading="lazy"
               decoding="async"
