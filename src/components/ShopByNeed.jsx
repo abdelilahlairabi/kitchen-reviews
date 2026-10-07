@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const needs = [
   { id: 1, title: 'Small Kitchens', image: '/homepage/need-small-kitchens.webp', link: '/collections/small-kitchen-essentials' },
-  { id: 2, title: 'Storage Solutions', image: '/homepage/need-storage-solutions.webp', link: '/collections/smart-kitchen-tech' },
+  { id: 2, title: 'Storage Solutions', image: '/homepage/need-storage-solutions.webp', link: '/category/storage-organization' },
   { id: 3, title: 'Modern Upgrades', image: '/homepage/need-modern-upgrades.webp', link: '/collections/luxury-kitchen-must-haves' },
   { id: 4, title: 'Budget Friendly', image: '/homepage/need-budget-friendly.webp', link: '/collections/budget-friendly-upgrades' },
 ];

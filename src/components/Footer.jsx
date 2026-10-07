@@ -37,8 +37,8 @@ const Footer = () => (
   <footer className="w-full border-t border-gray-200 bg-[#f4f6f8] pt-12 pb-8">
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
       <div className="mb-8 flex flex-col items-center text-center">
-        <Link to="/" className="text-xl font-extrabold tracking-tight text-black hover:opacity-80">
-          KitchenTrusted
+        <Link to="/" aria-label="KitchenTrusted home" className="inline-flex items-center justify-center transition-opacity hover:opacity-80">
+          <img src="/logo.webp" alt="KitchenTrusted" width="500" height="167" className="h-10 w-36 object-contain" loading="lazy" decoding="async" />
         </Link>
         <p className="mt-2 max-w-md text-sm text-gray-600">
           Practical kitchen product information, buying guides, and design ideas.
