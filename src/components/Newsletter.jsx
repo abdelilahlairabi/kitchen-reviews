@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom';
 const Newsletter = () => {
   return (
     <section className="w-full px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
-      <div className="relative isolate mx-auto grid max-w-7xl overflow-hidden rounded-3xl bg-[#202521] px-6 py-10 text-white shadow-sm sm:px-10 sm:py-14 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-12 lg:px-16">
-        <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-32 -z-10 h-80 w-80 rounded-full bg-[#dcb589]/20 blur-3xl" />
-        <div aria-hidden="true" className="pointer-events-none absolute -bottom-36 left-1/3 -z-10 h-72 w-72 rounded-full bg-[#8f9a78]/15 blur-3xl" />
+      <div
+        className="relative isolate mx-auto grid max-w-7xl overflow-hidden rounded-3xl bg-[#202521] bg-cover bg-center px-6 py-10 text-white shadow-sm sm:px-10 sm:py-14 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-12 lg:px-16"
+        style={{
+          backgroundImage: "linear-gradient(90deg, rgba(22, 27, 23, 0.68) 0%, rgba(22, 27, 23, 0.56) 48%, rgba(22, 27, 23, 0.3) 100%), url('/homepage/kitchen-buying-guides-banner.webp')",
+        }}
+      >
 
         <div className="max-w-2xl">
           <span className="mb-4 inline-flex items-center rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#e8c99f]">
