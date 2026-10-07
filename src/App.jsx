@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -22,12 +22,17 @@ const StyleDetails = lazy(() => import('./pages/StyleDetails'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 export function AppContent() {
+  const location = useLocation();
+  const pageLoadingFallback = location.pathname === '/'
+    ? <Home />
+    : <p className="py-16 text-center text-gray-500">Loading page...</p>;
+
   return (
     <div className="min-h-screen flex flex-col font-sans bg-white">
       <Navbar />
 
       <main className="flex-grow w-full pb-12">
-        <Suspense fallback={<p className="py-16 text-center text-gray-500">Loading page...</p>}>
+        <Suspense fallback={pageLoadingFallback}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<AllProducts />} /> {/* Ajout de la route */}

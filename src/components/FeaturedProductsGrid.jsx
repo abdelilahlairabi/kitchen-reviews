@@ -8,7 +8,7 @@ import ProductGridError from './ProductGridError';
 
 const filters = ['All', 'Top Rated'];
 const getProductImageSrcSet = (image) => {
-  if (!/^\/products\/product-(stand-mixer|pressure-cooker|coffee-maker)\.jpeg$/.test(image)) return undefined;
+  if (!/^\/products\/product-(stand-mixer|pressure-cooker|coffee-maker|blender)\.jpeg$/.test(image)) return undefined;
   return `${image.replace('.jpeg', '-336.jpeg')} 336w, ${image} 672w`;
 };
 
