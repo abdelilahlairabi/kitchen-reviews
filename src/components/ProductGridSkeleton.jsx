@@ -8,10 +8,10 @@ const layouts = {
     details: 'rating',
   },
   featured: {
-    count: 12,
-    grid: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6',
-    card: 'min-h-[400px] p-4',
-    image: 'h-48 mb-4 p-4',
+    count: 8,
+    grid: 'grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4',
+    card: 'min-h-[350px] p-3 sm:min-h-[400px] sm:p-4',
+    image: 'aspect-square mb-4 border border-[#e9e3d9] bg-[#f4f1eb]',
     details: 'stars',
   },
   deals: {

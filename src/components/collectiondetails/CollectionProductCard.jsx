@@ -1,6 +1,7 @@
 import { Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { isValidAmazonProductUrl } from '../../utils/affiliate';
+import ProductImageFrame from '../ProductImageFrame';
 
 export default function CollectionProductCard({ product }) {
   const hasRating = Number.isFinite(product.rating) && product.rating > 0;
@@ -9,10 +10,9 @@ export default function CollectionProductCard({ product }) {
 
   return (
     <article className="bg-white rounded-2xl border border-gray-200 p-4 md:p-5 flex flex-col shadow-sm hover:shadow-md transition-shadow">
-      <div className="relative aspect-[4/3] bg-gray-50 rounded-xl overflow-hidden mb-4 flex items-center justify-center p-4">
+      <ProductImageFrame src={product.image} alt={product.name} className="mb-4">
         {product.badge && <span className="absolute left-3 top-3 z-10 bg-white/95 text-gray-900 text-[10px] font-semibold uppercase px-2.5 py-1 rounded-full">{product.badge}</span>}
-        <img src={product.image} alt={product.name} className="max-h-full max-w-full object-contain" loading="lazy" decoding="async" />
-      </div>
+      </ProductImageFrame>
 
       <div className="flex-1">
         <Link to={`/product/${product.slug}`} className="font-bold text-gray-950 text-base leading-snug line-clamp-2 hover:underline underline-offset-4">{product.name}</Link>

@@ -1,5 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import AffiliateLink from './AffiliateLink';
+import ProductImageFrame from './ProductImageFrame';
 import { useProducts } from '../hooks/useProducts';
 import { PRODUCT_PAGE_SIZE } from '../services/products';
 
@@ -55,10 +56,9 @@ const ProductGrid = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {products.map((product) => (
               <article key={product.id} className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col hover:shadow-lg transition-shadow duration-300">
-                <div className="w-full h-56 bg-[#f8f9fa] rounded-lg mb-4 flex items-center justify-center overflow-hidden relative">
+                <ProductImageFrame src={product.image} alt={product.name} className="mb-4">
                   {product.badge && <span className="absolute top-2 left-2 bg-[#dcb589] text-black text-xs font-bold px-2 py-1 rounded">{product.badge}</span>}
-                  <img src={product.image} alt={product.name} className="w-full h-full object-contain mix-blend-multiply" loading="lazy" />
-                </div>
+                </ProductImageFrame>
                 <Link to={`/product/${product.slug}`} className="mb-1 line-clamp-2 min-h-[40px] hover:text-gray-600 transition-colors"><h2 className="text-sm font-bold text-black">{product.name}</h2></Link>
                 <div className="flex items-center gap-1 mb-2"><div className="flex gap-0.5" aria-label={`${product.rating} out of 5 stars`}>{[...Array(5)].map((_, index) => <StarIcon key={index} filled={index < Math.round(product.rating)} />)}</div><span className="text-xs text-gray-500 font-medium ml-1">{product.rating} ({product.reviewCount.toLocaleString()})</span></div>
                 <div className="flex items-center gap-2 mb-4 mt-auto"><p className="text-base font-extrabold text-black">${product.price.toFixed(2)}</p>{product.originalPrice && <span className="text-sm text-gray-400 line-through">${product.originalPrice.toFixed(2)}</span>}{product.discountPercent && <span className="text-xs font-bold text-red-500">-{product.discountPercent}%</span>}</div>

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
 import AffiliateLink from './AffiliateLink';
+import ProductImageFrame from './ProductImageFrame';
 import ProductGridSkeleton from './ProductGridSkeleton';
 import ProductGridError from './ProductGridError';
 
@@ -23,10 +24,9 @@ const AmazonDeals = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {deals.length === 0 ? <p className="col-span-full text-center text-gray-500">No deals available right now.</p> : deals.map((deal) => (
               <article key={deal.id} className="min-h-[500px] bg-white rounded-xl p-5 flex flex-col relative hover:shadow-lg transition-shadow duration-300">
-                <div className="absolute top-4 left-4 bg-[#c53030] text-white text-xs font-bold px-2.5 py-1 rounded-sm z-10">{deal.discountPercent}% OFF</div>
-                <div className="w-full h-56 mb-6 mt-6 flex items-center justify-center p-2">
-                  <img src={deal.image} alt={deal.name} width="672" height="672" className="max-w-full max-h-full object-contain" loading="lazy" />
-                </div>
+                <ProductImageFrame src={deal.image} alt={deal.name} className="mb-5 mt-6">
+                  <span className="absolute left-3 top-3 z-10 rounded-full bg-red-700 px-2.5 py-1 text-xs font-bold text-white">{deal.discountPercent}% OFF</span>
+                </ProductImageFrame>
                 <Link to={`/product/${deal.slug}`} className="text-sm font-bold text-black line-clamp-2 min-h-[40px] mb-3 hover:text-gray-600 transition-colors">{deal.name}</Link>
                 <div className="mb-3"><span className="bg-[#232f3e] text-white text-[11px] font-bold px-2 py-1 inline-block">{deal.badge || "Amazon's Choice"}</span></div>
                 <div className="mb-4 mt-auto">

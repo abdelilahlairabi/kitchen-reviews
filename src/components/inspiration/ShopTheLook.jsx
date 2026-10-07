@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import AffiliateLink from '../AffiliateLink';
+import ProductImageFrame from '../ProductImageFrame';
 
 export default function ShopTheLook({ products, styleTitle, isError = false }) {
   if (isError && products.length === 0) {
@@ -18,9 +19,7 @@ export default function ShopTheLook({ products, styleTitle, isError = false }) {
         {products.map((product) => (
           <article key={product.id} className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col hover:shadow-md transition-shadow">
             <Link to={`/product/${product.slug}`} className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950">
-              <div className="aspect-square rounded-xl overflow-hidden bg-gray-50 flex items-center justify-center p-4 mb-4">
-                <img src={product.image} alt={product.name} className="max-h-full max-w-full object-contain" loading="lazy" decoding="async" />
-              </div>
+              <ProductImageFrame src={product.image} alt={product.name} className="mb-4" />
               <h3 className="font-bold text-gray-950 text-sm line-clamp-2 hover:underline underline-offset-4">{product.name}</h3>
             </Link>
             {Number.isFinite(product.price) && <p className="text-sm font-semibold text-gray-900 mt-2">${product.price.toFixed(2)}</p>}

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import AffiliateLink from '../AffiliateLink';
+import ProductImageFrame from '../ProductImageFrame';
 
 export default function ShopThisLook({ products, styleTitle, isError = false }) {
   if (isError && products.length === 0) {
@@ -23,15 +24,7 @@ export default function ShopThisLook({ products, styleTitle, isError = false }) 
           >
             <div>
               {/* Conteneur Image Produit */}
-              <div className="h-48 rounded-xl overflow-hidden bg-gray-50 flex items-center justify-center p-3 mb-4">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="max-h-full max-w-full object-contain rounded-lg"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
+              <ProductImageFrame src={product.image} alt={product.name} className="mb-4" />
 
               {/* Titre & Évaluation */}
               <Link to={`/product/${product.slug}`} className="block font-bold text-gray-900 text-xs md:text-sm line-clamp-2 mb-1 hover:underline">

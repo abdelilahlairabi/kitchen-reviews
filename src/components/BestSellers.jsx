@@ -1,6 +1,7 @@
 import { Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AffiliateLink from './AffiliateLink';
+import ProductImageFrame from './ProductImageFrame';
 import { useProducts } from '../hooks/useProducts';
 import ProductGridSkeleton from './ProductGridSkeleton';
 import ProductGridError from './ProductGridError';
@@ -32,10 +33,9 @@ const BestSellers = () => {
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.length === 0 ? <p className="col-span-full text-center text-gray-500">No best sellers found.</p> : products.map((product) => (
             <article key={product.id} className="min-h-[420px] bg-white border border-gray-200 rounded-xl p-5 flex flex-col relative hover:shadow-lg transition-shadow duration-300">
-              <div className="absolute top-4 left-4 bg-[#f3dcb8] text-black text-xs font-bold px-2.5 py-1 rounded shadow-sm z-10">Bestseller</div>
-              <div className="w-full h-48 mb-6 mt-4 flex items-center justify-center">
-                <img src={product.image} srcSet={getProductImageSrcSet(product.image)} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 336px" alt={product.name} width="672" height="672" className="max-w-full max-h-full object-contain" loading="lazy" />
-              </div>
+              <ProductImageFrame src={product.image} srcSet={getProductImageSrcSet(product.image)} sizes="(min-width: 1024px) 25vw, 46vw" alt={product.name} className="mb-5 mt-4">
+                <span className="absolute left-3 top-3 z-10 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-semibold uppercase text-gray-900">Bestseller</span>
+              </ProductImageFrame>
               <Link to={`/product/${product.slug}`} className="text-sm font-bold text-black line-clamp-2 min-h-[40px] mb-3 hover:text-gray-600 transition-colors">{product.name}</Link>
               <div className="flex items-center justify-between mb-4 mt-auto">
                 <span className="font-extrabold text-lg text-black">${product.price.toFixed(2)}</span>
