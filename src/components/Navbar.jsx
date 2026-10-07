@@ -110,24 +110,18 @@ const Navbar = () => {
           <div className="flex shrink-0 items-center gap-2 sm:gap-4">
             {/* Barre de recherche */}
             <form onSubmit={handleSearchSubmit} className="relative hidden md:block">
-              <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" strokeWidth={2.5} />
-              <input 
-                type="text" 
-                placeholder="Search reviews..." 
+              <input
+                type="search"
+                placeholder="Search reviews..."
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
                 aria-label="Search products"
-                className="pl-10 pr-4 py-2 bg-white border border-gray-300 rounded-full text-sm w-56 lg:w-64 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all placeholder:text-gray-400"
+                className="pl-4 pr-11 py-2 bg-white border border-gray-300 rounded-full text-sm w-56 lg:w-64 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all placeholder:text-gray-400"
               />
+              <button type="submit" aria-label="Search products" className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full p-2 text-gray-600 hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gray-700">
+                <Search className="h-4 w-4" aria-hidden="true" />
+              </button>
             </form>
-
-            {/* Bouton Best Deals */}
-            <Link 
-              to="/products" 
-              className="hidden bg-[#E6DCC3] px-5 py-2.5 text-sm font-bold text-black transition-colors hover:bg-[#d8ceb5] sm:inline-flex sm:whitespace-nowrap"
-            >
-              Browse Products
-            </Link>
 
             <button
               type="button"
@@ -147,16 +141,17 @@ const Navbar = () => {
           <div id="mobile-navigation" className="lg:hidden border-t border-gray-200 bg-white">
             <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-4 flex flex-col">
               <form onSubmit={handleSearchSubmit} className="relative mb-3">
-                <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" aria-hidden="true" />
                 <input
                   type="search"
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(event) => setSearchQuery(event.target.value)}
                   aria-label="Search products"
-                  className="w-full rounded-full border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm focus:border-gray-500 focus:outline-none"
+                  className="w-full rounded-full border border-gray-300 bg-white py-2 pl-4 pr-12 text-sm focus:border-gray-500 focus:outline-none"
                 />
-                <button type="submit" className="sr-only">Search</button>
+                <button type="submit" aria-label="Search products" className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full p-2 text-gray-600 hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gray-700">
+                  <Search className="h-4 w-4" aria-hidden="true" />
+                </button>
               </form>
               <Link to="/products" onClick={() => setIsMobileMenuOpen(false)} className="py-3 text-sm font-medium text-gray-900 border-b border-gray-100">
                 Products
