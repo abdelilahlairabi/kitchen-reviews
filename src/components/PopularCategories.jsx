@@ -24,15 +24,15 @@ const PopularCategories = () => {
       <div className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-12">
         {popularCategories.map((category) => (
           <Link 
-            key={category.name}
-            to={`/category/${category.slug}`}
+          key={category.name}
+          to={`/category/${category.slug}`}
             className="flex flex-col items-center group"
           >
             <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full border border-gray-200 bg-white flex items-center justify-center overflow-hidden group-hover:shadow-lg transition-all duration-300">
               <img
                 src={category.heroImage}
-                srcSet={`/categories/category-${category.slug}-card.webp 440w, ${category.heroImage} ${sourceDimensions[category.slug][0]}w`}
-                sizes="(min-width: 768px) 160px, 96px"
+                srcSet={`/categories/category-${category.slug}-card-192.webp 192w, /categories/category-${category.slug}-card-256.webp 256w, /categories/category-${category.slug}-card-320.webp 320w, /categories/category-${category.slug}-card.webp 440w, ${category.heroImage} ${sourceDimensions[category.slug][0]}w`}
+                sizes="(min-width: 768px) 160px, (min-width: 640px) 128px, 96px"
                 alt=""
                 aria-hidden="true"
                 width={sourceDimensions[category.slug][0]}
