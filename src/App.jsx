@@ -11,6 +11,7 @@ const Categories = lazy(() => import('./pages/Categories'));
 const Collections = lazy(() => import('./pages/Collections'));
 const Guides = lazy(() => import('./pages/Guides'));
 const About = lazy(() => import('./pages/About'));
+const HowWeChoose = lazy(() => import('./pages/HowWeChoose'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
@@ -51,6 +52,7 @@ export function AppContent() {
             <Route path="/collections" element={<Collections />} />
             <Route path="/guides" element={<Guides />} />
             <Route path="/about" element={<About />} />
+            <Route path="/how-we-choose" element={<HowWeChoose />} />
             <Route path='/contact' element={<Contact />} />
             <Route path='/privacy' element={<Privacy />} />
             <Route path='/terms' element={<Terms />} />

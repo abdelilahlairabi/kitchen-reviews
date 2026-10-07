@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const AboutProcess = () => {
   return (
     <div className="bg-white py-16 border-t border-gray-100">
@@ -23,6 +25,9 @@ const AboutProcess = () => {
             </div>
           ))}
         </div>
+        <Link to="/how-we-choose" className="mt-2 inline-flex items-center rounded-full border border-gray-300 px-5 py-2.5 text-sm font-semibold text-gray-800 transition-colors hover:border-gray-900 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
+          See our full process
+        </Link>
       </div>
     </div>
   );

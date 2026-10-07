@@ -20,6 +20,7 @@ const footerGroups = [
     title: 'About',
     links: [
       { label: 'About KitchenTrusted', to: '/about' },
+      { label: 'How We Choose', to: '/how-we-choose' },
       { label: 'Contact', to: '/contact' },
     ],
   },

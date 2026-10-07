@@ -10,6 +10,7 @@
 - [Collections](https://kitchen-reviews-seven.vercel.app/collections): Browse curated kitchen product selections.
 - [Kitchen inspiration](https://kitchen-reviews-seven.vercel.app/inspiration): Explore kitchen styles and design ideas.
 - [About KitchenTrusted](https://kitchen-reviews-seven.vercel.app/about): Learn about the site's editorial approach.
+- [How we choose](https://kitchen-reviews-seven.vercel.app/how-we-choose): Learn how product details are organized and compared, and how affiliate links are disclosed.
 - [Affiliate disclosure](https://kitchen-reviews-seven.vercel.app/affiliate-disclosure): Learn how affiliate links may support the site.
 
 Product availability, specifications, and prices may change. Verify current details with the retailer before purchasing.

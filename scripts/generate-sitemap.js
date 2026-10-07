@@ -49,6 +49,7 @@ const staticPaths = [
   '/guides',
   '/inspiration',
   '/about',
+  '/how-we-choose',
   '/contact',
   '/privacy',
   '/terms',
