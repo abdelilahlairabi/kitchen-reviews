@@ -14,7 +14,10 @@ const sortColumns = {
 export const productColumns = `
   id, slug, name, category_id, primary_image, price, original_price,
   discount_percent, rating, review_count, badge, affiliate_url,
-  description, features, specs
+  description, features, specs, brand_name, model_number, upc,
+  availability_status, shipping_price, shipping_time, shipping_condition,
+  sold_by, ships_from, is_coupon_available, source_category_path, aplus_present,
+  rating_distribution, variants, last_scraped_at
 `;
 
 const normalizePage = (value) => Math.max(1, Number.parseInt(value, 10) || 1);
@@ -39,6 +42,22 @@ export const toProduct = (row) => ({
   description: row.description,
   features: row.features || [],
   specs: row.specs || {},
+  brandName: row.brand_name || '',
+  modelNumber: row.model_number || '',
+  upc: row.upc || '',
+  availabilityStatus: row.availability_status || '',
+  shippingPrice: row.shipping_price || '',
+  shippingTime: row.shipping_time || '',
+  shippingCondition: row.shipping_condition || '',
+  soldBy: row.sold_by || '',
+  shipsFrom: row.ships_from || '',
+  isCouponAvailable: row.is_coupon_available ?? false,
+  sourceCategoryPath: row.source_category_path || '',
+  aplusPresent: row.aplus_present ?? false,
+  ratingDistribution: row.rating_distribution || {},
+  variants: Array.isArray(row.variants) ? row.variants : [],
+  lastScrapedAt: row.last_scraped_at || null,
+  sourceMarketplace: row.source_marketplace || '',
 });
 
 const throwIfError = (error, message) => {
@@ -113,12 +132,12 @@ export async function fetchProductBySlug(slug) {
   const [imagesResult, reviewsResult] = await Promise.all([
     supabase
       .from('product_images')
-      .select('image_url, alt_text, sort_order')
+      .select('image_url, standard_image_url, alt_text, sort_order')
       .eq('product_id', product.id)
       .order('sort_order', { ascending: true }),
     supabase
       .from('reviews')
-      .select('author_name, avatar, rating, text')
+      .select('author_name, avatar, rating, text, source, source_review_key, reviewer_url, review_title, reviewed_at, verified_purchase, manufacturer_replied, helpful_count, review_images, variation')
       .eq('product_id', product.id),
   ]);
 
@@ -129,6 +148,7 @@ export async function fetchProductBySlug(slug) {
     ...toProduct(product),
     images: (imagesResult.data || []).map((image) => ({
       url: image.image_url,
+      standardUrl: image.standard_image_url || image.image_url,
       alt: image.alt_text || product.name,
     })),
     reviews: (reviewsResult.data || []).map((review) => ({
@@ -136,6 +156,16 @@ export async function fetchProductBySlug(slug) {
       avatar: review.avatar,
       rating: review.rating,
       text: review.text,
+      source: review.source || '',
+      sourceKey: review.source_review_key || '',
+      reviewerUrl: review.reviewer_url || '',
+      title: review.review_title || '',
+      date: review.reviewed_at || '',
+      verifiedPurchase: review.verified_purchase ?? false,
+      manufacturerReplied: review.manufacturer_replied ?? false,
+      helpfulCount: review.helpful_count ?? 0,
+      images: Array.isArray(review.review_images) ? review.review_images : [],
+      variation: review.variation || {},
     })),
   };
 }

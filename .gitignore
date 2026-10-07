@@ -16,6 +16,7 @@ dist-ssr
 
 # Keep local n8n exports out of the website repository
 **/KitchenTrusted_n8n_Workflow.json
+**/KitchenTrusted_Amazon_Product_Enrichment.json
 
 # Editor directories and files
 .vscode/*
