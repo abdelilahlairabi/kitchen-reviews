@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
+
 export default function DisclosureBreadcrumb() {
   return (
-    <div className="text-sm text-gray-500 mb-6">
-      <a href="/" className="underline hover:text-gray-700">Home</a>
-      <span className="mx-1">/</span>
-      <span className="text-gray-700">Affiliate Disclosure</span>
-    </div>
+    <nav aria-label="Breadcrumb" className="mb-8 text-xs text-gray-500">
+      <Link to="/" className="transition-colors hover:text-gray-950">Home</Link>
+      <span className="mx-2">/</span>
+      <span className="font-medium text-gray-900">Affiliate Disclosure</span>
+    </nav>
   );
 }
