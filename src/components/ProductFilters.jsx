@@ -1,5 +1,26 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import { categories } from '../data/categories';
+import CategoryFilterSelect from './CategoryFilterSelect';
+import FilterDropdown from './FilterDropdown';
+
+const priceOptions = [
+  { value: '', label: 'Any price' },
+  { value: 'under-100', label: 'Under $100' },
+  { value: '100-200', label: '$100–$200' },
+  { value: '200-500', label: '$200–$500' },
+  { value: 'over-500', label: 'Over $500' },
+];
+const ratingOptions = [
+  { value: '', label: 'Any rating' },
+  { value: '4.5', label: '4.5 stars & up' },
+  { value: '4.7', label: '4.7 stars & up' },
+];
+const sortOptions = [
+  { value: 'popularity', label: 'Popularity' },
+  { value: 'price-asc', label: 'Price: Low to High' },
+  { value: 'price-desc', label: 'Price: High to Low' },
+  { value: 'rating', label: 'Highest Rated' },
+];
 
 const ProductFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,36 +45,37 @@ const ProductFilters = () => {
   };
 
   return (
-    <div className="w-full bg-[#f8f9fa] pt-8 pb-6 border-b border-gray-200">
+    <div className="w-full border-b border-gray-200 bg-[#f8f9fa] py-5 sm:py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav className="text-xs text-gray-500 mb-4" aria-label="Breadcrumb">
+        <nav className="mb-3 text-xs text-gray-500 sm:mb-4" aria-label="Breadcrumb">
           <Link to="/" className="hover:text-black">Home</Link><span className="mx-2">/</span><span className="text-gray-900">All Products</span>
         </nav>
-        <div className="flex flex-col sm:flex-row justify-between sm:items-end mb-6 gap-4">
+        <div className="mb-4 sm:mb-5">
           <div>
-            <h1 className="text-3xl font-extrabold text-black mb-1">All Kitchen Products</h1>
+            <h1 className="mb-1 text-2xl font-extrabold tracking-tight text-black sm:text-3xl">All Kitchen Products</h1>
             <p className="text-sm text-gray-500">Browse our kitchen product reviews and recommendations.</p>
           </div>
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-            Sort by
-            <select value={sort} onChange={(event) => updateFilter('sort', event.target.value)} className="bg-white border border-gray-300 rounded-full px-4 py-2 text-sm font-medium focus:outline-none focus:border-gray-500">
-              <option value="popularity">Popularity</option><option value="price-asc">Price: Low to High</option><option value="price-desc">Price: High to Low</option><option value="rating">Highest Rated</option>
-            </select>
-          </label>
         </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <select value={category} onChange={(event) => updateFilter('category', event.target.value)} aria-label="Filter by category" className="bg-white border border-gray-300 rounded-full px-4 py-2 text-sm font-medium focus:outline-none focus:border-gray-500">
-            <option value="">All categories</option>
-            {categories.map((item) => <option key={item.slug} value={item.slug}>{item.name}</option>)}
-          </select>
-          <select value={price} onChange={(event) => updateFilter('price', event.target.value)} aria-label="Filter by price range" className="bg-white border border-gray-300 rounded-full px-4 py-2 text-sm font-medium focus:outline-none focus:border-gray-500">
-            <option value="">Any price</option><option value="under-100">Under $100</option><option value="100-200">$100–$200</option><option value="200-500">$200–$500</option><option value="over-500">Over $500</option>
-          </select>
-          <select value={rating} onChange={(event) => updateFilter('rating', event.target.value)} aria-label="Filter by rating" className="bg-white border border-gray-300 rounded-full px-4 py-2 text-sm font-medium focus:outline-none focus:border-gray-500">
-            <option value="">Any rating</option><option value="4.5">4.5 stars & up</option><option value="4.7">4.7 stars & up</option>
-          </select>
-          {hasFilters && <button type="button" onClick={clearFilters} className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-black underline">Clear filters</button>}
+
+        <div className="grid grid-cols-2 gap-x-2 gap-y-3 md:flex md:flex-wrap md:items-end md:gap-3">
+          <div className="min-w-0">
+            <span className="mb-1.5 block text-xs font-medium text-gray-500 md:hidden">Category</span>
+            <CategoryFilterSelect categories={categories} value={category} onChange={(value) => updateFilter('category', value)} />
+          </div>
+          <div className="min-w-0 md:w-[145px]">
+            <span className="mb-1.5 block text-xs font-medium text-gray-500 md:hidden">Price</span>
+            <FilterDropdown label="Filter by price range" options={priceOptions} value={price} onChange={(value) => updateFilter('price', value)} />
+          </div>
+          <div className="min-w-0 md:w-[155px]">
+            <span className="mb-1.5 block text-xs font-medium text-gray-500 md:hidden">Rating</span>
+            <FilterDropdown label="Filter by rating" options={ratingOptions} value={rating} onChange={(value) => updateFilter('rating', value)} />
+          </div>
+          <div className="min-w-0 md:ml-auto md:flex md:w-auto md:items-end md:gap-2">
+            <span className="mb-1.5 block text-xs font-medium text-gray-500 md:mb-2 md:text-sm md:font-semibold md:text-gray-700">Sort by</span>
+            <FilterDropdown label="Sort products" options={sortOptions} value={sort} onChange={(value) => updateFilter('sort', value)} className="md:w-[190px]" />
+          </div>
         </div>
+        {hasFilters && <button type="button" onClick={clearFilters} className="mt-3 px-1 py-1 text-sm font-semibold text-gray-600 underline underline-offset-4 transition-colors hover:text-black">Clear all filters</button>}
       </div>
     </div>
   );

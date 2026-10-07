@@ -1,4 +1,12 @@
 import { useSearchParams } from 'react-router-dom';
+import FilterDropdown from '../FilterDropdown';
+
+const sortOptions = [
+  { value: 'popularity', label: 'Sort by: Popularity' },
+  { value: 'price-asc', label: 'Price: Low to High' },
+  { value: 'price-desc', label: 'Price: High to Low' },
+  { value: 'rating', label: 'Highest Rated' },
+];
 
 const CategoryFilters = ({ category }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -14,7 +22,7 @@ const CategoryFilters = ({ category }) => {
 
   return <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-8"><div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
     {category.subFilters.length > 0 && <div><span className="text-xs text-gray-500 mb-2 block">Filter by type</span><div className="flex flex-wrap gap-2">{category.subFilters.map((type) => <button key={type} type="button" onClick={() => updateParams('type', activeType === type ? '' : type)} aria-pressed={activeType === type} className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${activeType === type ? 'bg-[#dcb589] text-black' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'}`}>{type}</button>)}</div></div>}
-    <div className="relative mt-4 md:mt-0"><select value={activeSort} onChange={(event) => updateParams('sort', event.target.value)} aria-label="Sort category products" className="appearance-none bg-white border border-gray-300 rounded-full pl-4 pr-8 py-1.5 text-sm font-medium hover:bg-gray-50 transition-colors cursor-pointer"><option value="popularity">Sort by: Popularity</option><option value="price-asc">Price: Low to High</option><option value="price-desc">Price: High to Low</option><option value="rating">Highest Rated</option></select></div>
+    <div className="mt-4 w-full md:mt-0 md:w-[210px]"><FilterDropdown label="Sort category products" options={sortOptions} value={activeSort} onChange={(value) => updateParams('sort', value)} /></div>
   </div></div>;
 };
 
