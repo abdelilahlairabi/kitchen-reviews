@@ -59,6 +59,8 @@ export const collections = [
       'madesmart-classic-5-compartment-compact-silverware-tray-granite-b010f6ij7e',
       'madesmart-classic-3-compartment-utensil-tray-white-b000bub4vi',
       'mind-reader-tea-bag-organizer-tea-station-organizer-countertop-storage-kitchen-plastic-10-25-l-x-3-25-w-x-13-75-h-black-b00xblgqdk',
+      'silonn-ice-maker-countertop-8-cubes-in-6-mins-26-5-lbs-24h-2-ice-sizes-self-cleaning-bullet-ice-maker-portable-ice-machine-for-kitchen-office-party-rv-camping-b0hjzp4vpj',
+      'euhomy-countertop-nugget-ice-maker-35lbs-daily-sonic-crushed-ice-machine-global-recycled-standard-global-recycled-standard-global-recycled-standard-b0gx9g2q1n',
     ],
     relatedSlugs: ['budget-friendly-upgrades', 'smart-kitchen-tech', 'coffee-espresso-corner'],
     contentSections: [
