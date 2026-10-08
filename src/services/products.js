@@ -186,7 +186,7 @@ export async function fetchProductBySlug(slug) {
 export async function fetchProductsBySlugs(slugs) {
   const safeSlugs = [...new Set(
     (Array.isArray(slugs) ? slugs : [])
-      .map((slug) => String(slug || '').trim().slice(0, 160))
+      .map((slug) => String(slug || '').trim())
       .filter(Boolean),
   )].slice(0, MAX_PAGE_SIZE);
 
