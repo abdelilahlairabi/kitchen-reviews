@@ -1,4 +1,5 @@
 import { supabase } from '../utils/supabase';
+import { isValidAmazonProductUrl } from '../utils/affiliate';
 
 export const PRODUCT_PAGE_SIZE = 12;
 const MAX_PAGE_SIZE = 24;
@@ -19,6 +20,16 @@ export const productColumns = `
   sold_by, ships_from, is_coupon_available, source_category_path, aplus_present,
   rating_distribution, variants, last_scraped_at, source_marketplace
 `;
+
+// Filter at the database level so products without a valid Amazon destination
+// never appear in cards, detail pages, or pagination counts.
+const validAmazonAffiliateUrlFilter = [
+  'affiliate_url.imatch."^https://amazon[.]com/([^?#]*/)?dp/[A-Za-z0-9]{10}([/?#].*)?$"',
+  'affiliate_url.imatch."^https://amazon[.]com/([^?#]*/)?gp/product/[A-Za-z0-9]{10}([/?#].*)?$"',
+  'affiliate_url.imatch."^https://www[.]amazon[.]com/([^?#]*/)?dp/[A-Za-z0-9]{10}([/?#].*)?$"',
+  'affiliate_url.imatch."^https://www[.]amazon[.]com/([^?#]*/)?gp/product/[A-Za-z0-9]{10}([/?#].*)?$"',
+  'affiliate_url.imatch."^https://amzn[.]to/[A-Za-z0-9]{4,}([?#].*)?$"',
+].join(',');
 
 const normalizePage = (value) => Math.max(1, Number.parseInt(value, 10) || 1);
 const normalizePageSize = (value) => Math.min(MAX_PAGE_SIZE, Math.max(1, Number.parseInt(value, 10) || PRODUCT_PAGE_SIZE));
@@ -90,6 +101,7 @@ export async function fetchProducts({
   let query = supabase
     .from('products')
     .select(`${productColumns}, categories!inner(slug)`, { count: 'exact' })
+    .or(validAmazonAffiliateUrlFilter)
     .order(sortRule.column, { ascending: sortRule.ascending })
     .order('id', { ascending: true })
     .range(from, to);
@@ -123,6 +135,7 @@ export async function fetchProductBySlug(slug) {
   const { data: product, error: productError } = await supabase
     .from('products')
     .select(`${productColumns}, categories(slug)`)
+    .or(validAmazonAffiliateUrlFilter)
     .eq('slug', safeSlug)
     .maybeSingle();
 
@@ -182,8 +195,9 @@ export async function fetchProductsBySlugs(slugs) {
   const { data, error } = await supabase
     .from('products')
     .select(productColumns)
+    .or(validAmazonAffiliateUrlFilter)
     .in('slug', safeSlugs);
 
   throwIfError(error, 'Unable to load products. Please try again.');
-  return (data || []).map(toProduct);
+  return (data || []).map(toProduct).filter((product) => isValidAmazonProductUrl(product.affiliateUrl));
 }
