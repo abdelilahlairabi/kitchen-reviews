@@ -17,7 +17,7 @@ export const productColumns = `
   description, features, specs, brand_name, model_number, upc,
   availability_status, shipping_price, shipping_time, shipping_condition,
   sold_by, ships_from, is_coupon_available, source_category_path, aplus_present,
-  rating_distribution, variants, last_scraped_at
+  rating_distribution, variants, last_scraped_at, source_marketplace
 `;
 
 const normalizePage = (value) => Math.max(1, Number.parseInt(value, 10) || 1);

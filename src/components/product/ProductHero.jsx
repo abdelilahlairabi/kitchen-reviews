@@ -62,7 +62,6 @@ const ProductHero = ({ product, category }) => {
           <div className="mb-3 flex flex-wrap items-center gap-2">
             {product.brandName && <span className="text-sm font-semibold text-gray-700">{product.brandName}</span>}
             {product.badge && <span className="rounded-full bg-[#f4eadb] px-3 py-1 text-xs font-semibold text-gray-800">{product.badge}</span>}
-            {product.availabilityStatus && <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-800">{product.availabilityStatus}</span>}
           </div>
           <h1 className="mb-3 text-2xl font-bold leading-tight text-gray-950 sm:text-3xl">{product.name}</h1>
           {(product.modelNumber || product.upc) && <p className="mb-4 text-xs text-gray-500">
@@ -108,13 +107,6 @@ const ProductHero = ({ product, category }) => {
 
           <AffiliateLink href={product.affiliateUrl} className="mb-2 block w-full rounded-xl bg-[#ebd5b3] py-3.5 text-center font-bold text-gray-950 transition hover:bg-[#dcb589]" fallback="Product link coming soon">Check price on Amazon</AffiliateLink>
           <p className="mb-5 text-center text-xs text-gray-500">As an Amazon Associate I earn from qualifying purchases. Price and availability may change.</p>
-          {(product.soldBy || product.shipsFrom || product.shippingPrice) && <p className="text-center text-xs text-gray-500">
-            {product.soldBy && <>Sold by {product.soldBy}</>}
-            {product.soldBy && product.shipsFrom && <span> · </span>}
-            {product.shipsFrom && <>Ships from {product.shipsFrom}</>}
-            {(product.soldBy || product.shipsFrom) && product.shippingPrice && <span> · </span>}
-            {product.shippingPrice && <>Shipping: {product.shippingPrice}</>}
-          </p>}
           {product.lastScrapedAt && <p className="mt-2 text-center text-[11px] text-gray-400">Product information last checked {new Date(product.lastScrapedAt).toLocaleDateString()}</p>}
         </div>
       </div>
