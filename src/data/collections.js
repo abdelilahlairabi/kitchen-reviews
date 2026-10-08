@@ -8,7 +8,7 @@ export const collections = [
     badge: 'Featured',
     image: '/collections/collection-featured-modern-farmhouse.jpeg',
     subtitle: 'Warm finishes and hardworking essentials for a relaxed, practical kitchen.',
-    introText: 'A farmhouse-inspired kitchen can feel welcoming without leaning on distressed finishes or decorative clutter. This selection pairs a few character pieces—such as a farmhouse sink and natural walnut—with practical cookware and lighting. Use the style as a starting point, then adapt the mix to your own layout, care preferences, and budget.',
+    introText: 'A farmhouse-inspired kitchen can feel welcoming without leaning on distressed finishes or decorative clutter. This selection pairs classic bridge faucets and practical sink options with a movable island, simple lighting, and useful cookware. Use it as a starting point, then adapt the mix to your layout, care preferences, and budget.',
     productSlugs: [
       'kingston-brass-ks1278albs-heritage-bridge-kitchen-faucet-8-3-4-brushed-nickel-b004cfoj6k',
       'kingston-brass-ks1271albs-heritage-bridge-kitchen-faucet-8-9-16-polished-chrome-b000gd8qwa',
@@ -25,7 +25,7 @@ export const collections = [
         heading: 'Build the look from a few repeated materials',
         paragraphs: [
           'Start with simple cabinet fronts and a restrained palette, then add warmth through wood grain, a practical island, or a small number of metal accents. Repeating a finish two or three times usually feels more intentional than introducing a different material at every turn.',
-          'A farmhouse sink can become a visual anchor, but it also affects cabinet support, counter fabrication, and faucet reach. Confirm the installation requirements before making it the starting point for a renovation.',
+          'A sink and faucet can become a visual anchor, but both affect fit, counter work, and reach. Compare exact dimensions and installation requirements before choosing a fixed upgrade.',
         ],
         bullets: ['Choose one or two wood tones and repeat them.', 'Use open shelving selectively; keep daily storage convenient.', 'Compare faucet finishes and cleaning guidance before pairing metals.'],
       },
@@ -33,7 +33,7 @@ export const collections = [
         heading: 'Keep the kitchen comfortable to work in',
         paragraphs: [
           'The style should support cooking as much as it supports the room’s appearance. Keep prep tools close to the work surface, choose cookware that suits the meals you make, and make sure pendant lights do not leave the counters in shadow.',
-          'If you are updating one area at a time, begin with movable pieces such as a cutting board, cookware, or lighting. Larger changes such as a sink or island need careful measurement and installation planning.',
+          'If you are updating one area at a time, begin with movable pieces such as cookware or lighting. Larger changes such as a sink or island need careful measurement and installation planning.',
         ],
       },
     ],
@@ -65,7 +65,7 @@ export const collections = [
       {
         heading: 'Measure storage and working clearance',
         paragraphs: [
-          'Check the full footprint of an appliance and the space needed to use it. A pressure cooker needs room for its lid and steam release; a coffee maker needs clearance for filling and removing its carafe. An item that fits on the counter but blocks a cabinet or walkway may not be a practical fit.',
+          'Check the full footprint of an appliance and the space needed to use it. A slim toaster or compact air fryer still needs safe clearance; a coffee maker needs room for filling and removing its carafe. An item that fits on the counter but blocks a cabinet or walkway may not be practical.',
           'For tools that can be stored away, measure the shelf opening and consider weight. Frequently used equipment is most useful when it is easy to reach and put back safely.',
         ],
         bullets: ['Measure width, depth, and height—not just the appliance base.', 'Leave the manufacturer’s recommended ventilation space.', 'Keep knives protected in a drawer organizer or blade guard.'],
@@ -73,8 +73,8 @@ export const collections = [
       {
         heading: 'Favor versatility over duplicate appliances',
         paragraphs: [
-          'A multi-function cooker or immersion circulator may cover tasks you otherwise do with separate equipment, but only if you will use those functions. Think through your weekly meals and choose tools around routines you already have.',
-          'A stable cutting board and one comfortable all-purpose knife can be more useful than a large set of specialized tools. Consider how each item will be cleaned and stored before adding it to a compact kitchen.',
+          'Compact storage can be as valuable as a small appliance. Favor organizers that fit the actual drawer or shelf, and choose tools around routines you already have rather than adding duplicate equipment.',
+          'A slim toaster, a compact dish drainer, or a small drawer organizer can be easier to store than a larger alternative. Measure the space and check cleaning needs before choosing.',
         ],
       },
     ],
@@ -116,7 +116,7 @@ export const collections = [
       {
         heading: 'Spend on the feature you will use most',
         paragraphs: [
-          'A multi-cooker can be valuable when its modes replace equipment you would otherwise buy, while a simpler pot may be a better choice if you only need stovetop cooking. The same principle applies to lighting: prioritize safe installation and useful illumination over a finish that does not improve the room.',
+          'A practical pan, basic kitchen tool, or task light can solve an everyday need without requiring a full renovation. Prioritize useful features, safe installation, and care requirements over extras you are unlikely to use.',
           'If your budget is limited, upgrade one high-use area at a time. Small changes to prep tools, storage, or task lighting can make a kitchen more comfortable without committing to a costly remodel.',
         ],
       },
@@ -156,7 +156,7 @@ export const collections = [
       {
         heading: 'Plan large purchases around your real routine',
         paragraphs: [
-          'A stand mixer, espresso machine, or blender is most valuable when it will be used often enough to justify its counter space and care. Consider where it will live, who will use it, and how difficult it is to clean after a normal week.',
+          'A stand mixer or high-capacity blender is most valuable when it will be used often enough to justify its counter space and care. Consider where it will live, who will use it, and how difficult it is to clean after a normal week.',
           'For fixed upgrades such as a sink, coordinate product selection with the installer and countertop measurements before ordering. A beautiful product that does not fit the space can become an expensive delay.',
         ],
       },
@@ -186,7 +186,7 @@ export const collections = [
       {
         heading: 'Use a restrained, warm material palette',
         paragraphs: [
-          'Begin with a few quiet surfaces—warm white, pale wood, or a soft stone tone—and repeat them across the room. A walnut prep board or natural accent can add contrast without making the kitchen feel busy.',
+          'Begin with a few quiet surfaces—warm white, stainless steel, or a soft neutral tone—and repeat them across the room. Simple finishes and clear surfaces can add contrast without making the kitchen feel busy.',
           'Choose a metal finish for the faucet and lighting that works with the other fixed elements. Before ordering, compare physical samples under the daylight and evening lighting in your own kitchen.',
         ],
         bullets: ['Limit the palette to a few repeating materials.', 'Use natural wood as a practical accent as well as decoration.', 'Keep work surfaces open for everyday preparation.'],
@@ -207,8 +207,8 @@ export const collections = [
     featured: false,
     badge: 'Natural materials',
     image: '/collections/collection-rustic-wood-accents.jpeg',
-    subtitle: 'Walnut prep surfaces and solid-wood furniture for a warmer kitchen.',
-    introText: 'Wood can bring warmth to a kitchen through a cutting board, movable cart, or other carefully chosen accent. This collection focuses on the wood items actually available in the catalog, paired with a few useful tools. Check care instructions and keep wood away from prolonged moisture and direct heat.',
+    subtitle: 'A couple of real wood details for a warmer kitchen.',
+    introText: 'The current catalog has two clearly identified wood accents: an acacia serving plate and a knife set with a pinewood block. We have kept this collection focused rather than filling it with products that only look rustic. Check care instructions and keep wood away from prolonged moisture and direct heat.',
     productSlugs: [
       'amazon-basics-14-piece-high-carbon-stainless-steel-kitchen-knife-set-with-full-tang-construction-ergonomic-handles-sharpener-and-pinewood-block-black-b00r3z49g6',
       'ironwood-gourmet-fort-worth-steak-plate-with-juice-channel-acacia-wood-13-x-11-x-0-75-inches-brown-b003y2tmrs',
@@ -218,8 +218,8 @@ export const collections = [
       {
         heading: 'Let wood be a deliberate accent',
         paragraphs: [
-          'A large butcher-block surface, a movable solid-wood cart, or one well-made cutting board can provide enough natural grain to warm up a neutral kitchen. Repeating a similar tone elsewhere helps the room feel connected without adding wood to every surface.',
-          'Wood species and finish affect color and care. Ask how a surface is sealed, whether it is intended for food preparation, and how it should be cleaned before using it as a worktop or board.',
+          'The acacia serving plate and pinewood knife block bring small, functional wood details into the kitchen without changing the whole room. Repeating a similar tone elsewhere can make the finish feel intentional.',
+          'Wood species and finish affect color and care. Check the manufacturer’s cleaning instructions and avoid prolonged moisture or direct heat.',
         ],
         bullets: ['Keep wooden boards dry between uses.', 'Use coasters or trivets to protect wood from heat and standing moisture.', 'Check the cart’s wheel locks and weight capacity for your intended use.'],
       },
@@ -266,7 +266,7 @@ export const collections = [
         heading: 'Plan space, safety, and maintenance',
         paragraphs: [
           'Appliances with heat, pressure, or water need appropriate counter clearance and careful maintenance. Follow the maker’s use and safety instructions, especially for steam release, electrical connections, and parts that must be cleaned between uses.',
-          'For a countertop garden, check the actual dimensions, refill routine, light placement, and the cost and availability of compatible supplies before choosing a model.',
+          'For connected or programmable products, check which features work without an app or network, and review the care, warranty, and replacement-part details before choosing.',
         ],
       },
     ],
@@ -274,12 +274,12 @@ export const collections = [
   {
     id: 8,
     slug: 'coffee-espresso-corner',
-    name: 'Home Coffee & Espresso Bar',
+    name: 'Home Coffee Corner',
     featured: false,
     badge: 'Coffee equipment',
     image: '/collections/collection-coffee-espresso-corner.jpeg',
-    subtitle: 'Three complementary ways to brew coffee at home, from drip to espresso.',
-    introText: 'A useful home coffee station begins with the brewing method you enjoy and enough room to use and clean it. This collection groups the coffee equipment currently available in the catalog: a drip brewer, a temperature-control kettle, and a semi-automatic espresso machine. Choose the method and workflow that fit your mornings rather than buying every style of brewer.',
+    subtitle: 'Compare drip, specialty, and hot-or-iced coffee makers at home.',
+    introText: 'A useful home coffee station begins with the brewing style you enjoy and enough room to use and clean it. The current catalog includes programmable drip, single-serve, and hot-or-iced coffee makers, plus a compact rack for organizing the station. Choose the capacity and workflow that fit your mornings rather than buying every style of brewer.',
     productSlugs: [
       'black-decker-12-cup-thermal-programmable-coffee-maker-with-brew-strength-and-vortex-technology-black-steel-cm2046s-b0c2jk9y8v',
       'ninja-hot-iced-xl-coffee-maker-with-rapid-cold-brew-black-cm371-b0csdrzsgg',
@@ -294,7 +294,7 @@ export const collections = [
       {
         heading: 'Choose a brewing routine before a machine',
         paragraphs: [
-          'A programmable drip machine suits households that want several cups ready with little morning setup. Espresso equipment involves a more hands-on routine and requires space for preparation and cleanup. A gooseneck kettle is designed for controlled pouring and can support manual brewing when paired with a separate brewer.',
+          'A programmable drip machine suits households that want several cups ready with little morning setup. Specialty and hot-or-iced machines offer different brew styles; compare how they fit your preferred drinks and cleanup routine.',
           'Consider how many drinks you make, how quickly you need them, and whether you want to measure and prepare each one. These daily habits matter more than the number of settings on a product page.',
         ],
         bullets: ['Measure the station, including room to fill a reservoir and remove parts.', 'Check whether filters, cleaning supplies, or accessories are required.', 'Plan nearby storage for cups, beans, and the tools you actually use.'],
