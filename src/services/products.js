@@ -117,7 +117,7 @@ export async function fetchProducts({
 }
 
 export async function fetchProductBySlug(slug) {
-  const safeSlug = String(slug || '').trim().slice(0, 160);
+  const safeSlug = String(slug || '').trim();
   if (!safeSlug) return null;
 
   const { data: product, error: productError } = await supabase
