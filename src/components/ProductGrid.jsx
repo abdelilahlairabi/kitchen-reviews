@@ -44,6 +44,8 @@ const ProductGrid = () => {
   const total = data?.total || 0;
   const totalPages = Math.max(1, Math.ceil(total / PRODUCT_PAGE_SIZE));
   const currentPage = Math.min(requestedPage, totalPages);
+  const pageButtons = Array.from({ length: totalPages }, (_, index) => index + 1)
+    .filter((page) => page === 1 || page === totalPages || Math.abs(page - currentPage) <= 1);
   const changePage = (page) => {
     const params = new URLSearchParams(searchParams);
     if (page <= 1) params.delete('page'); else params.set('page', String(page));
@@ -73,9 +75,15 @@ const ProductGrid = () => {
             ))}
           </div>
         )}
-        {totalPages > 1 && <nav className="flex justify-center items-center gap-2" aria-label="Product pages">
+        {totalPages > 1 && <nav className="flex flex-wrap justify-center items-center gap-2" aria-label="Product pages">
           <button type="button" onClick={() => changePage(currentPage - 1)} disabled={currentPage === 1} aria-label="Previous page" className="w-8 h-8 flex items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 disabled:text-gray-300 disabled:hover:bg-transparent">&lt;</button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => <button key={page} type="button" onClick={() => changePage(page)} aria-current={page === currentPage ? 'page' : undefined} className={`w-8 h-8 flex items-center justify-center rounded-md text-sm ${page === currentPage ? 'bg-[#dcb589] font-bold text-black' : 'text-gray-600 hover:bg-gray-100'}`}>{page}</button>)}
+          {pageButtons.map((page, index) => {
+            const previousPage = pageButtons[index - 1];
+            return <span key={page} className="contents">
+              {previousPage && page - previousPage > 1 && <span aria-hidden="true" className="px-1 text-gray-400">…</span>}
+              <button type="button" onClick={() => changePage(page)} aria-current={page === currentPage ? 'page' : undefined} aria-label={`Page ${page}`} className={`w-8 h-8 flex items-center justify-center rounded-md text-sm ${page === currentPage ? 'bg-[#dcb589] font-bold text-black' : 'text-gray-600 hover:bg-gray-100'}`}>{page}</button>
+            </span>;
+          })}
           <button type="button" onClick={() => changePage(currentPage + 1)} disabled={currentPage === totalPages} aria-label="Next page" className="w-8 h-8 flex items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 disabled:text-gray-300 disabled:hover:bg-transparent">&gt;</button>
         </nav>}
       </div>
