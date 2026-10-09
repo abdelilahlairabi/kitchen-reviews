@@ -22,6 +22,8 @@ const ProductGrid = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get('search') || '';
   const categorySlug = searchParams.get('category') || '';
+  const productType = searchParams.get('type') || '';
+  const brandName = searchParams.get('brand') || '';
   const price = searchParams.get('price') || '';
   const rating = Number(searchParams.get('rating')) || undefined;
   const sort = searchParams.get('sort') || 'popularity';
@@ -30,6 +32,8 @@ const ProductGrid = () => {
     page: requestedPage,
     pageSize: PRODUCT_PAGE_SIZE,
     categorySlug: categorySlug || undefined,
+    productType: productType || undefined,
+    brandName: brandName || undefined,
     minimumRating: rating,
     ...priceRanges[price],
     search,

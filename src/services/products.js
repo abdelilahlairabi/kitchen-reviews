@@ -81,6 +81,7 @@ export async function fetchProducts({
   pageSize = PRODUCT_PAGE_SIZE,
   categoryId,
   categorySlug,
+  brandName,
   productType,
   badge,
   hasDiscount = false,
@@ -95,6 +96,7 @@ export async function fetchProducts({
   const safePageSize = normalizePageSize(pageSize);
   const safeSearch = normalizeSearch(search);
   const safeCategorySlug = normalizeCategorySlug(categorySlug);
+  const safeBrandName = normalizeSearch(brandName);
   const sortRule = sortColumns[sort] || sortColumns.popularity;
   const from = (safePage - 1) * safePageSize;
   const to = from + safePageSize - 1;
@@ -108,6 +110,7 @@ export async function fetchProducts({
 
   if (categoryId) query = query.eq('category_id', categoryId);
   if (safeCategorySlug) query = query.eq('categories.slug', safeCategorySlug);
+  if (safeBrandName) query = query.ilike('brand_name', `%${safeBrandName}%`);
   if (productType) query = query.contains('type', [productType]);
   if (badge) query = query.eq('badge', badge);
   if (hasDiscount) query = query.not('discount_percent', 'is', null).gt('discount_percent', 0);

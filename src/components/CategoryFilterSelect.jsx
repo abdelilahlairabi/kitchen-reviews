@@ -1,7 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { Check, ChevronDown, Search, X } from 'lucide-react';
 
 export default function CategoryFilterSelect({ categories, value, onChange }) {
+  const id = useId();
+  const labelId = `${id}-category-label`;
+  const valueId = `${id}-category-value`;
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const rootRef = useRef(null);
@@ -43,17 +46,17 @@ export default function CategoryFilterSelect({ categories, value, onChange }) {
 
   return (
     <div ref={rootRef} className="relative w-full sm:w-[190px]">
-      <span id="product-category-label" className="sr-only">Filter by category</span>
+      <span id={labelId} className="sr-only">Filter by category</span>
       <button
         ref={triggerRef}
         type="button"
-        aria-labelledby="product-category-label product-category-value"
+        aria-labelledby={`${labelId} ${valueId}`}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         onClick={() => setIsOpen((open) => !open)}
         className="flex h-11 w-full items-center justify-between gap-3 rounded-full border border-gray-300 bg-white px-4 text-left text-sm font-medium text-gray-800 outline-none transition-colors hover:border-gray-500 focus:border-gray-700 focus:ring-2 focus:ring-gray-900/10"
       >
-        <span id="product-category-value" className="truncate">{selectedCategory?.name || 'All categories'}</span>
+        <span id={valueId} className="truncate">{selectedCategory?.name || 'All categories'}</span>
         <ChevronDown aria-hidden="true" className={`h-4 w-4 shrink-0 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
