@@ -67,7 +67,7 @@ const ProductHero = ({ product, category }) => {
           {gallery.length > 1 && <div className="flex gap-3 overflow-x-auto pb-2" aria-label="Product images">
             {gallery.map((image, index) => {
               const thumbnailUrl = image.standardUrl || image.url;
-              const thumbnailSrcSets = getAmazonImageSrcSets(thumbnailUrl);
+              const thumbnailSrcSets = getAmazonImageSrcSets(thumbnailUrl, [96, 160, 320]);
               return <button
                 key={`${image.url}-${index}`}
                 type="button"
