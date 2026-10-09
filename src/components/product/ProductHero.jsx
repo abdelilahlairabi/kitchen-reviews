@@ -9,6 +9,8 @@ const formatPrice = (value) => {
   return Number.isFinite(amount) ? `$${amount.toFixed(2)}` : null;
 };
 
+const VISIBLE_VARIANT_COUNT = 4;
+
 const ProductHero = ({ product, category }) => {
   const gallery = useMemo(() => {
     const images = (product.images || []).filter((image) => image?.url);
@@ -16,6 +18,7 @@ const ProductHero = ({ product, category }) => {
   }, [product.images, product.image, product.name]);
   const [activeImageUrl, setActiveImageUrl] = useState('');
   const [showAllDetails, setShowAllDetails] = useState(false);
+  const [showAllVariants, setShowAllVariants] = useState(false);
   const activeImage = gallery.find((image) => image.url === activeImageUrl) || gallery[0];
   const price = formatPrice(product.price);
   const originalPrice = formatPrice(product.originalPrice);
@@ -98,7 +101,7 @@ const ProductHero = ({ product, category }) => {
           {variants.length > 0 && <div className="mb-6">
             <h2 className="mb-2 text-sm font-semibold text-gray-800">Available options</h2>
             <div className="flex flex-wrap gap-2">
-              {variants.map((variant) => {
+              {variants.slice(0, showAllVariants ? variants.length : VISIBLE_VARIANT_COUNT).map((variant) => {
                 const href = createAmazonVariantUrl({
                   asin: variant.asin,
                   marketplace: validMarketplace,
@@ -111,6 +114,12 @@ const ProductHero = ({ product, category }) => {
                 </a>;
               })}
             </div>
+            {variants.length > VISIBLE_VARIANT_COUNT && <button
+              type="button"
+              onClick={() => setShowAllVariants((expanded) => !expanded)}
+              aria-expanded={showAllVariants}
+              className="mt-3 inline-flex min-h-9 items-center text-sm font-semibold text-amber-800 underline decoration-amber-300 underline-offset-4 hover:text-amber-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-2"
+            >{showAllVariants ? 'Show less options' : 'Show more options'}</button>}
           </div>}
 
           <AffiliateLink href={product.affiliateUrl} className="mb-2 block w-full rounded-xl bg-[#ebd5b3] py-3.5 text-center font-bold text-gray-950 transition hover:bg-[#dcb589]" fallback="Product link coming soon">Check price on Amazon</AffiliateLink>
