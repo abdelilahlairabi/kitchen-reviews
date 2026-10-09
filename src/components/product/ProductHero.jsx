@@ -15,6 +15,7 @@ const ProductHero = ({ product, category }) => {
     return images.length ? images : (product.image ? [{ url: product.image, standardUrl: product.image, alt: product.name }] : []);
   }, [product.images, product.image, product.name]);
   const [activeImageUrl, setActiveImageUrl] = useState('');
+  const [showAllDetails, setShowAllDetails] = useState(false);
   const activeImage = gallery.find((image) => image.url === activeImageUrl) || gallery[0];
   const price = formatPrice(product.price);
   const originalPrice = formatPrice(product.originalPrice);
@@ -26,6 +27,7 @@ const ProductHero = ({ product, category }) => {
     const values = Array.isArray(group?.value) ? group.value : [group];
     return values.filter((variant) => /^[A-Z0-9]{10}$/i.test(String(variant?.asin || '').trim()) && variant?.value);
   });
+  const hasExpandableDetails = String(product.description || '').length > 360 || (product.features?.length || 0) > 4;
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -82,10 +84,16 @@ const ProductHero = ({ product, category }) => {
           </div>
           {product.isCouponAvailable && <p className="mb-4 text-sm font-medium text-green-800">A coupon may be available on Amazon. Check the current offer.</p>}
 
-          {product.description && <p className="mb-6 line-clamp-4 text-sm leading-6 text-gray-600">{product.description}</p>}
-          {product.features?.length > 0 && <ul className="mb-7 space-y-2.5">
-            {product.features.slice(0, 7).map((feature, index) => <li key={`${feature}-${index}`} className="flex items-start gap-2 text-sm leading-5 text-gray-700"><span className="mt-px text-green-700" aria-hidden="true">✓</span><span>{feature}</span></li>)}
+          {product.description && <p className={`mb-4 text-sm leading-6 text-gray-600 ${showAllDetails ? '' : 'line-clamp-4'}`}>{product.description}</p>}
+          {product.features?.length > 0 && <ul className={`space-y-2.5 ${hasExpandableDetails ? 'mb-2' : 'mb-7'}`}>
+            {product.features.slice(0, showAllDetails ? product.features.length : 4).map((feature, index) => <li key={`${feature}-${index}`} className="flex items-start gap-2 text-sm leading-5 text-gray-700"><span className="mt-px text-green-700" aria-hidden="true">✓</span><span>{feature}</span></li>)}
           </ul>}
+          {hasExpandableDetails && <button
+            type="button"
+            onClick={() => setShowAllDetails((expanded) => !expanded)}
+            aria-expanded={showAllDetails}
+            className="mb-7 inline-flex min-h-9 items-center text-sm font-semibold text-amber-800 underline decoration-amber-300 underline-offset-4 hover:text-amber-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-2"
+          >{showAllDetails ? 'Show less' : 'Show more'}</button>}
 
           {variants.length > 0 && <div className="mb-6">
             <h2 className="mb-2 text-sm font-semibold text-gray-800">Available options</h2>

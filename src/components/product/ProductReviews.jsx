@@ -89,12 +89,12 @@ const ProductReviews = ({ reviews = EMPTY_REVIEWS, rating, reviewCount, ratingDi
           {review.date && <p className="mb-3 text-xs text-gray-400">{review.date}</p>}
           {review.variation && Object.keys(review.variation).length > 0 && <p className="mb-3 text-xs text-gray-500">Variant: {Object.values(review.variation).filter((value) => typeof value === 'string' && !value.startsWith('/')).join(' · ')}</p>}
           <p className={`whitespace-pre-line text-sm leading-6 text-gray-700 ${hasLongText && !isExpanded ? 'line-clamp-6' : ''}`}>{review.text}</p>
-          {hasLongText && <button type="button" onClick={() => setExpandedReviews((current) => {
+          {hasLongText && <button type="button" aria-expanded={isExpanded} onClick={() => setExpandedReviews((current) => {
             const next = new Set(current);
             if (next.has(reviewKey)) next.delete(reviewKey); else next.add(reviewKey);
             return next;
           })} className="mt-2 text-sm font-semibold text-amber-800 underline decoration-amber-300 underline-offset-2 hover:text-amber-950">
-            {isExpanded ? 'Show less' : 'Read full review'}
+            {isExpanded ? 'Show less' : 'Show more'}
           </button>}
           {review.images?.length > 0 && <div className="mt-4 flex gap-2 overflow-x-auto">
             {review.images.map((image, imageIndex) => {
