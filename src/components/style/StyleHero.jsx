@@ -18,6 +18,8 @@ export default function StyleHero({ styleData }) {
           src={styleData.heroImage}
           alt=""
           aria-hidden="true"
+          width="1376"
+          height="768"
           className="absolute inset-0 w-full h-full object-cover"
           fetchPriority="high"
         />

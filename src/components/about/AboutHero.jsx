@@ -20,7 +20,9 @@ const AboutHero = () => {
         </div>
         <div className="flex-1 w-full">
           <img 
-            src="/about/about-hero-woman-cooking.jpeg" /*[cite: 25] */
+            src="/about/about-hero-woman-cooking.webp"
+            width="1200"
+            height="896"
             alt="Woman cooking in kitchen" 
             className="w-full h-auto rounded-3xl object-cover shadow-lg"
           />

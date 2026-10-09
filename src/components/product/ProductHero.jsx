@@ -45,7 +45,7 @@ const ProductHero = ({ product, category }) => {
         <div className="flex min-w-0 flex-col gap-4">
           <div className="flex h-[360px] items-center justify-center overflow-hidden rounded-2xl border border-gray-100 bg-white p-6 sm:h-[440px]">
             {activeImage ? (
-              <img src={activeImage.url} alt={activeImage.alt || product.name} className="max-h-full max-w-full object-contain" fetchPriority="high" />
+              <img src={activeImage.url} alt={activeImage.alt || product.name} width="672" height="672" className="max-h-full max-w-full object-contain" fetchPriority="high" />
             ) : <span className="text-sm text-gray-400">Product image unavailable</span>}
           </div>
           {gallery.length > 1 && <div className="flex gap-3 overflow-x-auto pb-2" aria-label="Product images">

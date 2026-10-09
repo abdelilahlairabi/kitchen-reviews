@@ -17,7 +17,7 @@ const AboutTestimonial = () => {
             <div className="font-bold text-black mb-2">- Emily R.</div>
             <div className="flex items-center gap-3">
               <img 
-                src="/about/testimonial-avatar-emily.jpeg" /*[cite: 25] */
+                src="/about/testimonial-avatar-emily.webp"
                 alt="Emily R." 
                 className="w-10 h-10 rounded-full object-cover"
               />

@@ -11,7 +11,7 @@ const AboutHeader = () => {
       
       <div 
         className="w-full h-48 md:h-64 bg-cover bg-center flex items-center justify-center relative"
-        style={{ backgroundImage: "url('/about/about-header-banner.jpeg')" }} /*[cite: 25] */
+        style={{ backgroundImage: "url('/about/about-header-banner.webp')" }}
       >
         <div className="absolute inset-0 bg-white/60"></div>
         <div className="relative z-10 text-center px-4">

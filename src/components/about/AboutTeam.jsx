@@ -1,7 +1,7 @@
 const teamData = [
-  { name: 'Ethan Reed', role: 'Founder & Editor', image: '/about/team-founder-editor.jpeg' },
-  { name: 'Sarah Chen', role: 'Kitchen Product Specialist', image: '/about/team-kitchen-specialist.jpeg' },
-  { name: 'Mark Johnson', role: 'Content Writer', image: '/about/team-content-writer.jpeg' },
+  { name: 'Ethan Reed', role: 'Founder & Editor', image: '/about/team-founder-editor.webp' },
+  { name: 'Sarah Chen', role: 'Kitchen Product Specialist', image: '/about/team-kitchen-specialist.webp' },
+  { name: 'Mark Johnson', role: 'Content Writer', image: '/about/team-content-writer.webp' },
 ];
 
 const AboutTeam = () => {

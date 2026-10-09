@@ -83,6 +83,8 @@ export default function GuideHeader({ guide }) {
         <img
           src={guide.image}
           alt={`${guide.title} — kitchen guide`}
+          width="1200"
+          height="675"
           className="w-full h-full object-cover"
           fetchPriority="high"
           decoding="async"

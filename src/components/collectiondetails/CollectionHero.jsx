@@ -16,6 +16,8 @@ export default function CollectionHero({ collection }) {
           src={collection.image}
           alt=""
           aria-hidden="true"
+          width="1376"
+          height="768"
           className="absolute inset-0 w-full h-full object-cover"
           fetchPriority="high"
         />

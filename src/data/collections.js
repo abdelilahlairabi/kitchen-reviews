@@ -6,7 +6,7 @@ export const collections = [
     name: 'Modern Farmhouse Essentials',
     featured: true,
     badge: 'Featured',
-    image: '/collections/collection-featured-modern-farmhouse.jpeg',
+    image: '/collections/collection-featured-modern-farmhouse.webp',
     subtitle: 'Warm finishes and hardworking essentials for a relaxed, practical kitchen.',
     introText: 'A farmhouse-inspired kitchen can feel welcoming without leaning on distressed finishes or decorative clutter. This selection pairs classic bridge faucets and practical sink options with a movable island, simple lighting, and useful cookware. Use it as a starting point, then adapt the mix to your layout, care preferences, and budget.',
     productSlugs: [
@@ -44,7 +44,7 @@ export const collections = [
     name: 'Small Kitchen Essentials',
     featured: false,
     badge: 'Small-space picks',
-    image: '/collections/collection-small-kitchen-essentials.jpeg',
+    image: '/collections/collection-small-kitchen-essentials.webp',
     subtitle: 'Compact tools and flexible equipment for kitchens where every surface matters.',
     introText: 'A small kitchen benefits from equipment that earns its storage space. This collection focuses on compact prep tools and versatile appliances rather than large fixed upgrades. Before buying, measure the counter, cabinet, and storage space you actually have, including room to open lids, drawers, and appliance doors.',
     productSlugs: [
@@ -87,7 +87,7 @@ export const collections = [
     name: 'Budget-Friendly Upgrades',
     featured: false,
     badge: 'Value-minded',
-    image: '/collections/collection-budget-friendly.jpeg',
+    image: '/collections/collection-budget-friendly.webp',
     subtitle: 'Useful everyday picks chosen for function before decorative extras.',
     introText: 'A thoughtful kitchen refresh does not have to start with a full renovation. This group emphasizes useful appliances, cookware, and lighting that can solve a specific everyday need. Compare current prices and warranty terms, and avoid paying for functions or accessories you are unlikely to use.',
     productSlugs: [
@@ -130,7 +130,7 @@ export const collections = [
     name: 'Premium Kitchen Picks',
     featured: false,
     badge: 'Premium materials',
-    image: '/collections/collection-luxury-must-haves.jpeg',
+    image: '/collections/collection-luxury-must-haves.webp',
     subtitle: 'Higher-end appliances, cookware, and fixtures for considered kitchen upgrades.',
     introText: 'Premium purchases should earn their place through fit, function, serviceability, and finish—not price alone. This collection brings together higher-ticket items from the current catalog. Compare exact dimensions, installation needs, warranty coverage, and care requirements before committing to a large purchase.',
     productSlugs: [
@@ -170,7 +170,7 @@ export const collections = [
     name: 'Scandinavian Minimalist',
     featured: false,
     badge: 'Nordic-inspired',
-    image: '/collections/collection-scandinavian-minimalist.jpeg',
+    image: '/collections/collection-scandinavian-minimalist.webp',
     subtitle: 'Soft neutrals, natural textures, and a calm approach to useful kitchen details.',
     introText: 'A Scandinavian-inspired kitchen balances a light, uncluttered look with hardworking storage and comfortable task lighting. Natural wood, pale colors, and simple forms can help create a calm backdrop; the most successful choices are still the ones that fit your cleaning routine and how you cook.',
     productSlugs: [
@@ -208,7 +208,7 @@ export const collections = [
     name: 'Rustic Wood Accents',
     featured: false,
     badge: 'Natural materials',
-    image: '/collections/collection-rustic-wood-accents.jpeg',
+    image: '/collections/collection-rustic-wood-accents.webp',
     subtitle: 'A couple of real wood details for a warmer kitchen.',
     introText: 'The current catalog has two clearly identified wood accents: an acacia serving plate and a knife set with a pinewood block. We have kept this collection focused rather than filling it with products that only look rustic. Check care instructions and keep wood away from prolonged moisture and direct heat.',
     productSlugs: [
@@ -240,7 +240,7 @@ export const collections = [
     name: 'Smart & Precision Kitchen Tools',
     featured: false,
     badge: 'Cooking technology',
-    image: '/collections/collection-smart-kitchen-tech.jpeg',
+    image: '/collections/collection-smart-kitchen-tech.webp',
     subtitle: 'Programmable and temperature-focused tools for more controlled everyday cooking.',
     introText: 'Technology is useful when it makes a cooking task easier to repeat, monitor, or control. This selection focuses on programmable timing and temperature-oriented tools rather than assuming every appliance needs an app. Compare controls, cleaning, capacity, power requirements, and what happens if a feature or connection stops working.',
     productSlugs: [
@@ -279,7 +279,7 @@ export const collections = [
     name: 'Home Coffee Corner',
     featured: false,
     badge: 'Coffee equipment',
-    image: '/collections/collection-coffee-espresso-corner.jpeg',
+    image: '/collections/collection-coffee-espresso-corner.webp',
     subtitle: 'Compare drip, specialty, and hot-or-iced coffee makers at home.',
     introText: 'A useful home coffee station begins with the brewing style you enjoy and enough room to use and clean it. The current catalog includes programmable drip, single-serve, and hot-or-iced coffee makers, plus a compact rack for organizing the station. Choose the capacity and workflow that fit your mornings rather than buying every style of brewer.',
     productSlugs: [
@@ -316,7 +316,7 @@ export const collections = [
     name: 'Flexible & Multi-Use Kitchen Tools',
     featured: false,
     badge: 'Multi-use picks',
-    image: '/collections/collection-eco-friendly-kitchen.jpeg',
+    image: '/collections/collection-eco-friendly-kitchen.webp',
     subtitle: 'Adaptable tools for batch preparation, everyday cooking, and fresh herbs.',
     introText: 'The products in this collection are selected for having more than one useful role in a home kitchen; this is not an independently certified sustainability rating. Before buying, compare the functions you will actually use, the product’s expected care routine, and whether it can replace equipment you already own.',
     productSlugs: [

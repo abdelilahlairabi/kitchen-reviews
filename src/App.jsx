@@ -42,7 +42,10 @@ export function AppContent() {
     <div className="min-h-screen flex flex-col font-sans bg-white">
       <Navbar />
 
-      <main className="flex-grow w-full pb-12">
+      {/* Keep the shared footer below the initial mobile viewport while lazy route chunks load.
+          Otherwise the short Suspense fallback puts the footer on screen, then shifts it down
+          when the real page replaces the fallback (a large CLS on every non-home route). */}
+      <main className="min-h-[120svh] flex-grow w-full pb-12">
         <Suspense fallback={pageLoadingFallback}>
           <Routes>
             <Route path="/" element={<Home />} />

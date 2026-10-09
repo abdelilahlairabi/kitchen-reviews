@@ -66,7 +66,7 @@ export const categories = [
     slug: "utensils",
     name: "Utensils",
     description: "Knives, cutting boards and everyday essentials",
-    heroImage: "/categories/category-utensils.jpeg",
+    heroImage: "/categories/category-utensils.webp",
     subFilters: ["Knife Sets", "Cutting Boards", "Spatulas", "Measuring Tools", "Peelers", "Tongs"],
     buyingGuide: {
       title: "How to Choose Kitchen Utensils",
@@ -81,7 +81,7 @@ export const categories = [
     slug: "kitchen-islands",
     name: "Kitchen Islands",
     description: "Add space and style with a kitchen island",
-    heroImage: "/categories/category-kitchen-islands.jpeg",
+    heroImage: "/categories/category-kitchen-islands.webp",
     subFilters: ["Rolling Carts", "Stationary Islands", "Drop-Leaf", "Butcher Block Top", "Stainless Steel Top"],
     buyingGuide: {
       title: "How to Choose a Kitchen Island",
@@ -96,7 +96,7 @@ export const categories = [
     slug: "lighting",
     name: "Lighting",
     description: "Pendant lights and fixtures for your kitchen",
-    heroImage: "/categories/category-lighting.jpeg",
+    heroImage: "/categories/category-lighting.webp",
     subFilters: ["Pendant Lights", "Chandeliers", "Flush Mount", "Under Cabinet", "Track Lighting", "Industrial"],
     buyingGuide: {
       title: "How to Choose Kitchen Lighting",
@@ -113,7 +113,7 @@ export const categories = [
     slug: "bakeware",
     name: "Bakeware",
     description: "High-quality baking pans, sheets, and molds",
-    heroImage: "/categories/category-bakeware.jpeg",
+    heroImage: "/categories/category-bakeware.webp",
     subFilters: ["Baking Sheets", "Cake Pans", "Muffin Pans", "Loaf Pans", "Casserole Dishes", "Silicone Mats"],
     buyingGuide: {
       title: "How to Choose Bakeware",
@@ -128,7 +128,7 @@ export const categories = [
     slug: "cabinets",
     name: "Cabinets",
     description: "Stylish and functional kitchen cabinetry",
-    heroImage: "/categories/category-cabinets.jpeg",
+    heroImage: "/categories/category-cabinets.webp",
     subFilters: ["Base Cabinets", "Wall Cabinets", "Pantry Cabinets", "Shaker Style", "Modern Flat-Panel"],
     buyingGuide: {
       title: "How to Choose Kitchen Cabinets",
@@ -143,7 +143,7 @@ export const categories = [
     slug: "countertops",
     name: "Countertops",
     description: "Durable and elegant surfaces for your workspace",
-    heroImage: "/categories/category-countertops.jpeg",
+    heroImage: "/categories/category-countertops.webp",
     subFilters: ["Quartz", "Granite", "Butcher Block", "Marble", "Laminate", "Concrete"],
     buyingGuide: {
       title: "How to Choose Countertops",
@@ -158,7 +158,7 @@ export const categories = [
     slug: "kitchen-stands",
     name: "Kitchen Stands",
     description: "Versatile stands and carts for extra storage",
-    heroImage: "/categories/category-kitchen-stands.jpeg",
+    heroImage: "/categories/category-kitchen-stands.webp",
     subFilters: ["Microwave Stands", "Bakers Racks", "Bar Carts", "Wire Shelving", "Wood Stands"],
     buyingGuide: {
       title: "How to Choose Kitchen Stands",
@@ -188,7 +188,7 @@ export const categories = [
     slug: "utensil-organizers",
     name: "Utensil Organizers",
     description: "Keep your tools sorted and accessible",
-    heroImage: "/categories/category-utensil-organizers.jpeg",
+    heroImage: "/categories/category-utensil-organizers.webp",
     subFilters: ["Drawer Dividers", "Utensil Crocks", "Knife Blocks", "Magnetic Knife Strips", "Silverware Trays"],
     buyingGuide: {
       title: "How to Choose Utensil Organizers",
@@ -203,7 +203,7 @@ export const categories = [
     slug: "water-filters",
     name: "Water Filters",
     description: "Clean, fresh, and purified drinking water",
-    heroImage: "/categories/category-water-filters.jpeg",
+    heroImage: "/categories/category-water-filters.webp",
     subFilters: ["Under Sink", "Pitchers", "Faucet Attachments", "Reverse Osmosis", "Countertop Filters"],
     buyingGuide: {
       title: "How to Choose a Water Filter",
