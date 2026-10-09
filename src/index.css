@@ -5,6 +5,13 @@
   --color-amazon-dark: #0f1111;
 }
 
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 body {
   background-color: #f8f9fa;
   color: var(--color-amazon-dark);
