@@ -12,6 +12,17 @@ const priceRanges = {
   'over-500': { minimumPrice: 500.01 },
 };
 
+const getProductImageSrcSet = (src) => {
+  if (!src?.startsWith('https://m.media-amazon.com/images/I/')) return undefined;
+
+  const amazonSizePattern = /\._AC_[A-Z0-9_]+(?=\.(?:jpe?g|png|webp)(?:\?|$))/i;
+  if (!amazonSizePattern.test(src)) return undefined;
+
+  return [480, 720, 960]
+    .map((width) => `${src.replace(amazonSizePattern, `._AC_SX${width}_`)} ${width}w`)
+    .join(', ');
+};
+
 const StarIcon = ({ filled }) => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill={filled ? '#dcb589' : '#e5e7eb'} stroke={filled ? '#dcb589' : '#e5e7eb'} strokeWidth="2">
     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -63,7 +74,15 @@ const ProductGrid = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {products.map((product, index) => (
               <article key={product.id} className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col hover:shadow-lg transition-shadow duration-300">
-                <ProductImageFrame src={product.image} alt={product.name} className="mb-4" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : undefined}>
+                <ProductImageFrame
+                  src={product.image}
+                  srcSet={getProductImageSrcSet(product.image)}
+                  sizes="(max-width: 639px) calc(100vw - 64px), (max-width: 1023px) calc(50vw - 64px), 320px"
+                  alt={product.name}
+                  className="mb-4"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={index === 0 ? 'high' : undefined}
+                >
                   <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
                   {product.badge && <span className="absolute top-2 left-2 bg-[#dcb589] text-black text-xs font-bold px-2 py-1 rounded">{product.badge}</span>}
                 </ProductImageFrame>
