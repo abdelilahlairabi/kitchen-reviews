@@ -70,9 +70,9 @@ function ProductShelf({ title, description, icon: Icon, slugs, products, isPendi
       ) : products.length === 0 ? (
         <p className="rounded-xl border border-dashed border-gray-300 bg-[#faf9f6] px-5 py-8 text-center text-sm text-gray-500">These products are no longer available in the catalog.</p>
       ) : (
-        <div ref={carouselRef} role="region" aria-label={`${title} products`} tabIndex={0} className="flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400 sm:gap-5">
+        <div ref={carouselRef} role="region" aria-label={`${title} products`} tabIndex={0} className="hide-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400 sm:gap-5">
           {products.map((product) => (
-            <article key={product.id} className="flex min-w-0 shrink-0 basis-[calc((100%-0.75rem)/2)] snap-start flex-col rounded-2xl border border-gray-200 bg-white p-3 transition duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-lg sm:basis-[calc((100%-2.5rem)/3)] sm:p-4 xl:basis-[calc((100%-3.75rem)/4)]">
+            <article key={product.id} className="flex min-w-0 shrink-0 basis-[calc((100%-2.25rem)/2.25)] snap-start flex-col rounded-2xl border border-gray-200 bg-white p-3 transition duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-lg sm:basis-[calc((100%-5rem)/3.25)] sm:p-4 xl:basis-[calc((100%-5rem)/4.25)]">
               <div className="relative mb-4">
                 <Link to={`/product/${product.slug}`} aria-label={`View ${product.name}`} className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950">
                   <ProductImageFrame src={product.image} alt={product.name} />
