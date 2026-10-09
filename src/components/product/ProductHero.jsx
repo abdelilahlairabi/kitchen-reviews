@@ -4,6 +4,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import AffiliateLink from '../AffiliateLink';
 import SaveProductButton from '../SaveProductButton';
 import { createAmazonVariantUrl } from '../../utils/affiliate';
+import { getAmazonImageSrcSets } from '../../utils/amazonImageSrcSets';
 
 const formatPrice = (value) => {
   const amount = Number(value);
@@ -21,6 +22,7 @@ const ProductHero = ({ product, category }) => {
   const [showAllDetails, setShowAllDetails] = useState(false);
   const [showAllVariants, setShowAllVariants] = useState(false);
   const activeImage = gallery.find((image) => image.url === activeImageUrl) || gallery[0];
+  const activeImageSrcSets = getAmazonImageSrcSets(activeImage?.url);
   const price = formatPrice(product.price);
   const originalPrice = formatPrice(product.originalPrice);
   const hasRating = product.rating !== null && product.rating !== undefined && product.rating !== '' && Number.isFinite(Number(product.rating));
@@ -45,18 +47,52 @@ const ProductHero = ({ product, category }) => {
         <div className="flex min-w-0 flex-col gap-4">
           <div className="flex h-[360px] items-center justify-center overflow-hidden rounded-2xl border border-gray-100 bg-white p-6 sm:h-[440px]">
             {activeImage ? (
-              <img src={activeImage.url} alt={activeImage.alt || product.name} width="672" height="672" className="max-h-full max-w-full object-contain" fetchPriority="high" />
+              <picture className="flex h-full w-full items-center justify-center">
+                {activeImageSrcSets.avifSrcSet && <source type="image/avif" srcSet={activeImageSrcSets.avifSrcSet} sizes="(max-width: 767px) calc(100vw - 80px), (max-width: 1279px) calc(50vw - 80px), 560px" />}
+                {activeImageSrcSets.webpSrcSet && <source type="image/webp" srcSet={activeImageSrcSets.webpSrcSet} sizes="(max-width: 767px) calc(100vw - 80px), (max-width: 1279px) calc(50vw - 80px), 560px" />}
+                <img
+                  src={activeImage.url}
+                  srcSet={activeImageSrcSets.srcSet}
+                  sizes="(max-width: 767px) calc(100vw - 80px), (max-width: 1279px) calc(50vw - 80px), 560px"
+                  alt={activeImage.alt || product.name}
+                  width="672"
+                  height="672"
+                  className="max-h-full max-w-full object-contain"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </picture>
             ) : <span className="text-sm text-gray-400">Product image unavailable</span>}
           </div>
           {gallery.length > 1 && <div className="flex gap-3 overflow-x-auto pb-2" aria-label="Product images">
-            {gallery.map((image, index) => <button
-              key={`${image.url}-${index}`}
-              type="button"
-              onClick={() => setActiveImageUrl(image.url)}
-              aria-label={`Show product image ${index + 1}`}
-              aria-pressed={(activeImage?.url || '') === image.url}
-              className={`h-20 w-20 shrink-0 rounded-lg border bg-white p-2 transition-colors ${activeImage?.url === image.url ? 'border-gray-900' : 'border-gray-200 hover:border-gray-500'}`}
-            ><img src={image.standardUrl || image.url} alt="" className="h-full w-full object-contain" loading="lazy" /></button>)}
+            {gallery.map((image, index) => {
+              const thumbnailUrl = image.standardUrl || image.url;
+              const thumbnailSrcSets = getAmazonImageSrcSets(thumbnailUrl);
+              return <button
+                key={`${image.url}-${index}`}
+                type="button"
+                onClick={() => setActiveImageUrl(image.url)}
+                aria-label={`Show product image ${index + 1}`}
+                aria-pressed={(activeImage?.url || '') === image.url}
+                className={`h-20 w-20 shrink-0 rounded-lg border bg-white p-2 transition-colors ${activeImage?.url === image.url ? 'border-gray-900' : 'border-gray-200 hover:border-gray-500'}`}
+              >
+                <picture className="block h-full w-full">
+                  {thumbnailSrcSets.avifSrcSet && <source type="image/avif" srcSet={thumbnailSrcSets.avifSrcSet} sizes="64px" />}
+                  {thumbnailSrcSets.webpSrcSet && <source type="image/webp" srcSet={thumbnailSrcSets.webpSrcSet} sizes="64px" />}
+                  <img
+                    src={thumbnailUrl}
+                    srcSet={thumbnailSrcSets.srcSet}
+                    sizes="64px"
+                    alt=""
+                    width="160"
+                    height="160"
+                    className="h-full w-full object-contain"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </button>;
+            })}
           </div>}
         </div>
 

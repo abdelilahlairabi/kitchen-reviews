@@ -2,6 +2,7 @@ import { ArrowRight, BookOpen, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ProductImageFrame from '../ProductImageFrame';
 import SaveProductButton from '../SaveProductButton';
+import { getAmazonImageSrcSets } from '../../utils/amazonImageSrcSets';
 
 const ResourceLink = ({ to, kind, title, description }) => (
   <Link
@@ -34,10 +35,19 @@ const RelatedProductCard = ({ product }) => {
   const reviewCount = Number(product.reviewCount);
   const price = formatPrice(product.price);
   const originalPrice = formatPrice(product.originalPrice);
+  const imageSrcSets = getAmazonImageSrcSets(product.image);
 
   return (
     <article className="group flex min-w-0 flex-col rounded-2xl border border-gray-200 bg-white p-3 transition-shadow hover:shadow-md sm:p-4">
-      <ProductImageFrame src={product.image} alt={product.name} className="mb-4">
+      <ProductImageFrame
+        src={product.image}
+        srcSet={imageSrcSets.srcSet}
+        webpSrcSet={imageSrcSets.webpSrcSet}
+        avifSrcSet={imageSrcSets.avifSrcSet}
+        sizes="(max-width: 767px) calc(50vw - 34px), (max-width: 1279px) calc((100vw - 176px) / 3), 340px"
+        alt={product.name}
+        className="mb-4"
+      >
         {product.badge && <span className="absolute left-3 top-3 z-10 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-gray-800">{product.badge}</span>}
         <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
       </ProductImageFrame>
