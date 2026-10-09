@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { Check, ChevronDown } from 'lucide-react';
 
-export default function FilterDropdown({ label, options, value, onChange, className = '', menuClassName = '' }) {
+export default function FilterDropdown({ label, options, value, onChange, className = '', menuAlign = 'left' }) {
   const [isOpen, setIsOpen] = useState(false);
   const rootRef = useRef(null);
   const triggerRef = useRef(null);
@@ -51,7 +51,7 @@ export default function FilterDropdown({ label, options, value, onChange, classN
       </button>
 
       {isOpen && (
-        <div id={menuId} role="group" aria-label={label} className={`absolute left-0 top-full z-50 mt-2 max-h-60 w-[min(19rem,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-2xl border border-gray-200 bg-white p-1.5 shadow-xl ${menuClassName}`}>
+        <div id={menuId} role="group" aria-label={label} className={`absolute ${menuAlign === 'right' ? 'right-0' : 'left-0'} top-full z-50 mt-2 max-h-60 w-[min(19rem,calc(100vw-2rem))] overflow-y-auto overscroll-contain rounded-2xl border border-gray-200 bg-white p-1.5 shadow-xl`}>
           {options.map((option) => {
             const isSelected = option.value === value;
             return (

@@ -169,7 +169,7 @@ const ProductFilters = () => {
             <SlidersHorizontal aria-hidden="true" className="h-4 w-4" />
             Filters{activeCount > 0 && <span className="inline-flex min-w-5 items-center justify-center rounded-full bg-[#dcb589] px-1.5 py-0.5 text-[11px] font-bold text-black">{activeCount}</span>}
           </button>
-          <FilterDropdown label="Sort products" options={sortOptions} value={sort} onChange={(value) => updateFilter('sort', value)} menuClassName="left-auto right-0" />
+          <FilterDropdown label="Sort products" options={sortOptions} value={sort} onChange={(value) => updateFilter('sort', value)} menuAlign="right" />
         </div>
 
         <div className="hidden flex-wrap items-end gap-3 md:flex">
@@ -178,7 +178,7 @@ const ProductFilters = () => {
           <FilterField label="Rating"><FilterDropdown label="Filter by rating" options={ratingOptions} value={rating} onChange={(value) => updateFilter('rating', value)} className="w-[160px]" /></FilterField>
           {selectedTypeOptions.length > 0 && <FilterField label="Product type"><FilterDropdown label="Filter by product type" options={[{ value: '', label: 'All types' }, ...selectedTypeOptions.map((item) => ({ value: item, label: item }))]} value={type} onChange={(value) => updateFilter('type', value)} className="w-[180px]" /></FilterField>}
           <BrandFilterField key={brand} value={brand} onApply={(value) => updateFilter('brand', value)} />
-          <FilterField label="Sort by" className="ml-auto"><FilterDropdown label="Sort products" options={sortOptions} value={sort} onChange={(value) => updateFilter('sort', value)} className="w-[190px]" /></FilterField>
+          <FilterField label="Sort by" className="ml-auto"><FilterDropdown label="Sort products" options={sortOptions} value={sort} onChange={(value) => updateFilter('sort', value)} className="w-[190px]" menuAlign="right" /></FilterField>
         </div>
 
         {hasFilters && (
