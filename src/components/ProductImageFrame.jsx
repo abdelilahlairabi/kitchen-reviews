@@ -3,6 +3,7 @@ export default function ProductImageFrame({
   src,
   alt,
   srcSet,
+  webpSrcSet,
   sizes,
   className = '',
   children,
@@ -11,18 +12,21 @@ export default function ProductImageFrame({
 }) {
   return (
     <div className={`relative aspect-square w-full overflow-hidden rounded-xl border border-[#e9e3d9] bg-[#f4f1eb] ${className}`}>
-      <img
-        src={src}
-        srcSet={srcSet}
-        sizes={sizes}
-        alt={alt}
-        width="672"
-        height="672"
-        className="h-full w-full object-cover"
-        loading={loading}
-        fetchPriority={fetchPriority}
-        decoding="async"
-      />
+      <picture className="block h-full w-full">
+        {webpSrcSet && <source type="image/webp" srcSet={webpSrcSet} sizes={sizes} />}
+        <img
+          src={src}
+          srcSet={srcSet}
+          sizes={sizes}
+          alt={alt}
+          width="672"
+          height="672"
+          className="h-full w-full object-cover"
+          loading={loading}
+          fetchPriority={fetchPriority}
+          decoding="async"
+        />
+      </picture>
       {children}
     </div>
   );
