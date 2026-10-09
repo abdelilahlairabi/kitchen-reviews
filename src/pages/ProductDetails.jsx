@@ -10,6 +10,8 @@ import NotFound from './NotFound';
 import PageMeta from '../components/PageMeta';
 import useProductSlugs from '../hooks/useProductSlugs';
 import { RECENT_PRODUCTS_KEY } from '../utils/productPreferences';
+import { guidesData } from '../data/guides';
+import { collections } from '../data/collections';
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -30,6 +32,12 @@ const ProductDetails = () => {
 
   const category = getCategoryBySlug(product.categorySlug);
   const relatedProducts = (relatedData?.products || []).filter((item) => item.id !== product.id).slice(0, 3);
+  const relatedGuides = guidesData
+    .filter((guide) => guide.recommendedProductSlugs?.includes(product.slug))
+    .slice(0, 1);
+  const relatedCollections = collections
+    .filter((collection) => collection.productSlugs?.includes(product.slug))
+    .slice(0, 1);
 
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen">
@@ -46,7 +54,12 @@ const ProductDetails = () => {
         ratingDistribution={product.ratingDistribution}
         sourceMarketplace={product.sourceMarketplace}
       />
-      <ProductRelated products={relatedProducts} />
+      <ProductRelated
+        products={relatedProducts}
+        category={category}
+        guides={relatedGuides}
+        collections={relatedCollections}
+      />
     </div>
   );
 };
