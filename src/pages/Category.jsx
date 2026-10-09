@@ -33,7 +33,7 @@ const Category = () => {
       <CategoryHero category={category} productCount={data?.total || 0} />
       <CategoryFilters category={category} />
       {isLoadingProducts ? <p className="py-16 text-center text-gray-500">Loading products...</p> : <CategoryProductGrid products={data?.products || []} total={data?.total || 0} pageSize={PRODUCT_PAGE_SIZE} page={requestedPage} />}
-      <RelatedCategories categories={categories} currentSlug={category.slug} />
+      {!isLoadingProducts && <RelatedCategories categories={categories} currentSlug={category.slug} />}
     </div>
   );
 };
