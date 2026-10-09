@@ -7,6 +7,7 @@ export const categories = [
     name: "Kitchen Faucets",
     description: "Explore our top-rated faucets for every kitchen style",
     heroImage: "/categories/category-faucets.webp",
+    heroImageWidth: 1024,
     subFilters: ["Pull-Down", "Touchless", "Bridge", "Wall-Mount", "Commercial-Style"],
     buyingGuide: {
       title: "How to Choose the Right Kitchen Faucet",
@@ -22,6 +23,7 @@ export const categories = [
     name: "Kitchen Sinks",
     description: "Durable, stylish sinks for every kitchen layout",
     heroImage: "/categories/category-sinks.webp",
+    heroImageWidth: 1024,
     subFilters: ["Undermount", "Farmhouse", "Drop-In", "Double-Bowl", "Stainless Steel", "Fireclay"],
     buyingGuide: {
       title: "How to Choose the Right Kitchen Sink",
@@ -37,6 +39,7 @@ export const categories = [
     name: "Cookware",
     description: "Pots, pans and everything you need to cook well",
     heroImage: "/categories/category-cookware.webp",
+    heroImageWidth: 1200,
     subFilters: ["Cookware Sets", "Dutch Ovens", "Skillets & Pans", "Stainless Steel", "Cast Iron", "Non-Stick"],
     buyingGuide: {
       title: "How to Choose Quality Cookware",
@@ -52,6 +55,7 @@ export const categories = [
     name: "Small Appliances",
     description: "Mixers, blenders, coffee makers and more",
     heroImage: "/categories/category-small-appliances.webp",
+    heroImageWidth: 1200,
     subFilters: ["Stand Mixers", "Blenders", "Coffee Makers", "Toasters", "Air Fryers", "Slow Cookers"],
     buyingGuide: {
       title: "How to Choose Small Appliances",
@@ -67,6 +71,7 @@ export const categories = [
     name: "Utensils",
     description: "Knives, cutting boards and everyday essentials",
     heroImage: "/categories/category-utensils.webp",
+    heroImageWidth: 1200,
     subFilters: ["Knife Sets", "Cutting Boards", "Spatulas", "Measuring Tools", "Peelers", "Tongs"],
     buyingGuide: {
       title: "How to Choose Kitchen Utensils",
@@ -82,6 +87,7 @@ export const categories = [
     name: "Kitchen Islands",
     description: "Add space and style with a kitchen island",
     heroImage: "/categories/category-kitchen-islands.webp",
+    heroImageWidth: 1200,
     subFilters: ["Rolling Carts", "Stationary Islands", "Drop-Leaf", "Butcher Block Top", "Stainless Steel Top"],
     buyingGuide: {
       title: "How to Choose a Kitchen Island",
@@ -97,6 +103,7 @@ export const categories = [
     name: "Lighting",
     description: "Pendant lights and fixtures for your kitchen",
     heroImage: "/categories/category-lighting.webp",
+    heroImageWidth: 1024,
     subFilters: ["Pendant Lights", "Chandeliers", "Flush Mount", "Under Cabinet", "Track Lighting", "Industrial"],
     buyingGuide: {
       title: "How to Choose Kitchen Lighting",
@@ -114,6 +121,7 @@ export const categories = [
     name: "Bakeware",
     description: "High-quality baking pans, sheets, and molds",
     heroImage: "/categories/category-bakeware.webp",
+    heroImageWidth: 1200,
     subFilters: ["Baking Sheets", "Cake Pans", "Muffin Pans", "Loaf Pans", "Casserole Dishes", "Silicone Mats"],
     buyingGuide: {
       title: "How to Choose Bakeware",
@@ -129,6 +137,7 @@ export const categories = [
     name: "Cabinets",
     description: "Stylish and functional kitchen cabinetry",
     heroImage: "/categories/category-cabinets.webp",
+    heroImageWidth: 1024,
     subFilters: ["Base Cabinets", "Wall Cabinets", "Pantry Cabinets", "Shaker Style", "Modern Flat-Panel"],
     buyingGuide: {
       title: "How to Choose Kitchen Cabinets",
@@ -144,6 +153,7 @@ export const categories = [
     name: "Countertops",
     description: "Durable and elegant surfaces for your workspace",
     heroImage: "/categories/category-countertops.webp",
+    heroImageWidth: 1024,
     subFilters: ["Quartz", "Granite", "Butcher Block", "Marble", "Laminate", "Concrete"],
     buyingGuide: {
       title: "How to Choose Countertops",
@@ -159,6 +169,7 @@ export const categories = [
     name: "Kitchen Stands",
     description: "Versatile stands and carts for extra storage",
     heroImage: "/categories/category-kitchen-stands.webp",
+    heroImageWidth: 1200,
     subFilters: ["Microwave Stands", "Bakers Racks", "Bar Carts", "Wire Shelving", "Wood Stands"],
     buyingGuide: {
       title: "How to Choose Kitchen Stands",
@@ -174,6 +185,7 @@ export const categories = [
     name: "Storage Organization",
     description: "Smart solutions to keep your kitchen tidy",
     heroImage: "/categories/category-storage-organization.webp",
+    heroImageWidth: 1200,
     subFilters: ["Food Storage Containers", "Spice Racks", "Pantry Bins", "Pot Racks", "Dish Racks"],
     buyingGuide: {
       title: "How to Choose Storage Solutions",
@@ -189,6 +201,7 @@ export const categories = [
     name: "Utensil Organizers",
     description: "Keep your tools sorted and accessible",
     heroImage: "/categories/category-utensil-organizers.webp",
+    heroImageWidth: 1200,
     subFilters: ["Drawer Dividers", "Utensil Crocks", "Knife Blocks", "Magnetic Knife Strips", "Silverware Trays"],
     buyingGuide: {
       title: "How to Choose Utensil Organizers",
@@ -204,6 +217,7 @@ export const categories = [
     name: "Water Filters",
     description: "Clean, fresh, and purified drinking water",
     heroImage: "/categories/category-water-filters.webp",
+    heroImageWidth: 1200,
     subFilters: ["Under Sink", "Pitchers", "Faucet Attachments", "Reverse Osmosis", "Countertop Filters"],
     buyingGuide: {
       title: "How to Choose a Water Filter",
