@@ -104,6 +104,7 @@ export async function fetchProducts({
   let query = supabase
     .from('products')
     .select(`${productColumns}, categories!inner(slug)`, { count: 'exact' })
+    .eq('is_active', true)
     .order(sortRule.column, { ascending: sortRule.ascending })
     .order('id', { ascending: true })
     .range(from, to);
@@ -124,8 +125,9 @@ export async function fetchProducts({
       `brand_name.ilike.${searchPattern}`,
       `model_number.ilike.${searchPattern}`,
     ].join(',');
-    // Keep the two OR groups explicitly ANDed into one PostgREST filter.
-    query = query.and(`or(${validAmazonAffiliateUrlFilter}),or(${searchFilters})`);
+    // Supabase's PostgREST builder exposes `.or()` (not `.and()`). Nest both
+    // OR groups under AND so search still requires a valid Amazon destination.
+    query = query.or(`and(or(${validAmazonAffiliateUrlFilter}),or(${searchFilters}))`);
   } else query = query.or(validAmazonAffiliateUrlFilter);
   if (signal) query = query.abortSignal(signal);
 
@@ -147,6 +149,7 @@ export async function fetchProductBySlug(slug) {
   const { data: product, error: productError } = await supabase
     .from('products')
     .select(`${productColumns}, categories(slug)`)
+    .eq('is_active', true)
     .or(validAmazonAffiliateUrlFilter)
     .eq('slug', safeSlug)
     .maybeSingle();
@@ -207,6 +210,7 @@ export async function fetchProductsBySlugs(slugs) {
   const { data, error } = await supabase
     .from('products')
     .select(productColumns)
+    .eq('is_active', true)
     .or(validAmazonAffiliateUrlFilter)
     .in('slug', safeSlugs);
 

@@ -11,3 +11,29 @@ export const isValidAmazonProductUrl = (value) => {
     return false;
   }
 };
+
+export const createAmazonVariantUrl = ({ asin, marketplace = 'amazon.com', affiliateUrl = '' }) => {
+  const normalizedAsin = String(asin || '').trim().toUpperCase();
+  if (!/^[A-Z0-9]{10}$/.test(normalizedAsin)) return null;
+
+  let hostname = 'amazon.com';
+  try {
+    const parsedMarketplace = new URL(`https://${marketplace}`).hostname.toLowerCase();
+    if (/^(?:www\.)?amazon\.[a-z.]+$/.test(parsedMarketplace)) {
+      hostname = parsedMarketplace.replace(/^www\./, '');
+    }
+  } catch {
+    // Use the supported default marketplace when the source value is malformed.
+  }
+
+  const url = new URL(`/dp/${normalizedAsin}`, `https://${hostname}`);
+  try {
+    const sourceUrl = new URL(affiliateUrl);
+    const trackingTag = sourceUrl.searchParams.get('tag');
+    if (trackingTag) url.searchParams.set('tag', trackingTag);
+  } catch {
+    // A variant can still link to its exact product when the main URL is unavailable.
+  }
+
+  return url.toString();
+};

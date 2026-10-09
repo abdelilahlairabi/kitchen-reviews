@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AffiliateLink from '../AffiliateLink';
 import SaveProductButton from '../SaveProductButton';
+import { createAmazonVariantUrl } from '../../utils/affiliate';
 
 const formatPrice = (value) => {
   const amount = Number(value);
@@ -21,15 +22,9 @@ const ProductHero = ({ product, category }) => {
   const roundedRating = hasRating ? Math.max(0, Math.min(5, Math.round(Number(product.rating)))) : 0;
   const marketplace = String(product.sourceMarketplace || 'amazon.com').toLowerCase();
   const validMarketplace = /^amazon\.[a-z.]+$/.test(marketplace) ? marketplace : 'amazon.com';
-  let affiliateTag = '';
-  try {
-    affiliateTag = new URL(product.affiliateUrl).searchParams.get('tag') || '';
-  } catch {
-    // Some affiliate links are short links; keep the primary URL as the fallback.
-  }
   const variants = (product.variants || []).flatMap((group) => {
     const values = Array.isArray(group?.value) ? group.value : [group];
-    return values.filter((variant) => variant?.asin && variant?.value);
+    return values.filter((variant) => /^[A-Z0-9]{10}$/i.test(String(variant?.asin || '').trim()) && variant?.value);
   });
 
   return (
@@ -96,9 +91,12 @@ const ProductHero = ({ product, category }) => {
             <h2 className="mb-2 text-sm font-semibold text-gray-800">Available options</h2>
             <div className="flex flex-wrap gap-2">
               {variants.map((variant) => {
-                const url = new URL(`/dp/${encodeURIComponent(variant.asin)}`, `https://${validMarketplace}`);
-                if (affiliateTag) url.searchParams.set('tag', affiliateTag);
-                const href = affiliateTag ? url.toString() : product.affiliateUrl;
+                const href = createAmazonVariantUrl({
+                  asin: variant.asin,
+                  marketplace: validMarketplace,
+                  affiliateUrl: product.affiliateUrl,
+                });
+                if (!href) return null;
                 return <a key={`${variant.asin}-${variant.value}`} href={href} target="_blank" rel="noopener noreferrer nofollow sponsored" className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-gray-700 transition hover:border-gray-500">
                   {variant.image && <img src={variant.image} alt="" className="h-7 w-7 rounded-full bg-gray-50 object-contain" loading="lazy" />}
                   <span>{variant.value}</span>
