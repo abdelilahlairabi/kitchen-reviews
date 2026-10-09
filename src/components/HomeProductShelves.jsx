@@ -7,7 +7,7 @@ import { RECENT_PRODUCTS_KEY } from '../utils/productPreferences';
 import ProductImageFrame from './ProductImageFrame';
 import SaveProductButton from './SaveProductButton';
 
-function ProductShelf({ title, description, icon: Icon, slugs, products, isPending, onRemove, onClear }) {
+function ProductShelf({ title, description, icon: Icon, slugs, products, isPending, isError, onRemove, onClear }) {
   const carouselRef = useRef(null);
   const [scrollEdges, setScrollEdges] = useState({ left: false, right: false });
 
@@ -30,7 +30,7 @@ function ProductShelf({ title, description, icon: Icon, slugs, products, isPendi
     };
   }, [products.length]);
 
-  if (!slugs.length) return null;
+  if (!slugs.length || (!isPending && !isError && !products.length)) return null;
 
   const scrollCarousel = (direction) => {
     const carousel = carouselRef.current;
@@ -66,6 +66,8 @@ function ProductShelf({ title, description, icon: Icon, slugs, products, isPendi
 
       {isPending && products.length === 0 ? (
         <p role="status" className="py-5 text-sm text-gray-500">Loading your products…</p>
+      ) : isError && products.length === 0 ? (
+        <p role="status" className="py-5 text-sm text-gray-500">Your recently viewed products are temporarily unavailable.</p>
       ) : products.length === 0 ? (
         <p className="rounded-xl border border-dashed border-gray-300 bg-[#faf9f6] px-5 py-8 text-center text-sm text-gray-500">These products are no longer available in the catalog.</p>
       ) : (
@@ -100,12 +102,12 @@ function ProductShelf({ title, description, icon: Icon, slugs, products, isPendi
 }
 
 function useShelfProducts(slugs) {
-  const { data, isPending } = useProductsBySlugs(slugs);
+  const { data, isPending, isError } = useProductsBySlugs(slugs);
   const products = useMemo(() => {
     const bySlug = new Map((data || []).map((product) => [product.slug, product]));
     return slugs.map((slug) => bySlug.get(slug)).filter(Boolean);
   }, [data, slugs]);
-  return { products, isPending };
+  return { products, isPending, isError };
 }
 
 export default function HomeProductShelves() {
