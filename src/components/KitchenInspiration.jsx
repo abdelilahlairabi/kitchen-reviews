@@ -5,6 +5,9 @@ import { stylesData } from '../data/inspirationStyles';
 
 const featuredGuideSlugs = ['choosing-a-kitchen-faucet', 'toaster-ovens-vs-air-fryers'];
 const featuredStyleSlugs = ['modern-farmhouse', 'minimalist-white'];
+const getCardImageSrcSet = (image) => (
+  `${image.replace('.webp', '-card-480.webp')} 480w, ${image.replace('.webp', '-card-854.webp')} 854w`
+);
 
 const featuredLinks = [
   ...featuredStyleSlugs.map((slug) => {
@@ -60,8 +63,12 @@ const KitchenInspiration = () => (
           <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
             <img
               src={item.image}
+              srcSet={getCardImageSrcSet(item.image)}
+              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 46vw, calc(50vw - 22px)"
               alt=""
               aria-hidden="true"
+              width="854"
+              height="480"
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
               decoding="async"
