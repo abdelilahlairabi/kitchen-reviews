@@ -19,6 +19,7 @@ const ProductHero = ({ product, category }) => {
     return images.length ? images : (product.image ? [{ url: product.image, standardUrl: product.image, alt: product.name }] : []);
   }, [product.images, product.image, product.name]);
   const [activeImageUrl, setActiveImageUrl] = useState('');
+  const [failedImageUrls, setFailedImageUrls] = useState(() => new Set());
   const [showAllDetails, setShowAllDetails] = useState(false);
   const [showAllVariants, setShowAllVariants] = useState(false);
   const activeImage = gallery.find((image) => image.url === activeImageUrl) || gallery[0];
@@ -46,7 +47,7 @@ const ProductHero = ({ product, category }) => {
       <div className="grid gap-8 md:grid-cols-2 md:gap-12">
         <div className="flex min-w-0 flex-col gap-4">
           <div className="flex h-[360px] items-center justify-center overflow-hidden rounded-2xl border border-gray-100 bg-white p-6 sm:h-[440px]">
-            {activeImage ? (
+            {activeImage && !failedImageUrls.has(activeImage.url) ? (
               <picture className="flex h-full w-full items-center justify-center">
                 {activeImageSrcSets.avifSrcSet && <source type="image/avif" srcSet={activeImageSrcSets.avifSrcSet} sizes="(max-width: 767px) calc(100vw - 80px), (max-width: 1279px) calc(50vw - 80px), 560px" />}
                 {activeImageSrcSets.webpSrcSet && <source type="image/webp" srcSet={activeImageSrcSets.webpSrcSet} sizes="(max-width: 767px) calc(100vw - 80px), (max-width: 1279px) calc(50vw - 80px), 560px" />}
@@ -60,9 +61,19 @@ const ProductHero = ({ product, category }) => {
                   className="max-h-full max-w-full object-contain"
                   fetchPriority="high"
                   decoding="async"
+                  onError={() => setFailedImageUrls((current) => new Set(current).add(activeImage.url))}
                 />
               </picture>
-            ) : <span className="text-sm text-gray-400">Product image unavailable</span>}
+            ) : (
+              <div role="img" aria-label={`Product image unavailable: ${product.name}`} className="flex flex-col items-center gap-3 text-center text-sm text-gray-500">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="h-10 w-10 text-gray-400" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="3" y="4" width="18" height="16" rx="2" />
+                  <circle cx="8.5" cy="9" r="1.5" />
+                  <path d="m21 15-5-5L5 20M3 3l18 18" />
+                </svg>
+                <span>Product image unavailable</span>
+              </div>
+            )}
           </div>
           {gallery.length > 1 && <div className="flex gap-3 overflow-x-auto pb-2" aria-label="Product images">
             {gallery.map((image, index) => {
