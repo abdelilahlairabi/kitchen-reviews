@@ -2,6 +2,7 @@ import { Check, Lightbulb, Minus, Plus, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AffiliateLink from '../AffiliateLink';
 import ProductImageFrame from '../ProductImageFrame';
+import SaveProductButton from '../SaveProductButton';
 
 const sectionId = (heading) => `guide-${heading.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-')}`;
 
@@ -109,7 +110,10 @@ export default function GuideContent({ guide }) {
               {guide.recommendedProducts.map((product) => (
                 <article key={product.id} className="bg-white rounded-2xl border border-gray-200 p-4 md:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
                   <div className="flex items-center gap-4 min-w-0">
-                    <ProductImageFrame src={product.image} alt={product.name} className="w-20 shrink-0 rounded-lg" />
+                    <div className="relative shrink-0">
+                      <ProductImageFrame src={product.image} alt={product.name} className="w-20 rounded-lg" />
+                      <SaveProductButton product={product} className="absolute -right-2 -top-2 z-10" />
+                    </div>
                     <div className="min-w-0">
                       <Link to={`/product/${product.slug}`} className="font-bold text-gray-950 text-sm hover:underline underline-offset-4">{product.name}</Link>
                       {Number.isFinite(product.price) && <p className="text-sm font-semibold text-gray-900 mt-1">${product.price.toFixed(2)}</p>}

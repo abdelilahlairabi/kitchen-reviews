@@ -5,6 +5,7 @@ import ProductImageFrame from './ProductImageFrame';
 import { useProducts } from '../hooks/useProducts';
 import ProductGridSkeleton from './ProductGridSkeleton';
 import ProductGridError from './ProductGridError';
+import SaveProductButton from './SaveProductButton';
 
 const getProductImageSrcSet = (image) => {
   if (!/^\/products\/product-(stand-mixer|pressure-cooker|coffee-maker|blender)\.jpeg$/.test(image)) return undefined;
@@ -35,6 +36,7 @@ const BestSellers = () => {
             <article key={product.id} className="min-h-[420px] bg-white border border-gray-200 rounded-xl p-5 flex flex-col relative hover:shadow-lg transition-shadow duration-300">
               <ProductImageFrame src={product.image} srcSet={getProductImageSrcSet(product.image)} sizes="(min-width: 1024px) 25vw, 46vw" alt={product.name} className="mb-5 mt-4">
                 <span className="absolute left-3 top-3 z-10 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-semibold uppercase text-gray-900">Bestseller</span>
+                <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
               </ProductImageFrame>
               <Link to={`/product/${product.slug}`} className="text-sm font-bold text-black line-clamp-2 min-h-[40px] mb-3 hover:text-gray-600 transition-colors">{product.name}</Link>
               <div className="flex items-center justify-between mb-4 mt-auto">

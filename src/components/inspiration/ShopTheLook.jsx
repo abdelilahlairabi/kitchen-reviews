@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import AffiliateLink from '../AffiliateLink';
 import ProductImageFrame from '../ProductImageFrame';
+import SaveProductButton from '../SaveProductButton';
 
 export default function ShopTheLook({ products, styleTitle, isError = false }) {
   if (isError && products.length === 0) {
@@ -18,10 +19,13 @@ export default function ShopTheLook({ products, styleTitle, isError = false }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
         {products.map((product) => (
           <article key={product.id} className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col hover:shadow-md transition-shadow">
-            <Link to={`/product/${product.slug}`} className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950">
-              <ProductImageFrame src={product.image} alt={product.name} className="mb-4" />
-              <h3 className="font-bold text-gray-950 text-sm line-clamp-2 hover:underline underline-offset-4">{product.name}</h3>
-            </Link>
+            <div className="relative mb-4">
+              <Link to={`/product/${product.slug}`} aria-label={`View ${product.name}`} className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950">
+                <ProductImageFrame src={product.image} alt={product.name} />
+              </Link>
+              <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
+            </div>
+            <Link to={`/product/${product.slug}`} className="font-bold text-gray-950 text-sm line-clamp-2 hover:underline underline-offset-4">{product.name}</Link>
             {Number.isFinite(product.price) && <p className="text-sm font-semibold text-gray-900 mt-2">${product.price.toFixed(2)}</p>}
             {Number.isFinite(product.rating) && product.rating > 0 && <p className="text-xs text-gray-600 mt-1">Rated {product.rating.toFixed(1)}{product.reviewCount ? ` · ${product.reviewCount.toLocaleString()} reviews` : ''}</p>}
             <div className="mt-auto pt-4">

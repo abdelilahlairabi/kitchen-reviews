@@ -4,6 +4,7 @@ import AffiliateLink from './AffiliateLink';
 import ProductImageFrame from './ProductImageFrame';
 import ProductGridSkeleton from './ProductGridSkeleton';
 import ProductGridError from './ProductGridError';
+import SaveProductButton from './SaveProductButton';
 
 const AmazonDeals = () => {
   const { data, isPending, isError } = useProducts({ hasDiscount: true, page: 1, pageSize: 3, sort: 'discount' });
@@ -26,6 +27,7 @@ const AmazonDeals = () => {
               <article key={deal.id} className="min-h-[500px] bg-white rounded-xl p-5 flex flex-col relative hover:shadow-lg transition-shadow duration-300">
                 <ProductImageFrame src={deal.image} alt={deal.name} className="mb-5 mt-6">
                   <span className="absolute left-3 top-3 z-10 rounded-full bg-red-700 px-2.5 py-1 text-xs font-bold text-white">{deal.discountPercent}% OFF</span>
+                  <SaveProductButton product={deal} className="absolute right-2 top-2 z-10" />
                 </ProductImageFrame>
                 <Link to={`/product/${deal.slug}`} className="text-sm font-bold text-black line-clamp-2 min-h-[40px] mb-3 hover:text-gray-600 transition-colors">{deal.name}</Link>
                 <div className="mb-3"><span className="bg-[#232f3e] text-white text-[11px] font-bold px-2 py-1 inline-block">{deal.badge || "Amazon's Choice"}</span></div>

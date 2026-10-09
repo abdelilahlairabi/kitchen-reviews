@@ -1,6 +1,7 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import AffiliateLink from '../AffiliateLink';
 import ProductImageFrame from '../ProductImageFrame';
+import SaveProductButton from '../SaveProductButton';
 
 const CategoryProductGrid = ({ products, total, pageSize, page }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,6 +17,7 @@ const CategoryProductGrid = ({ products, total, pageSize, page }) => {
     {products.length === 0 ? <p className="col-span-full text-center text-gray-500 py-12">No products found in this category yet.</p> : products.map((product) => <article key={product.id} className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col relative hover:shadow-md transition-shadow">
       <ProductImageFrame src={product.image} alt={product.name} className="mb-4">
         {product.badge && <span className="absolute left-3 top-3 z-10 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-semibold uppercase text-gray-900">{product.badge}</span>}
+        <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
       </ProductImageFrame>
       <Link to={`/product/${product.slug}`} className="mb-1 line-clamp-2 min-h-[40px] hover:text-gray-600 transition-colors"><h2 className="text-sm font-bold text-black">{product.name}</h2></Link>
       <div className="flex items-center gap-1 mb-4"><div className="flex gap-0.5" aria-label={`${product.rating} out of 5 stars`}>{[...Array(5)].map((_, index) => <span key={index} className={index < Math.round(product.rating) ? 'text-[#a0aec0]' : 'text-gray-200'}>★</span>)}</div><span className="text-xs text-gray-400 ml-1">({product.reviewCount.toLocaleString()})</span></div>

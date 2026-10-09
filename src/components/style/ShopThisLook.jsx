@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import AffiliateLink from '../AffiliateLink';
 import ProductImageFrame from '../ProductImageFrame';
+import SaveProductButton from '../SaveProductButton';
 
 export default function ShopThisLook({ products, styleTitle, isError = false }) {
   if (isError && products.length === 0) {
@@ -24,7 +25,9 @@ export default function ShopThisLook({ products, styleTitle, isError = false }) 
           >
             <div>
               {/* Conteneur Image Produit */}
-              <ProductImageFrame src={product.image} alt={product.name} className="mb-4" />
+              <ProductImageFrame src={product.image} alt={product.name} className="mb-4">
+                <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
+              </ProductImageFrame>
 
               {/* Titre & Évaluation */}
               <Link to={`/product/${product.slug}`} className="block font-bold text-gray-900 text-xs md:text-sm line-clamp-2 mb-1 hover:underline">
