@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { getGuideImageSrcSet } from '../../utils/guideImageSrcSets';
 
 const FeaturedGuide = ({ guide, isLoading }) => {
   if (isLoading) return <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12"><div className="h-[350px] md:h-[450px] rounded-3xl bg-gray-100 animate-pulse" /></div>;
@@ -7,7 +8,7 @@ const FeaturedGuide = ({ guide, isLoading }) => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
       <article className="relative min-h-[420px] md:min-h-[480px] rounded-3xl overflow-hidden bg-gray-900 flex items-end md:items-center shadow-xl">
-        <img src={guide.image} alt="" aria-hidden="true" width="1200" height="675" className="absolute inset-0 w-full h-full object-cover" fetchPriority="high" />
+        <img src={guide.image} srcSet={getGuideImageSrcSet(guide.image)} sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1279px) calc(100vw - 48px), 1104px" alt="" aria-hidden="true" width="1200" height="675" className="absolute inset-0 w-full h-full object-cover" fetchPriority="high" decoding="async" />
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/90 via-black/65 to-black/10"></div>
         
         <div className="relative z-10 p-7 md:p-12 max-w-2xl">

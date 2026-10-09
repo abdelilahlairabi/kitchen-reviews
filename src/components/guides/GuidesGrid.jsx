@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { getGuideImageSrcSet } from '../../utils/guideImageSrcSets';
 
 const GuidesGrid = ({ guides, isLoading, isError }) => {
   if (isLoading) return <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center text-gray-600">Loading guides…</div>;
@@ -15,8 +16,12 @@ const GuidesGrid = ({ guides, isLoading, isError }) => {
                 {guide.badge}
               </span>
               <img 
-                src={guide.image} 
+                src={guide.image}
+                srcSet={getGuideImageSrcSet(guide.image)}
+                sizes="(max-width: 767px) calc(100vw - 32px), (max-width: 1279px) calc((100vw - 72px) / 2), 368px"
                 alt={guide.title} 
+                width="1376"
+                height="768"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
                 decoding="async"
