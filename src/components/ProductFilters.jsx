@@ -196,8 +196,8 @@ const ProductFilters = () => {
 
       {isMobilePanelOpen && (
         <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/45 md:hidden" onMouseDown={(event) => { if (event.target === event.currentTarget) closeMobilePanel(); }}>
-          <section ref={mobilePanelRef} role="dialog" aria-modal="true" aria-labelledby="mobile-filters-title" className="max-h-[90dvh] w-full overflow-y-auto rounded-t-3xl bg-white px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5 shadow-2xl">
-            <div className="mb-5 flex items-start justify-between border-b border-gray-100 pb-4">
+          <section ref={mobilePanelRef} role="dialog" aria-modal="true" aria-labelledby="mobile-filters-title" className="flex max-h-[90dvh] w-full flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl">
+            <div className="mb-2 flex shrink-0 items-start justify-between border-b border-gray-100 px-5 pb-4 pt-5">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#8c6744]">Find your fit</p>
                 <h2 id="mobile-filters-title" className="mt-1 text-xl font-bold text-gray-950">Filter products</h2>
@@ -205,7 +205,7 @@ const ProductFilters = () => {
               <button ref={closeButtonRef} type="button" onClick={closeMobilePanel} aria-label="Close filters" className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"><X aria-hidden="true" className="h-5 w-5" /></button>
             </div>
 
-            <div className="space-y-4">
+            <div className="hide-scrollbar min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-5 py-2">
               <FilterField label="Category"><CategoryFilterSelect categories={categories} value={draft.category} onChange={(value) => updateDraft('category', value)} /></FilterField>
               {draftTypeOptions.length > 0 && <FilterField label="Product type"><FilterDropdown label="Filter by product type" options={[{ value: '', label: 'All types' }, ...draftTypeOptions.map((item) => ({ value: item, label: item }))]} value={draft.type} onChange={(value) => updateDraft('type', value)} /></FilterField>}
               <FilterField label="Price range"><FilterDropdown label="Filter by price range" options={priceOptions} value={draft.price} onChange={(value) => updateDraft('price', value)} /></FilterField>
@@ -213,7 +213,7 @@ const ProductFilters = () => {
               <FilterField label="Brand"><input type="search" value={draft.brand} onChange={(event) => updateDraft('brand', event.target.value)} placeholder="Type a brand name" className="h-11 w-full rounded-full border border-gray-300 bg-white px-4 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:border-gray-700 focus:ring-2 focus:ring-gray-900/10" /></FilterField>
             </div>
 
-            <div className="mt-6 flex gap-3 border-t border-gray-100 pt-4">
+            <div className="flex shrink-0 gap-3 border-t border-gray-100 bg-white px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4">
               <button type="button" onClick={() => setDraft({ category: '', price: '', rating: '', brand: '', type: '' })} className="h-12 flex-1 rounded-full border border-gray-300 text-sm font-semibold text-gray-700 transition hover:border-gray-950">Reset</button>
               <button type="button" onClick={applyMobileFilters} className="h-12 flex-[2] rounded-full bg-[#dcb589] text-sm font-bold text-gray-950 transition hover:bg-[#cba478]">Show products</button>
             </div>
