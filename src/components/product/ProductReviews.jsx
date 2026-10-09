@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const REVIEWS_PER_PAGE = 3;
 const EMPTY_REVIEWS = [];
@@ -43,7 +43,8 @@ const ProductReviews = ({ reviews = EMPTY_REVIEWS, rating, reviewCount, ratingDi
     setExpandedReviews(new Set());
   };
 
-  const pageButtons = Array.from({ length: pageCount }, (_, index) => index + 1);
+  const pageButtons = Array.from({ length: pageCount }, (_, index) => index + 1)
+    .filter((pageNumber) => pageNumber === 1 || pageNumber === pageCount || Math.abs(pageNumber - currentPage) <= 1);
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8" aria-labelledby="product-reviews-title">
@@ -68,6 +69,7 @@ const ProductReviews = ({ reviews = EMPTY_REVIEWS, rating, reviewCount, ratingDi
       {reviews.length > 0 && <>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <p className="text-sm text-gray-600" aria-live="polite">Showing <span className="font-semibold text-gray-900">{firstReview}–{lastReview}</span> of <span className="font-semibold text-gray-900">{reviews.length.toLocaleString()}</span> reviews</p>
+        {pageCount > 1 && <p className="text-xs text-gray-500">Page {currentPage} of {pageCount}</p>}
       </div>
       <div className="grid items-start gap-4 md:grid-cols-2">
         {visibleReviews.map((review, index) => {
@@ -106,10 +108,16 @@ const ProductReviews = ({ reviews = EMPTY_REVIEWS, rating, reviewCount, ratingDi
         </article>;
         })}
       </div>
-      {pageCount > 1 && <nav className="mt-8 flex flex-wrap items-center justify-center gap-1.5" aria-label="Review pages">
-        <button type="button" onClick={() => changePage(currentPage - 1)} disabled={currentPage === 1} aria-label="Previous page" className="inline-flex h-8 w-8 items-center justify-center rounded-md text-gray-600 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-35"><ChevronLeft aria-hidden="true" className="h-4 w-4" /></button>
-        {pageButtons.map((pageNumber) => <button key={pageNumber} type="button" onClick={() => changePage(pageNumber)} aria-current={currentPage === pageNumber ? 'page' : undefined} aria-label={`Page ${pageNumber}`} className={`h-8 min-w-8 rounded-md px-2 text-xs font-medium transition ${currentPage === pageNumber ? 'bg-[#e8c99f] text-gray-950' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-950'}`}>{pageNumber}</button>)}
-        <button type="button" onClick={() => changePage(currentPage + 1)} disabled={currentPage === pageCount} aria-label="Next page" className="inline-flex h-8 w-8 items-center justify-center rounded-md text-gray-600 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-35"><ChevronRight aria-hidden="true" className="h-4 w-4" /></button>
+      {pageCount > 1 && <nav className="mt-8 flex flex-wrap items-center justify-center gap-2" aria-label="Review pages">
+        <button type="button" onClick={() => changePage(currentPage - 1)} disabled={currentPage === 1} className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40">Previous</button>
+        {pageButtons.map((pageNumber, index) => {
+          const previousPage = pageButtons[index - 1];
+          return <span key={pageNumber} className="contents">
+            {previousPage && pageNumber - previousPage > 1 && <span aria-hidden="true" className="px-1 text-gray-400">…</span>}
+            <button type="button" onClick={() => changePage(pageNumber)} aria-current={currentPage === pageNumber ? 'page' : undefined} aria-label={`Page ${pageNumber}`} className={`min-w-10 rounded-lg border px-3 py-2 text-sm font-semibold transition ${currentPage === pageNumber ? 'border-gray-900 bg-gray-900 text-white' : 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50'}`}>{pageNumber}</button>
+          </span>;
+        })}
+        <button type="button" onClick={() => changePage(currentPage + 1)} disabled={currentPage === pageCount} className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40">Next</button>
       </nav>}
       </>}
     </section>
