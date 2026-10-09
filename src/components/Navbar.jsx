@@ -62,7 +62,7 @@ const Navbar = () => {
                 type="button"
                 onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
                 aria-expanded={isCategoryMenuOpen}
-                className="flex items-center gap-1 group focus:outline-none"
+                className="flex items-center gap-1 group rounded-sm focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gray-700"
               >
                 <span className={`text-[15px] font-medium transition-colors ${isCategoryMenuOpen ? 'text-gray-600' : 'text-gray-900 group-hover:text-gray-600'}`}>
                   Categories
@@ -137,7 +137,7 @@ const Navbar = () => {
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-navigation"
               aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="lg:hidden p-2 text-black hover:bg-gray-100 rounded-md transition-colors"
+              className="lg:hidden p-2 text-black hover:bg-gray-100 rounded-md transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
