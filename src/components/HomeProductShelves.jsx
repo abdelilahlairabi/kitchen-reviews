@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Clock3, Heart, Star, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock3, Star, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useProductsBySlugs } from '../hooks/useProducts';
 import useProductSlugs from '../hooks/useProductSlugs';
-import { RECENT_PRODUCTS_KEY, SAVED_PRODUCTS_KEY } from '../utils/productPreferences';
+import { RECENT_PRODUCTS_KEY } from '../utils/productPreferences';
 import ProductImageFrame from './ProductImageFrame';
 import SaveProductButton from './SaveProductButton';
 
@@ -41,7 +41,6 @@ function ProductShelf({ title, description, icon: Icon, slugs, products, isPendi
     <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10" aria-busy={isPending}>
       <div className="mb-6 flex items-end justify-between gap-4 border-b border-[#e9e3d9] pb-4">
         <div>
-          <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#8c6744]">Your kitchen shortlist</p>
           <h2 className="flex items-center gap-2 text-xl font-bold tracking-tight text-gray-950 sm:text-2xl">
             <Icon aria-hidden="true" className="h-5 w-5 text-[#8c6744]" />{title}
           </h2>
@@ -111,14 +110,7 @@ function useShelfProducts(slugs) {
 
 export default function HomeProductShelves() {
   const recent = useProductSlugs(RECENT_PRODUCTS_KEY, 6);
-  const saved = useProductSlugs(SAVED_PRODUCTS_KEY, 24);
   const recentShelf = useShelfProducts(recent.slugs);
-  const savedShelf = useShelfProducts(saved.slugs);
 
-  return (
-    <>
-      <ProductShelf title="Recently viewed" description="Pick up where you left off." icon={Clock3} slugs={recent.slugs} {...recentShelf} />
-      <ProductShelf title="Your saved products" description="A handy shortlist of kitchen finds you want to revisit." icon={Heart} slugs={saved.slugs} {...savedShelf} onRemove={saved.slugs.length ? saved.removeSlug : undefined} onClear={saved.clear} />
-    </>
-  );
+  return <ProductShelf title="Recently viewed" description="Pick up where you left off." icon={Clock3} slugs={recent.slugs} {...recentShelf} />;
 }
