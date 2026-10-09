@@ -4,10 +4,10 @@ import { dehydrate, QueryClient, QueryClientProvider } from '@tanstack/react-que
 import { StaticRouter } from 'react-router-dom';
 import { Writable } from 'node:stream';
 import { AppContent } from './App.jsx';
-import { fetchProducts } from './services/products.js';
+import { fetchProducts, PRODUCT_PAGE_SIZE } from './services/products.js';
 import { productKeys } from './hooks/useProducts.js';
 
-export function renderHome() {
+function renderRoute(location, productQueries) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -17,14 +17,8 @@ export function renderHome() {
     },
   });
 
-  const homepageProductQueries = [
-    { badge: 'Best Seller', page: 1, pageSize: 4, sort: 'popularity' },
-    { page: 1, pageSize: 24, sort: 'popularity' },
-    { hasDiscount: true, page: 1, pageSize: 3, sort: 'discount' },
-  ];
-
   return Promise.allSettled(
-    homepageProductQueries.map(async (filters) => {
+    productQueries.map(async (filters) => {
       try {
         await queryClient.fetchQuery({
           queryKey: productKeys.list(filters),
@@ -34,7 +28,7 @@ export function renderHome() {
           }),
         });
       } catch (error) {
-        console.warn('Could not prefetch homepage products:', error.message);
+        console.warn(`Could not prefetch products for ${location}:`, error.message);
       }
     }),
   ).then(() => new Promise((resolve, reject) => {
@@ -49,7 +43,7 @@ export function renderHome() {
 
     output.on('finish', () => {
       if (didError) {
-        reject(new Error('React reported an error while rendering the homepage'));
+        reject(new Error(`React reported an error while rendering ${location}`));
         return;
       }
       resolve({ html, dehydratedState: dehydrate(queryClient) });
@@ -59,7 +53,7 @@ export function renderHome() {
     const stream = renderToPipeableStream(
       <StrictMode>
         <QueryClientProvider client={queryClient}>
-          <StaticRouter location="/">
+          <StaticRouter location={location}>
             <AppContent />
           </StaticRouter>
         </QueryClientProvider>
@@ -75,4 +69,20 @@ export function renderHome() {
       },
     );
   }));
+}
+
+export function renderHome() {
+  const homepageProductQueries = [
+    { badge: 'Best Seller', page: 1, pageSize: 4, sort: 'popularity' },
+    { page: 1, pageSize: 24, sort: 'popularity' },
+    { hasDiscount: true, page: 1, pageSize: 3, sort: 'discount' },
+  ];
+
+  return renderRoute('/', homepageProductQueries);
+}
+
+export function renderProducts() {
+  return renderRoute('/products', [
+    { page: 1, pageSize: PRODUCT_PAGE_SIZE, sort: 'popularity' },
+  ]);
 }

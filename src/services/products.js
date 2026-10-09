@@ -21,6 +21,11 @@ export const productColumns = `
   rating_distribution, variants, last_scraped_at, source_marketplace
 `;
 
+const productListColumns = `
+  id, slug, name, category_id, primary_image, price, original_price,
+  discount_percent, rating, review_count, badge, affiliate_url
+`;
+
 // Filter at the database level so products without a valid Amazon destination
 // never appear in cards, detail pages, or pagination counts.
 const validAmazonAffiliateUrlFilter = [
@@ -103,7 +108,7 @@ export async function fetchProducts({
 
   let query = supabase
     .from('products')
-    .select(`${productColumns}, categories!inner(slug)`, { count: 'exact' })
+    .select(`${productListColumns}, categories!inner(slug)`, { count: 'exact' })
     .eq('is_active', true)
     .order(sortRule.column, { ascending: sortRule.ascending })
     .order('id', { ascending: true })
