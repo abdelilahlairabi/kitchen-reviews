@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom';
 
+const getCollectionHeroSrcSet = (collection) => {
+  const imageBase = collection.image.replace(/\.webp$/i, '');
+  return `${imageBase}-hero-480.webp 480w, ${imageBase}-hero-854.webp 854w, ${collection.image} ${collection.imageWidth}w`;
+};
+
 export default function CollectionHero({ collection }) {
   return (
     <header>
@@ -14,12 +19,13 @@ export default function CollectionHero({ collection }) {
       <div className="relative rounded-3xl overflow-hidden bg-gray-900 text-white min-h-[390px] md:min-h-[500px] flex items-end">
         <img
           src={collection.image}
+          srcSet={getCollectionHeroSrcSet(collection)}
+          sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(100vw - 48px), (max-width: 1343px) calc(100vw - 64px), 1216px"
           alt=""
           aria-hidden="true"
-          width="1376"
-          height="768"
           className="absolute inset-0 w-full h-full object-cover"
           fetchPriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/85 via-black/55 to-black/10" aria-hidden="true" />
 

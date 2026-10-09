@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom';
 
+const getCollectionCardSrcSet = (collection) => {
+  const imageBase = collection.image.replace(/\.webp$/i, '');
+  return `${imageBase}-card-480.webp 480w, ${imageBase}-card-800.webp 800w, ${collection.image} ${collection.imageWidth}w`;
+};
+
 export default function RelatedCollections({ currentSlug, collections }) {
   const current = collections?.find((item) => item.slug === currentSlug);
   const related = current?.relatedSlugs?.map((slug) => collections.find((item) => item.slug === slug)).filter(Boolean)
@@ -25,6 +30,8 @@ export default function RelatedCollections({ currentSlug, collections }) {
             <div className="aspect-[16/10] overflow-hidden bg-gray-100">
               <img
                 src={col.image}
+                srcSet={getCollectionCardSrcSet(col)}
+                sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc(100vw - 48px), (max-width: 1023px) calc((100vw - 88px) / 3), (max-width: 1279px) calc((100vw - 104px) / 3), 392px"
                 alt=""
                 aria-hidden="true"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
