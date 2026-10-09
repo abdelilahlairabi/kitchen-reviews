@@ -1,16 +1,16 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Clock3, Heart, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useProductsBySlugs } from '../hooks/useProducts';
 import useProductSlugs from '../hooks/useProductSlugs';
 import { RECENT_PRODUCTS_KEY, SAVED_PRODUCTS_KEY } from '../utils/productPreferences';
 import ProductImageFrame from './ProductImageFrame';
 
-function ProductShelf({ title, icon: Icon, slugs, products, isPending, onRemove, onClear, sectionId }) {
+function ProductShelf({ title, icon: Icon, slugs, products, isPending, onRemove, onClear }) {
   if (!slugs.length) return null;
 
   return (
-    <section id={sectionId} className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10" aria-busy={isPending}>
+    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10" aria-busy={isPending}>
       <div className="mb-5 flex items-center justify-between gap-4">
         <h2 className="flex items-center gap-2 text-xl font-bold text-gray-950 sm:text-2xl">
           <Icon aria-hidden="true" className="h-5 w-5 text-[#8c6744]" />{title}
@@ -50,23 +50,15 @@ function useShelfProducts(slugs) {
 }
 
 export default function HomeProductShelves() {
-  const location = useLocation();
   const recent = useProductSlugs(RECENT_PRODUCTS_KEY, 6);
   const saved = useProductSlugs(SAVED_PRODUCTS_KEY, 24);
   const recentShelf = useShelfProducts(recent.slugs);
   const savedShelf = useShelfProducts(saved.slugs);
 
-  useEffect(() => {
-    if (window.location.hash !== '#saved-products' || !saved.slugs.length) return;
-    window.requestAnimationFrame(() => {
-      document.getElementById('saved-products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }, [location.hash, saved.slugs.length]);
-
   return (
     <>
-      <ProductShelf title="Continue browsing" icon={Clock3} sectionId="recently-viewed-products" slugs={recent.slugs} {...recentShelf} />
-      <ProductShelf title="Your saved products" icon={Heart} sectionId="saved-products" slugs={saved.slugs} {...savedShelf} onRemove={saved.slugs.length ? saved.removeSlug : undefined} onClear={saved.clear} />
+      <ProductShelf title="Continue browsing" icon={Clock3} slugs={recent.slugs} {...recentShelf} />
+      <ProductShelf title="Your saved products" icon={Heart} slugs={saved.slugs} {...savedShelf} onRemove={saved.slugs.length ? saved.removeSlug : undefined} onClear={saved.clear} />
     </>
   );
 }

@@ -3,8 +3,12 @@ import { PRODUCT_PREFERENCES_EVENT, readProductSlugs, writeProductSlugs } from '
 
 export default function useProductSlugs(storageKey, maximumItems = 12) {
   const [slugs, setSlugs] = useState([]);
+  const [isReady, setIsReady] = useState(false);
 
-  const refresh = useCallback(() => setSlugs(readProductSlugs(storageKey).slice(0, maximumItems)), [maximumItems, storageKey]);
+  const refresh = useCallback(() => {
+    setSlugs(readProductSlugs(storageKey).slice(0, maximumItems));
+    setIsReady(true);
+  }, [maximumItems, storageKey]);
 
   useEffect(() => {
     refresh();
@@ -20,6 +24,7 @@ export default function useProductSlugs(storageKey, maximumItems = 12) {
     const uniqueSlugs = [...new Set(nextSlugs.map((slug) => String(slug || '').trim()).filter(Boolean))]
       .slice(0, maximumItems);
     setSlugs(uniqueSlugs);
+    setIsReady(true);
     writeProductSlugs(storageKey, uniqueSlugs);
   }, [maximumItems, storageKey]);
 
@@ -44,5 +49,5 @@ export default function useProductSlugs(storageKey, maximumItems = 12) {
 
   const clear = useCallback(() => update([]), [update]);
 
-  return { slugs, addSlug, toggleSlug, removeSlug, clear };
+  return { slugs, isReady, addSlug, toggleSlug, removeSlug, clear };
 }

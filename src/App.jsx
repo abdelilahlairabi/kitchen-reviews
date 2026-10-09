@@ -21,6 +21,7 @@ const GuideDetails = lazy(() => import('./pages/GuideDetails'));
 const Inspiration = lazy(() => import('./pages/Inspiration'));
 const StyleDetails = lazy(() => import('./pages/StyleDetails'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const SavedProducts = lazy(() => import('./pages/SavedProducts'));
 
 export function AppContent() {
   const location = useLocation();
@@ -46,6 +47,7 @@ export function AppContent() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<AllProducts />} /> {/* Ajout de la route */}
+            <Route path="/saved" element={<SavedProducts />} />
             <Route path="/category/:categoryName" element={<Category />} />
             <Route path="/product/:productId" element={<ProductDetails />} />
             <Route path="/categories" element={<Categories />} />
