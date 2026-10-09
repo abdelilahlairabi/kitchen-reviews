@@ -25,12 +25,12 @@ const PrivacyContent = () => (
 
     <article className="max-w-3xl space-y-10 text-sm leading-7 text-gray-700 md:col-span-9">
       <p className="rounded-xl border border-[#ebe4d8] bg-[#f8f5ef] p-5">
-        This notice describes the site as it currently operates. KitchenTrusted does not currently offer account registration, a working contact form, or an email newsletter. If those features are added, this notice should be updated before they collect information.
+        This notice describes the site as it currently operates. KitchenTrusted does not offer account registration, a website contact form, or an email newsletter. You may browse without providing contact information; if you choose to email us, the message and your email address are used to respond to your request.
       </p>
 
       <section id="information" className="scroll-mt-24 space-y-3">
         <h2 className="text-2xl font-bold text-gray-950">Information involved when you use this site</h2>
-        <p>You do not need to provide your name, email address, or demographic information to browse KitchenTrusted. The current Contact page does not accept or send messages.</p>
+        <p>You do not need to provide your name, email address, or demographic information to browse KitchenTrusted. If you choose to contact us at <a className="underline underline-offset-2" href="mailto:kitchentrusted.help@outlook.com">kitchentrusted.help@outlook.com</a>, we receive the email address and message you send so we can respond. Please do not include passwords, payment details, or other sensitive information.</p>
         <p>If you use product search, the search phrase is sent to our Supabase catalog service as part of a request to find matching products. Please do not enter sensitive or personal information in search.</p>
         <p>Our site is hosted on Vercel. Like other web hosting services, Vercel may process technical request information to deliver, maintain, and secure the site. See <a className="underline underline-offset-2" href="https://vercel.com/legal/privacy-notice" target="_blank" rel="noreferrer">Vercel’s Privacy Notice</a> for its handling of that information.</p>
       </section>
@@ -62,7 +62,7 @@ const PrivacyContent = () => (
 
       <section id="contact" className="scroll-mt-24 space-y-3">
         <h2 className="text-2xl font-bold text-gray-950">Privacy questions</h2>
-        <p>The KitchenTrusted contact channel is still being set up and the Contact page currently does not accept messages. A privacy contact method and operator details need to be added before this notice can be treated as final or before the site starts collecting information directly from visitors.</p>
+        <p>For privacy questions about KitchenTrusted, email <a className="underline underline-offset-2" href="mailto:kitchentrusted.help@outlook.com">kitchentrusted.help@outlook.com</a>. Messages are delivered through Microsoft Outlook; see the <a className="underline underline-offset-2" href="https://www.microsoft.com/en-us/privacy/privacystatement" target="_blank" rel="noreferrer">Microsoft Privacy Statement</a> for information about Microsoft’s handling of Outlook data. The site operator’s legal identity and jurisdiction-specific details still need to be confirmed.</p>
       </section>
     </article>
   </div>

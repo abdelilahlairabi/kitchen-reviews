@@ -1,4 +1,4 @@
-import { BookOpen, Layers3, ShieldCheck } from 'lucide-react';
+import { BookOpen, Layers3, Mail, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const helpfulLinks = [
@@ -26,12 +26,14 @@ const ContactFormSection = () => (
   <section className="mx-auto mb-16 grid max-w-5xl grid-cols-1 items-start gap-8 px-4 md:grid-cols-12">
     <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:col-span-7 md:p-8">
       <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#9b7049]">
-        Support channel in progress
+        KitchenTrusted support
       </p>
-      <h2 className="mb-3 text-2xl font-bold text-gray-950">Contact details are coming soon</h2>
-      <p className="text-sm leading-6 text-gray-600">
-        We are setting up a reliable way to receive and answer messages. Until it is ready, this page will not collect or send personal information.
-      </p>
+      <h2 className="mb-3 text-2xl font-bold text-gray-950">How can we help?</h2>
+      <p className="text-sm leading-6 text-gray-600">For questions about the site, product information, or buying guides, email us. Please don’t include passwords, payment details, or other sensitive information.</p>
+      <a href="mailto:kitchentrusted.help@outlook.com" className="mt-5 inline-flex min-h-11 max-w-full items-center gap-2 rounded-full bg-gray-950 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
+        <Mail aria-hidden="true" className="h-4 w-4 shrink-0" />
+        <span className="break-all">kitchentrusted.help@outlook.com</span>
+      </a>
     </div>
 
     <nav aria-label="Helpful pages" className="space-y-3 md:col-span-5">

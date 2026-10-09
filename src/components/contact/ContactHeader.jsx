@@ -13,7 +13,7 @@ const ContactHeader = () => {
         Get in Touch
       </h1>
       <p className="text-gray-600 text-sm max-w-sm mx-auto">
-        Our support contact channel is being set up. In the meantime, explore our guides and site information below.
+        Questions about our product information, buying guides, or website? Email the KitchenTrusted support team.
       </p>
     </div>
   );

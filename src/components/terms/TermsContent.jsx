@@ -27,7 +27,7 @@ const TermsContent = () => (
 
     <article className="max-w-3xl space-y-10 text-sm leading-7 text-gray-700 md:col-span-9">
       <p className="rounded-xl border border-[#ebe4d8] bg-[#f8f5ef] p-5">
-        These terms describe the current KitchenTrusted website, which publishes kitchen-product information and links to retailers. The site operator’s legal identity, contact details, and governing-law terms still need to be confirmed; this page is not a substitute for jurisdiction-specific legal review.
+        These terms describe the current KitchenTrusted website, which publishes kitchen-product information and links to retailers. A support email is listed on the Contact page; the site operator’s legal identity and governing-law terms still need to be confirmed. This page is not a substitute for jurisdiction-specific legal review.
       </p>
 
       <section id="about" className="scroll-mt-24 space-y-3">
@@ -67,7 +67,7 @@ const TermsContent = () => (
       <section id="changes" className="scroll-mt-24 space-y-3">
         <h2 className="text-2xl font-bold text-gray-950">Updates and operator details</h2>
         <p>We may update this page as the website or its services change. The date above indicates when this text was last revised.</p>
-        <p>The site’s legal operator and a working contact method have not yet been added. These details, along with any governing-law or other jurisdiction-specific provisions, must be confirmed before these terms are treated as final.</p>
+        <p>A support contact email is available on our <Link className="underline underline-offset-2" to="/contact">Contact page</Link>. The site’s legal operator and any governing-law or other jurisdiction-specific provisions still need to be confirmed before these terms are treated as final.</p>
       </section>
     </article>
   </div>

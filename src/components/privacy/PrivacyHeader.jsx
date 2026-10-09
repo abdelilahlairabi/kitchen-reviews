@@ -14,7 +14,7 @@ const PrivacyHeader = () => {
           Privacy Policy
         </h1>
         <p className="text-gray-500 text-sm">
-          Last updated: October 6, 2026
+          Last updated: October 9, 2026
         </p>
       </div>
     </div>
