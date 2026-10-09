@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import AffiliateLink from '../AffiliateLink';
 import ProductImageFrame from '../ProductImageFrame';
 import SaveProductButton from '../SaveProductButton';
+import { getAmazonImageSrcSets } from '../../utils/amazonImageSrcSets';
 
 const sectionId = (heading) => `guide-${heading.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-')}`;
 
@@ -111,7 +112,7 @@ export default function GuideContent({ guide }) {
                 <article key={product.id} className="bg-white rounded-2xl border border-gray-200 p-4 md:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
                   <div className="flex items-center gap-4 min-w-0">
                     <div className="relative shrink-0">
-                      <ProductImageFrame src={product.image} alt={product.name} className="w-20 rounded-lg" />
+                      <ProductImageFrame src={product.image} {...getAmazonImageSrcSets(product.image, [96, 160, 320])} sizes="80px" alt={product.name} className="w-20 rounded-lg" />
                       <SaveProductButton product={product} className="absolute -right-2 -top-2 z-10" />
                     </div>
                     <div className="min-w-0">

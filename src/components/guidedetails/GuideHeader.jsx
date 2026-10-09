@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Link2, Share2 } from 'lucide-react';
+import { getGuideImageSrcSet } from '../../utils/guideImageSrcSets';
 
 export default function GuideHeader({ guide }) {
   const [shareMessage, setShareMessage] = useState('');
@@ -82,6 +83,8 @@ export default function GuideHeader({ guide }) {
       <figure className="mt-6 rounded-3xl overflow-hidden bg-gray-100 shadow-sm aspect-[16/9] max-h-[520px]">
         <img
           src={guide.image}
+          srcSet={getGuideImageSrcSet(guide.image)}
+          sizes="(max-width: 1055px) calc(100vw - 32px), 992px"
           alt={`${guide.title} — kitchen guide`}
           width="1200"
           height="675"
