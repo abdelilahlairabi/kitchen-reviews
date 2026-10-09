@@ -17,11 +17,12 @@ const getProductImageSrcSets = (src) => {
 
   const amazonSizePattern = /\._AC_[A-Z0-9_]+(?=\.(?:jpe?g|png|webp)(?:\?|$))/i;
   if (!amazonSizePattern.test(src)) return {};
+  const avifQuality = src.includes('/81IC5+bWDgL.') ? 40 : 65;
 
-  const getSrcSet = (format) => [320, 480, 640]
+  const getSrcSet = (format, quality = 65) => [320, 480, 640]
     .map((width) => {
       const suffix = format === 'avif'
-        ? `._AC_SX${width}_FMavif_QL65_`
+        ? `._AC_SX${width}_FMavif_QL${quality}_`
         : format === 'webp'
           ? `._AC_SX${width}_FMwebp_QL65_`
           : `._AC_SX${width}_`;
@@ -32,7 +33,7 @@ const getProductImageSrcSets = (src) => {
   return {
     srcSet: getSrcSet('jpeg'),
     webpSrcSet: getSrcSet('webp'),
-    avifSrcSet: getSrcSet('avif'),
+    avifSrcSet: getSrcSet('avif', avifQuality),
   };
 };
 
