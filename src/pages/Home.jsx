@@ -32,9 +32,9 @@ const Home = () => {
       <Hero />
       <PopularCategories />
       <Suspense fallback={<FeaturedProductsFallback />}><FeaturedProductsGrid /></Suspense>
-      <HomeProductShelves />
       <ShopByNeed />
       <KitchenInspiration />
+      <HomeProductShelves />
       <Newsletter />
     </div>
   );
