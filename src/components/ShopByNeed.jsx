@@ -16,6 +16,11 @@ const sourceDimensions = {
   'storage-organization': [672, 502],
 };
 
+const getNeedImageSrcSet = (image) => {
+  const imageBase = image.replace(/\.webp$/i, '');
+  return `${imageBase}-480.webp 480w, ${imageBase}-768.webp 768w, ${image} 1200w`;
+};
+
 const needs = [
   {
     id: 'small-kitchens',
@@ -125,8 +130,12 @@ const ShopByNeed = () => {
                 <div className="aspect-[5/3] overflow-hidden bg-gray-100">
                   <img
                     src={need.image}
+                    srcSet={getNeedImageSrcSet(need.image)}
+                    sizes="(max-width: 639px) calc(50vw - 22px), (max-width: 1023px) calc(50vw - 32px), (max-width: 1343px) calc((100vw - 124px) / 4), 289px"
                     alt=""
                     aria-hidden="true"
+                    width="1200"
+                    height="896"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                     decoding="async"

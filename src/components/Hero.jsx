@@ -64,6 +64,8 @@ const Hero = () => {
         {/* Assure-toi que le nom du fichier correspond à ton image dans le dossier public */}
         <img 
           src="/homepage/hero-modern-kitchen.webp"
+          srcSet="/homepage/hero-modern-kitchen-480.webp 480w, /homepage/hero-modern-kitchen-768.webp 768w, /homepage/hero-modern-kitchen.webp 1200w"
+          sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1343px) calc(100vw - 64px), 1216px"
           alt="Modern Kitchen" 
           width="1200"
           height="896"
