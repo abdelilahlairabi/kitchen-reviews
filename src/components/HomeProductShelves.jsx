@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { Clock3, Heart, Star, X } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight, Clock3, Heart, Star, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useProductsBySlugs } from '../hooks/useProducts';
 import useProductSlugs from '../hooks/useProductSlugs';
@@ -8,7 +8,34 @@ import ProductImageFrame from './ProductImageFrame';
 import SaveProductButton from './SaveProductButton';
 
 function ProductShelf({ title, description, icon: Icon, slugs, products, isPending, onRemove, onClear }) {
+  const carouselRef = useRef(null);
+  const [scrollEdges, setScrollEdges] = useState({ left: false, right: false });
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return undefined;
+
+    const updateScrollEdges = () => {
+      const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+      setScrollEdges({ left: carousel.scrollLeft > 2, right: maxScroll - carousel.scrollLeft > 2 });
+    };
+
+    updateScrollEdges();
+    carousel.addEventListener('scroll', updateScrollEdges, { passive: true });
+    const observer = new ResizeObserver(updateScrollEdges);
+    observer.observe(carousel);
+    return () => {
+      carousel.removeEventListener('scroll', updateScrollEdges);
+      observer.disconnect();
+    };
+  }, [products.length]);
+
   if (!slugs.length) return null;
+
+  const scrollCarousel = (direction) => {
+    const carousel = carouselRef.current;
+    if (carousel) carousel.scrollBy({ left: direction * carousel.clientWidth * 0.85, behavior: 'smooth' });
+  };
 
   return (
     <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10" aria-busy={isPending}>
@@ -20,7 +47,22 @@ function ProductShelf({ title, description, icon: Icon, slugs, products, isPendi
           </h2>
           <p className="mt-1 text-sm text-gray-600">{description}</p>
         </div>
-        {onClear && products.length > 0 && <button type="button" onClick={onClear} className="shrink-0 rounded-full border border-gray-300 px-3 py-2 text-xs font-semibold text-gray-600 transition hover:border-gray-950 hover:text-gray-950">Clear saved</button>}
+        {(scrollEdges.left || scrollEdges.right || (onClear && products.length > 0)) && (
+          <div className="flex shrink-0 items-center gap-2">
+            {(scrollEdges.left || scrollEdges.right) && <span className="hidden text-xs text-gray-500 sm:inline">{products.length} products</span>}
+            {onClear && products.length > 0 && <button type="button" onClick={onClear} className="rounded-full border border-gray-300 px-3 py-2 text-xs font-semibold text-gray-600 transition hover:border-gray-950 hover:text-gray-950">Clear saved</button>}
+            {(scrollEdges.left || scrollEdges.right) && (
+              <>
+                <button type="button" onClick={() => scrollCarousel(-1)} disabled={!scrollEdges.left} aria-label={`Scroll ${title} left`} className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 transition hover:border-gray-950 hover:text-gray-950 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-gray-300 disabled:hover:text-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
+                  <ChevronLeft aria-hidden="true" className="h-4 w-4" />
+                </button>
+                <button type="button" onClick={() => scrollCarousel(1)} disabled={!scrollEdges.right} aria-label={`Scroll ${title} right`} className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 transition hover:border-gray-950 hover:text-gray-950 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-gray-300 disabled:hover:text-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
+                  <ChevronRight aria-hidden="true" className="h-4 w-4" />
+                </button>
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       {isPending && products.length === 0 ? (
@@ -28,9 +70,9 @@ function ProductShelf({ title, description, icon: Icon, slugs, products, isPendi
       ) : products.length === 0 ? (
         <p className="rounded-xl border border-dashed border-gray-300 bg-[#faf9f6] px-5 py-8 text-center text-sm text-gray-500">These products are no longer available in the catalog.</p>
       ) : (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 xl:grid-cols-4">
+        <div ref={carouselRef} role="region" aria-label={`${title} products`} tabIndex={0} className="flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400 sm:gap-5">
           {products.map((product) => (
-            <article key={product.id} className="flex min-w-0 flex-col rounded-2xl border border-gray-200 bg-white p-3 transition duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-lg sm:p-4">
+            <article key={product.id} className="flex min-w-0 shrink-0 basis-[calc((100%-0.75rem)/2)] snap-start flex-col rounded-2xl border border-gray-200 bg-white p-3 transition duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-lg sm:basis-[calc((100%-2.5rem)/3)] sm:p-4 xl:basis-[calc((100%-3.75rem)/4)]">
               <div className="relative mb-4">
                 <Link to={`/product/${product.slug}`} aria-label={`View ${product.name}`} className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950">
                   <ProductImageFrame src={product.image} alt={product.name} />
