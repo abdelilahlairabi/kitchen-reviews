@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { getStyleHeroImageSrcSet } from '../../utils/styleImageSrcSets';
 
 export default function ExploreOtherStyles({ otherStyles }) {
   return (
@@ -16,7 +17,11 @@ export default function ExploreOtherStyles({ otherStyles }) {
           >
             <img
               src={item.image}
+              srcSet={getStyleHeroImageSrcSet(item.image)}
+              sizes="(max-width: 767px) calc(100vw - 32px), (max-width: 1023px) calc((100vw - 40px) / 2), 440px"
               alt={item.title}
+              width="1376"
+              height="768"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
               decoding="async"

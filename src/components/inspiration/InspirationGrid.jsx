@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { getStyleHeroImageSrcSet } from '../../utils/styleImageSrcSets';
 
 export default function InspirationGrid({ items }) {
   const featuredItem = items.find((item) => item.featured) || items[0];
@@ -10,10 +11,15 @@ export default function InspirationGrid({ items }) {
         <article className="relative group rounded-3xl overflow-hidden bg-gray-900 shadow-md min-h-[400px] md:min-h-[520px]">
           <img
             src={featuredItem.image}
+            srcSet={getStyleHeroImageSrcSet(featuredItem.image)}
+            sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1279px) calc(100vw - 32px), 1120px"
             alt=""
             aria-hidden="true"
+            width="1376"
+            height="768"
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
             fetchPriority="high"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/5" aria-hidden="true" />
           <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 max-w-3xl">
@@ -33,7 +39,7 @@ export default function InspirationGrid({ items }) {
             <article key={item.slug} className="group rounded-3xl overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-lg transition-shadow">
               <Link to={`/inspiration/${item.slug}`} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-gray-950">
                 <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
-                  <img src={item.image} alt="" aria-hidden="true" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
+                  <img src={item.image} srcSet={getStyleHeroImageSrcSet(item.image)} sizes="(max-width: 767px) calc(100vw - 32px), (max-width: 1279px) calc((100vw - 56px) / 2), 548px" alt="" aria-hidden="true" width="1376" height="768" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" />
                   <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-gray-900">{item.category}</span>
                 </div>
                 <div className="p-5 md:p-6">

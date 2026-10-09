@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { getStyleHeroImageSrcSet } from '../../utils/styleImageSrcSets';
 
 export default function StyleHero({ styleData }) {
   return (
@@ -16,10 +17,13 @@ export default function StyleHero({ styleData }) {
       <div className="relative rounded-3xl overflow-hidden shadow-sm min-h-[430px] md:min-h-[540px] bg-gray-900 flex items-end">
         <img
           src={styleData.heroImage}
+          srcSet={getStyleHeroImageSrcSet(styleData.heroImage)}
+          sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1279px) calc(100vw - 32px), 1120px"
           alt=""
           aria-hidden="true"
           width="1376"
           height="768"
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover"
           fetchPriority="high"
         />

@@ -1,3 +1,5 @@
+import { getStyleGalleryImageSrcSet } from '../../utils/styleImageSrcSets';
+
 export default function StyleGallery({ gallery }) {
   const cleanedGallery = (gallery || []).filter(Boolean).map((image) => (
     typeof image === 'string'
@@ -28,6 +30,8 @@ export default function StyleGallery({ gallery }) {
               >
                 <img
                   src={img.src}
+                  srcSet={getStyleGalleryImageSrcSet(img.src)}
+                  sizes="(max-width: 767px) calc(100vw - 32px), (max-width: 1023px) calc((100vw - 56px) / 2), 484px"
                   alt={img.alt || `Gallery image ${idx + 1}`}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   loading="lazy"
@@ -46,6 +50,8 @@ export default function StyleGallery({ gallery }) {
               >
                 <img
                   src={img.src}
+                  srcSet={getStyleGalleryImageSrcSet(img.src)}
+                  sizes="(max-width: 767px) calc((100vw - 48px) / 2), 230px"
                   alt={img.alt || `Gallery image ${idx + 3}`}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   loading="lazy"
