@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react';
 import Hero from '../components/Hero';
 import KitchenInspiration from '../components/KitchenInspiration';
 import Newsletter from '../components/Newsletter';
-import PopularCategories from '../components/PopularCategories';
 import ShopByNeed from '../components/ShopByNeed';
 import HomeProductShelves from '../components/HomeProductShelves';
 import ProductGridSkeleton from '../components/ProductGridSkeleton';
@@ -30,9 +29,8 @@ const Home = () => {
   return (
     <div className="w-full">
       <Hero />
-      <PopularCategories />
-      <Suspense fallback={<FeaturedProductsFallback />}><FeaturedProductsGrid /></Suspense>
       <ShopByNeed />
+      <Suspense fallback={<FeaturedProductsFallback />}><FeaturedProductsGrid /></Suspense>
       <KitchenInspiration />
       <HomeProductShelves />
       <Newsletter />
