@@ -48,6 +48,7 @@ const ProductDetails = () => {
       <ProductHero key={product.id} product={product} category={category} />
       <ProductSpecs product={product} />
       <ProductReviews
+        key={product.id}
         reviews={product.reviews}
         rating={product.rating}
         reviewCount={product.reviewCount}

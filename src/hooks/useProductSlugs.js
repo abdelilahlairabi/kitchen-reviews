@@ -1,30 +1,22 @@
-import { useCallback, useEffect, useState } from 'react';
-import { PRODUCT_PREFERENCES_EVENT, readProductSlugs, writeProductSlugs } from '../utils/productPreferences';
+import { useCallback, useSyncExternalStore } from 'react';
+import {
+  getProductSlugSnapshot,
+  getServerProductSlugSnapshot,
+  readProductSlugs,
+  subscribeToProductPreferences,
+  writeProductSlugs,
+} from '../utils/productPreferences';
 
 export default function useProductSlugs(storageKey, maximumItems = 12) {
-  const [slugs, setSlugs] = useState([]);
-  const [isReady, setIsReady] = useState(false);
-
-  const refresh = useCallback(() => {
-    setSlugs(readProductSlugs(storageKey).slice(0, maximumItems));
-    setIsReady(true);
-  }, [maximumItems, storageKey]);
-
-  useEffect(() => {
-    refresh();
-    window.addEventListener('storage', refresh);
-    window.addEventListener(PRODUCT_PREFERENCES_EVENT, refresh);
-    return () => {
-      window.removeEventListener('storage', refresh);
-      window.removeEventListener(PRODUCT_PREFERENCES_EVENT, refresh);
-    };
-  }, [refresh]);
+  const snapshot = useSyncExternalStore(
+    subscribeToProductPreferences,
+    () => getProductSlugSnapshot(storageKey, maximumItems),
+    getServerProductSlugSnapshot,
+  );
 
   const update = useCallback((nextSlugs) => {
     const uniqueSlugs = [...new Set(nextSlugs.map((slug) => String(slug || '').trim()).filter(Boolean))]
       .slice(0, maximumItems);
-    setSlugs(uniqueSlugs);
-    setIsReady(true);
     writeProductSlugs(storageKey, uniqueSlugs);
   }, [maximumItems, storageKey]);
 
@@ -49,5 +41,5 @@ export default function useProductSlugs(storageKey, maximumItems = 12) {
 
   const clear = useCallback(() => update([]), [update]);
 
-  return { slugs, isReady, addSlug, toggleSlug, removeSlug, clear };
+  return { ...snapshot, addSlug, toggleSlug, removeSlug, clear };
 }

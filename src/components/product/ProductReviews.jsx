@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const REVIEWS_PER_PAGE = 3;
 const EMPTY_REVIEWS = [];
@@ -27,17 +27,13 @@ const ProductReviews = ({ reviews = EMPTY_REVIEWS, rating, reviewCount, ratingDi
   const hasRating = rating !== null && rating !== undefined && rating !== '' && Number.isFinite(averageRating);
   const hasSummary = hasRating || Number(reviewCount) > 0;
   const pageCount = Math.ceil(reviews.length / REVIEWS_PER_PAGE);
+  const currentPage = Math.min(page, Math.max(1, pageCount));
   const visibleReviews = useMemo(
-    () => reviews.slice((page - 1) * REVIEWS_PER_PAGE, page * REVIEWS_PER_PAGE),
-    [reviews, page],
+    () => reviews.slice((currentPage - 1) * REVIEWS_PER_PAGE, currentPage * REVIEWS_PER_PAGE),
+    [reviews, currentPage],
   );
-  const firstReview = reviews.length ? (page - 1) * REVIEWS_PER_PAGE + 1 : 0;
-  const lastReview = Math.min(page * REVIEWS_PER_PAGE, reviews.length);
-
-  useEffect(() => {
-    setPage(1);
-    setExpandedReviews(new Set());
-  }, [reviews]);
+  const firstReview = reviews.length ? (currentPage - 1) * REVIEWS_PER_PAGE + 1 : 0;
+  const lastReview = Math.min(currentPage * REVIEWS_PER_PAGE, reviews.length);
 
   if (!hasSummary && reviews.length === 0) return null;
 
@@ -47,7 +43,7 @@ const ProductReviews = ({ reviews = EMPTY_REVIEWS, rating, reviewCount, ratingDi
   };
 
   const pageButtons = Array.from({ length: pageCount }, (_, index) => index + 1)
-    .filter((pageNumber) => pageNumber === 1 || pageNumber === pageCount || Math.abs(pageNumber - page) <= 1);
+    .filter((pageNumber) => pageNumber === 1 || pageNumber === pageCount || Math.abs(pageNumber - currentPage) <= 1);
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8" aria-labelledby="product-reviews-title">
@@ -72,11 +68,11 @@ const ProductReviews = ({ reviews = EMPTY_REVIEWS, rating, reviewCount, ratingDi
       {reviews.length > 0 && <>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <p className="text-sm text-gray-600" aria-live="polite">Showing <span className="font-semibold text-gray-900">{firstReview}–{lastReview}</span> of <span className="font-semibold text-gray-900">{reviews.length.toLocaleString()}</span> reviews</p>
-        {pageCount > 1 && <p className="text-xs text-gray-500">Page {page} of {pageCount}</p>}
+        {pageCount > 1 && <p className="text-xs text-gray-500">Page {currentPage} of {pageCount}</p>}
       </div>
       <div className="grid items-start gap-4 md:grid-cols-2">
         {visibleReviews.map((review, index) => {
-          const reviewKey = review.sourceKey || `${review.name}-${review.date}-${(page - 1) * REVIEWS_PER_PAGE + index}`;
+          const reviewKey = review.sourceKey || `${review.name}-${review.date}-${(currentPage - 1) * REVIEWS_PER_PAGE + index}`;
           const isExpanded = expandedReviews.has(reviewKey);
           const hasLongText = String(review.text || '').length > 360;
           return <article key={reviewKey} className="min-w-0 rounded-xl border border-gray-200 bg-white p-5 shadow-sm shadow-gray-950/[0.02]">
@@ -112,15 +108,15 @@ const ProductReviews = ({ reviews = EMPTY_REVIEWS, rating, reviewCount, ratingDi
         })}
       </div>
       {pageCount > 1 && <nav className="mt-8 flex flex-wrap items-center justify-center gap-2" aria-label="Review pages">
-        <button type="button" onClick={() => changePage(page - 1)} disabled={page === 1} className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40">Previous</button>
+        <button type="button" onClick={() => changePage(currentPage - 1)} disabled={currentPage === 1} className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40">Previous</button>
         {pageButtons.map((pageNumber, index) => {
           const previousPage = pageButtons[index - 1];
           return <span key={pageNumber} className="contents">
             {previousPage && pageNumber - previousPage > 1 && <span aria-hidden="true" className="px-1 text-gray-400">…</span>}
-            <button type="button" onClick={() => changePage(pageNumber)} aria-current={page === pageNumber ? 'page' : undefined} aria-label={`Page ${pageNumber}`} className={`min-w-10 rounded-lg border px-3 py-2 text-sm font-semibold transition ${page === pageNumber ? 'border-gray-900 bg-gray-900 text-white' : 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50'}`}>{pageNumber}</button>
+            <button type="button" onClick={() => changePage(pageNumber)} aria-current={currentPage === pageNumber ? 'page' : undefined} aria-label={`Page ${pageNumber}`} className={`min-w-10 rounded-lg border px-3 py-2 text-sm font-semibold transition ${currentPage === pageNumber ? 'border-gray-900 bg-gray-900 text-white' : 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50'}`}>{pageNumber}</button>
           </span>;
         })}
-        <button type="button" onClick={() => changePage(page + 1)} disabled={page === pageCount} className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40">Next</button>
+        <button type="button" onClick={() => changePage(currentPage + 1)} disabled={currentPage === pageCount} className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40">Next</button>
       </nav>}
       </>}
     </section>

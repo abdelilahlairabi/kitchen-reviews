@@ -8,7 +8,7 @@ const CategoriesCallToAction = () => {
           Can't Find What You Need?
         </h2>
         <p className="text-gray-600 mb-8">
-          Browse our full product catalog or contact our kitchen experts
+          Explore our full catalog and compare trusted kitchen products
         </p>
         <Link 
           to="/products" 
