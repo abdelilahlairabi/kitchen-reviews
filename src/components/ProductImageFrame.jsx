@@ -4,6 +4,7 @@ export default function ProductImageFrame({
   alt,
   srcSet,
   webpSrcSet,
+  avifSrcSet,
   sizes,
   className = '',
   children,
@@ -13,6 +14,7 @@ export default function ProductImageFrame({
   return (
     <div className={`relative aspect-square w-full overflow-hidden rounded-xl border border-[#e9e3d9] bg-[#f4f1eb] ${className}`}>
       <picture className="block h-full w-full">
+        {avifSrcSet && <source type="image/avif" srcSet={avifSrcSet} sizes={sizes} />}
         {webpSrcSet && <source type="image/webp" srcSet={webpSrcSet} sizes={sizes} />}
         <img
           src={src}

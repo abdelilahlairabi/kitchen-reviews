@@ -20,14 +20,20 @@ const getProductImageSrcSets = (src) => {
 
   const getSrcSet = (format) => [320, 480, 640]
     .map((width) => {
-      const suffix = format === 'webp'
-        ? `._AC_SX${width}_FMwebp_QL65_`
-        : `._AC_SX${width}_`;
+      const suffix = format === 'avif'
+        ? `._AC_SX${width}_FMavif_QL65_`
+        : format === 'webp'
+          ? `._AC_SX${width}_FMwebp_QL65_`
+          : `._AC_SX${width}_`;
       return `${src.replace(amazonSizePattern, suffix)} ${width}w`;
     })
     .join(', ');
 
-  return { srcSet: getSrcSet('jpeg'), webpSrcSet: getSrcSet('webp') };
+  return {
+    srcSet: getSrcSet('jpeg'),
+    webpSrcSet: getSrcSet('webp'),
+    avifSrcSet: getSrcSet('avif'),
+  };
 };
 
 const StarIcon = ({ filled }) => (
@@ -80,13 +86,14 @@ const ProductGrid = () => {
         {products.length === 0 ? <p className="py-12 text-center text-gray-500">No products match your search and filters.</p> : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {products.map((product, index) => {
-              const { srcSet, webpSrcSet } = getProductImageSrcSets(product.image);
+              const { srcSet, webpSrcSet, avifSrcSet } = getProductImageSrcSets(product.image);
               return (
                 <article key={product.id} className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col hover:shadow-lg transition-shadow duration-300">
                   <ProductImageFrame
                     src={product.image}
                     srcSet={srcSet}
                     webpSrcSet={webpSrcSet}
+                    avifSrcSet={avifSrcSet}
                     sizes="(max-width: 639px) calc(100vw - 64px), (max-width: 1023px) calc(50vw - 64px), 320px"
                     alt={product.name}
                     className="mb-4"
