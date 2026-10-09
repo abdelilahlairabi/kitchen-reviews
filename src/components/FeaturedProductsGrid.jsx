@@ -6,6 +6,7 @@ import AffiliateLink from './AffiliateLink';
 import ProductImageFrame from './ProductImageFrame';
 import ProductGridSkeleton from './ProductGridSkeleton';
 import ProductGridError from './ProductGridError';
+import SaveProductButton from './SaveProductButton';
 
 const filters = ['All', 'Top Rated'];
 const FEATURED_PRODUCT_COUNT = 8;
@@ -71,7 +72,9 @@ const FeaturedProductsGrid = () => {
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {products.length === 0 ? <p className="col-span-full text-center text-gray-500">No products found for this filter.</p> : products.map((product, index) => (
             <article key={product.id} className={`flex min-h-[350px] flex-col rounded-2xl border border-gray-200 bg-white p-3 transition duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-lg sm:min-h-[400px] sm:p-4 ${index >= 4 ? 'hidden lg:flex' : ''}`}>
-              <ProductImageFrame src={product.image} srcSet={getProductImageSrcSet(product.image)} sizes="(min-width: 1024px) 25vw, 46vw" alt={product.name} className="mb-4 sm:mb-5" />
+              <ProductImageFrame src={product.image} srcSet={getProductImageSrcSet(product.image)} sizes="(min-width: 1024px) 25vw, 46vw" alt={product.name} className="mb-4 sm:mb-5">
+                <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
+              </ProductImageFrame>
               <Link to={`/product/${product.slug}`} className="mb-1 line-clamp-2 min-h-10 text-xs font-extrabold text-black hover:text-gray-600 transition-colors sm:text-sm">{product.name}</Link>
               <p className="mb-2 text-sm font-extrabold text-black sm:text-base">${product.price.toFixed(2)}</p>
               <div className="flex items-center gap-1 mb-3 mt-auto sm:mb-4" role="img" aria-label={`${product.rating} out of 5 stars`}>

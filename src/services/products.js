@@ -35,6 +35,7 @@ const normalizePage = (value) => Math.max(1, Number.parseInt(value, 10) || 1);
 const normalizePageSize = (value) => Math.min(MAX_PAGE_SIZE, Math.max(1, Number.parseInt(value, 10) || PRODUCT_PAGE_SIZE));
 const normalizeSearch = (value) => String(value || '').trim().slice(0, 80);
 const normalizeCategorySlug = (value) => String(value || '').trim().toLowerCase().slice(0, 160);
+const escapePostgrestSearchTerm = (value) => value.replaceAll('\\', '\\\\').replaceAll('"', '\\"');
 
 export const toProduct = (row) => ({
   id: row.id,
@@ -101,7 +102,6 @@ export async function fetchProducts({
   let query = supabase
     .from('products')
     .select(`${productColumns}, categories!inner(slug)`, { count: 'exact' })
-    .or(validAmazonAffiliateUrlFilter)
     .order(sortRule.column, { ascending: sortRule.ascending })
     .order('id', { ascending: true })
     .range(from, to);
@@ -114,7 +114,16 @@ export async function fetchProducts({
   if (Number.isFinite(minimumRating)) query = query.gte('rating', minimumRating);
   if (Number.isFinite(minimumPrice)) query = query.gte('price', minimumPrice);
   if (Number.isFinite(maximumPrice)) query = query.lte('price', maximumPrice);
-  if (safeSearch) query = query.ilike('name', `%${safeSearch}%`);
+  if (safeSearch) {
+    const searchPattern = `"%${escapePostgrestSearchTerm(safeSearch)}%"`;
+    const searchFilters = [
+      `name.ilike.${searchPattern}`,
+      `brand_name.ilike.${searchPattern}`,
+      `model_number.ilike.${searchPattern}`,
+    ].join(',');
+    // Keep the two OR groups explicitly ANDed into one PostgREST filter.
+    query = query.and(`or(${validAmazonAffiliateUrlFilter}),or(${searchFilters})`);
+  } else query = query.or(validAmazonAffiliateUrlFilter);
   if (signal) query = query.abortSignal(signal);
 
   const { data, error, count } = await query;

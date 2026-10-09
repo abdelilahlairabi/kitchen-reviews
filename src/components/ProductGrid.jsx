@@ -3,6 +3,7 @@ import AffiliateLink from './AffiliateLink';
 import ProductImageFrame from './ProductImageFrame';
 import { useProducts } from '../hooks/useProducts';
 import { PRODUCT_PAGE_SIZE } from '../services/products';
+import SaveProductButton from './SaveProductButton';
 
 const priceRanges = {
   'under-100': { maximumPrice: 99.99 },
@@ -57,6 +58,7 @@ const ProductGrid = () => {
             {products.map((product) => (
               <article key={product.id} className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col hover:shadow-lg transition-shadow duration-300">
                 <ProductImageFrame src={product.image} alt={product.name} className="mb-4">
+                  <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
                   {product.badge && <span className="absolute top-2 left-2 bg-[#dcb589] text-black text-xs font-bold px-2 py-1 rounded">{product.badge}</span>}
                 </ProductImageFrame>
                 <Link to={`/product/${product.slug}`} className="mb-1 line-clamp-2 min-h-[40px] hover:text-gray-600 transition-colors"><h2 className="text-sm font-bold text-black">{product.name}</h2></Link>

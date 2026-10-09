@@ -4,6 +4,7 @@ import KitchenInspiration from '../components/KitchenInspiration';
 import Newsletter from '../components/Newsletter';
 import PopularCategories from '../components/PopularCategories';
 import ShopByNeed from '../components/ShopByNeed';
+import HomeProductShelves from '../components/HomeProductShelves';
 import ProductGridSkeleton from '../components/ProductGridSkeleton';
 
 const FeaturedProductsGrid = lazy(() => import('../components/FeaturedProductsGrid'));
@@ -31,6 +32,7 @@ const Home = () => {
       <Hero />
       <PopularCategories />
       <Suspense fallback={<FeaturedProductsFallback />}><FeaturedProductsGrid /></Suspense>
+      <HomeProductShelves />
       <ShopByNeed />
       <KitchenInspiration />
       <Newsletter />

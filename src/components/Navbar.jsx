@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown, Menu, Search, X } from 'lucide-react';
+import { ChevronDown, Heart, Menu, Search, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { categories } from '../data/categories';
+import useProductSlugs from '../hooks/useProductSlugs';
+import { SAVED_PRODUCTS_KEY } from '../utils/productPreferences';
 
 const Navbar = () => {
   // État pour gérer l'ouverture du menu catégories
@@ -10,6 +12,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const { slugs: savedProductSlugs } = useProductSlugs(SAVED_PRODUCTS_KEY, 24);
   // Fermer le menu si on clique en dehors
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -108,6 +111,11 @@ const Navbar = () => {
 
           {/* Recherche et Bouton d'action (Droite) */}
           <div className="flex shrink-0 items-center gap-2 sm:gap-4">
+            <Link to="/#saved-products" aria-label={`Saved products${savedProductSlugs.length ? `, ${savedProductSlugs.length} saved` : ''}`} title="Saved products" className="relative inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700">
+              <Heart aria-hidden="true" className="h-5 w-5" />
+              {savedProductSlugs.length > 0 && <span aria-hidden="true" className="absolute right-0 top-0 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[#dcb589] px-1 text-[10px] font-bold text-gray-950">{savedProductSlugs.length > 99 ? '99+' : savedProductSlugs.length}</span>}
+            </Link>
+
             {/* Barre de recherche */}
             <form onSubmit={handleSearchSubmit} className="relative hidden md:block">
               <input

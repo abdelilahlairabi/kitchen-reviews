@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AffiliateLink from '../AffiliateLink';
+import SaveProductButton from '../SaveProductButton';
 
 const formatPrice = (value) => {
   const amount = Number(value);
@@ -62,6 +63,7 @@ const ProductHero = ({ product, category }) => {
           <div className="mb-3 flex flex-wrap items-center gap-2">
             {product.brandName && <span className="text-sm font-semibold text-gray-700">{product.brandName}</span>}
             {product.badge && <span className="rounded-full bg-[#f4eadb] px-3 py-1 text-xs font-semibold text-gray-800">{product.badge}</span>}
+            <SaveProductButton product={product} className="ml-auto" />
           </div>
           <h1 className="mb-3 text-2xl font-bold leading-tight text-gray-950 sm:text-3xl">{product.name}</h1>
           {(product.modelNumber || product.upc) && <p className="mb-4 text-xs text-gray-500">
