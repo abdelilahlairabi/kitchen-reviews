@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { categories } from '../../data/categories';
+import { getCategoryHeroSrcSet } from '../../utils/categoryImageSrcSets';
 
 const CategoriesGrid = () => {
   return (
@@ -16,8 +17,12 @@ const CategoriesGrid = () => {
             <div className="relative h-64 w-full bg-gray-100 overflow-hidden">
               <img
                 src={cat.heroImage}
+                srcSet={getCategoryHeroSrcSet(cat)}
+                sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 767px) calc((100vw - 72px) / 2), (max-width: 1023px) calc((100vw - 96px) / 3), (max-width: 1279px) calc((100vw - 112px) / 3), 347px"
                 alt={cat.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute bottom-0 w-full h-1/3 bg-gradient-to-t from-white/80 to-transparent"></div>
             </div>
