@@ -39,7 +39,7 @@ const Footer = () => (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
       <div className="mb-8 flex flex-col items-center text-center">
         <Link to="/" aria-label="KitchenTrusted home" className="inline-flex items-center justify-center transition-opacity hover:opacity-80">
-          <img src="/logo.webp" alt="KitchenTrusted" width="500" height="167" className="h-10 w-36 object-contain" loading="lazy" decoding="async" />
+          <img src="/logo-256.webp" srcSet="/logo-256.webp 256w, /logo.webp 500w" sizes="144px" alt="KitchenTrusted" width="256" height="85" className="h-10 w-36 object-contain" loading="lazy" decoding="async" />
         </Link>
         <p className="mt-2 max-w-md text-sm text-gray-600">
           Practical kitchen product information, buying guides, and design ideas.
