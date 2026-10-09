@@ -8,6 +8,35 @@ import ProductGridSkeleton from './ProductGridSkeleton';
 import ProductGridError from './ProductGridError';
 
 const filters = ['All', 'Top Rated'];
+const FEATURED_PRODUCT_COUNT = 8;
+
+const diversifyByCategory = (products, limit) => {
+  const categories = new Map();
+
+  for (const product of products) {
+    const categoryKey = product.categorySlug || `uncategorized-${product.id}`;
+    if (!categories.has(categoryKey)) categories.set(categoryKey, []);
+    categories.get(categoryKey).push(product);
+  }
+
+  const groups = [...categories.values()];
+  const diversified = [];
+
+  // Take the most popular product from each category before taking a second.
+  for (let rank = 0; diversified.length < limit; rank += 1) {
+    const previousLength = diversified.length;
+
+    for (const group of groups) {
+      if (group[rank]) diversified.push(group[rank]);
+      if (diversified.length === limit) break;
+    }
+
+    if (diversified.length === previousLength) break;
+  }
+
+  return diversified;
+};
+
 const getProductImageSrcSet = (image) => {
   if (!/^\/products\/product-(stand-mixer|pressure-cooker|coffee-maker|blender)\.jpeg$/.test(image)) return undefined;
   return `${image.replace('.jpeg', '-336.jpeg')} 336w, ${image} 672w`;
@@ -17,11 +46,12 @@ const FeaturedProductsGrid = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const { data, isPending, isError } = useProducts({
     page: 1,
-    pageSize: 8,
+    // Load a broader popularity-ranked pool so one category cannot dominate the grid.
+    pageSize: 24,
     sort: 'popularity',
     minimumRating: activeFilter === 'Top Rated' ? 4.8 : undefined,
   });
-  const products = data?.products || [];
+  const products = diversifyByCategory(data?.products || [], FEATURED_PRODUCT_COUNT);
 
   return (
     <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" aria-busy={isPending}>
