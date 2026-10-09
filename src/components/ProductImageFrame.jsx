@@ -7,6 +7,7 @@ export default function ProductImageFrame({
   className = '',
   children,
   loading = 'lazy',
+  fetchPriority,
 }) {
   return (
     <div className={`relative aspect-square w-full overflow-hidden rounded-xl border border-[#e9e3d9] bg-[#f4f1eb] ${className}`}>
@@ -19,6 +20,7 @@ export default function ProductImageFrame({
         height="672"
         className="h-full w-full object-cover"
         loading={loading}
+        fetchPriority={fetchPriority}
         decoding="async"
       />
       {children}

@@ -61,9 +61,9 @@ const ProductGrid = () => {
         <p className="text-sm text-gray-500 mb-6">{total} {total === 1 ? 'product' : 'products'} found</p>
         {products.length === 0 ? <p className="py-12 text-center text-gray-500">No products match your search and filters.</p> : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {products.map((product) => (
+            {products.map((product, index) => (
               <article key={product.id} className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col hover:shadow-lg transition-shadow duration-300">
-                <ProductImageFrame src={product.image} alt={product.name} className="mb-4">
+                <ProductImageFrame src={product.image} alt={product.name} className="mb-4" loading={index === 0 ? 'eager' : 'lazy'} fetchPriority={index === 0 ? 'high' : undefined}>
                   <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
                   {product.badge && <span className="absolute top-2 left-2 bg-[#dcb589] text-black text-xs font-bold px-2 py-1 rounded">{product.badge}</span>}
                 </ProductImageFrame>
