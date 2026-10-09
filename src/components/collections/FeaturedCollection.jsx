@@ -1,12 +1,28 @@
 import { Link } from 'react-router-dom';
 
+const getFeaturedCollectionSrcSet = (image) => {
+  const base = image.replace(/\.webp$/i, '');
+  return `${base}-hero-480.webp 480w, ${base}-hero-854.webp 854w, ${image} 1376w`;
+};
+
 const FeaturedCollection = ({ collection }) => {
   if (!collection) return null;
 
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
       <article className="relative min-h-[390px] md:min-h-[470px] rounded-3xl overflow-hidden bg-gray-900 flex items-end">
-        <img src={collection.image} alt="" aria-hidden="true" width="1376" height="768" className="absolute inset-0 w-full h-full object-cover" fetchPriority="high" />
+        <img
+          src={collection.image}
+          srcSet={getFeaturedCollectionSrcSet(collection.image)}
+          sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1199px) calc(100vw - 64px), 1088px"
+          alt=""
+          aria-hidden="true"
+          width="1376"
+          height="768"
+          className="absolute inset-0 w-full h-full object-cover"
+          fetchPriority="high"
+          decoding="async"
+        />
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/85 via-black/55 to-black/10" aria-hidden="true" />
         <div className="relative z-10 p-7 md:p-12 max-w-2xl">
           <span className="bg-white/95 text-gray-900 text-xs font-semibold px-3 py-1.5 rounded-full mb-5 inline-block">Featured collection</span>
