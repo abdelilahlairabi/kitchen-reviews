@@ -19,6 +19,14 @@ try {
     throw new Error('Could not find the root placeholder in dist/index.html');
   }
 
+  const stylesheetLink = template.match(/<link\b(?=[^>]*\brel="stylesheet")(?=[^>]*\bhref="([^"]+)")[^>]*>/);
+  let productsTemplate = template;
+  if (stylesheetLink) {
+    const stylesheetPath = resolve('dist', stylesheetLink[1].replace(/^\/+/, ''));
+    const stylesheet = await readFile(stylesheetPath, 'utf8');
+    productsTemplate = template.replace(stylesheetLink[0], `<style>${stylesheet}</style>`);
+  }
+
   const { html: appHtml, dehydratedState } = await renderHome();
   const { html: productHtml, dehydratedState: productState } = await renderProducts();
   const spaHtml = template;
@@ -26,12 +34,12 @@ try {
     .replace(/</g, '\\u003c')
     .replace(/>/g, '\\u003e')
     .replace(/&/g, '\\u0026');
-  const renderDocument = (html, state) => template.replace(
+  const renderDocument = (html, state, documentTemplate = template) => documentTemplate.replace(
     rootPlaceholder,
     `<div id="root" data-ssr="true">${html}</div><script id="react-query-state" type="application/json">${serializeState(state)}</script>`,
   );
   const homeHtml = renderDocument(appHtml, dehydratedState);
-  const productsHtml = renderDocument(productHtml, productState)
+  const productsHtml = renderDocument(productHtml, productState, productsTemplate)
     .replace('<title>KitchenTrusted</title>', '<title>Kitchen Products &amp; Reviews | KitchenTrusted</title>')
     .replace(
       /<meta name="description" content="[^"]*"\s*\/>/,

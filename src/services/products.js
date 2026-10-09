@@ -1,4 +1,3 @@
-import { supabase } from '../utils/supabase';
 import { isValidAmazonProductUrl } from '../utils/affiliate';
 
 export const PRODUCT_PAGE_SIZE = 12;
@@ -41,6 +40,7 @@ const normalizePageSize = (value) => Math.min(MAX_PAGE_SIZE, Math.max(1, Number.
 const normalizeSearch = (value) => String(value || '').trim().slice(0, 80);
 const normalizeCategorySlug = (value) => String(value || '').trim().toLowerCase().slice(0, 160);
 const escapePostgrestSearchTerm = (value) => value.replaceAll('\\', '\\\\').replaceAll('"', '\\"');
+const getSupabase = async () => (await import('../utils/supabase')).supabase;
 
 export const toProduct = (row) => ({
   id: row.id,
@@ -105,6 +105,7 @@ export async function fetchProducts({
   const sortRule = sortColumns[sort] || sortColumns.popularity;
   const from = (safePage - 1) * safePageSize;
   const to = from + safePageSize - 1;
+  const supabase = await getSupabase();
 
   let query = supabase
     .from('products')
@@ -150,6 +151,7 @@ export async function fetchProducts({
 export async function fetchProductBySlug(slug) {
   const safeSlug = String(slug || '').trim();
   if (!safeSlug) return null;
+  const supabase = await getSupabase();
 
   const { data: product, error: productError } = await supabase
     .from('products')
@@ -211,6 +213,7 @@ export async function fetchProductsBySlugs(slugs) {
   )].slice(0, MAX_PAGE_SIZE);
 
   if (safeSlugs.length === 0) return [];
+  const supabase = await getSupabase();
 
   const { data, error } = await supabase
     .from('products')
