@@ -6,6 +6,7 @@ import useProductSlugs from '../hooks/useProductSlugs';
 import { RECENT_PRODUCTS_KEY } from '../utils/productPreferences';
 import ProductImageFrame from './ProductImageFrame';
 import SaveProductButton from './SaveProductButton';
+import { getAmazonImageSrcSets } from '../utils/amazonImageSrcSets';
 
 function ProductShelf({ title, description, icon: Icon, slugs, products, isPending, isError, onRemove, onClear }) {
   const carouselRef = useRef(null);
@@ -76,7 +77,7 @@ function ProductShelf({ title, description, icon: Icon, slugs, products, isPendi
             <article key={product.id} className="flex min-w-0 shrink-0 basis-[calc((100%-2.25rem)/2.25)] snap-start flex-col rounded-2xl border border-gray-200 bg-white p-3 transition duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-lg sm:basis-[calc((100%-5rem)/3.25)] sm:p-4 xl:basis-[calc((100%-5rem)/4.25)]">
               <div className="relative mb-4">
                 <Link to={`/product/${product.slug}`} aria-label={`View ${product.name}`} className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950">
-                  <ProductImageFrame src={product.image} alt={product.name} />
+                  <ProductImageFrame src={product.image} {...getAmazonImageSrcSets(product.image)} sizes="(max-width: 639px) 140px, (max-width: 1279px) 220px, 250px" alt={product.name} />
                 </Link>
                 {onRemove ? (
                   <button type="button" onClick={() => onRemove(product.slug)} aria-label={`Remove ${product.name} from saved products`} title="Remove from saved products" className="absolute right-2 top-2 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white/95 text-gray-600 shadow-sm transition hover:text-gray-950"><X aria-hidden="true" className="h-4 w-4" /></button>

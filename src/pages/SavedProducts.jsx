@@ -6,6 +6,7 @@ import useProductSlugs from '../hooks/useProductSlugs';
 import { SAVED_PRODUCTS_KEY } from '../utils/productPreferences';
 import ProductImageFrame from '../components/ProductImageFrame';
 import PageMeta from '../components/PageMeta';
+import { getAmazonImageSrcSets } from '../utils/amazonImageSrcSets';
 
 export default function SavedProducts() {
   const { slugs, isReady, removeSlug, clear } = useProductSlugs(SAVED_PRODUCTS_KEY, 24);
@@ -54,7 +55,7 @@ export default function SavedProducts() {
               <article key={product.id} className="relative flex min-w-0 flex-col rounded-2xl border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md sm:p-5">
                 <button type="button" onClick={() => removeSlug(product.slug)} aria-label={`Remove ${product.name} from saved products`} title="Remove from saved products" className="absolute right-6 top-6 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white/95 text-gray-600 shadow-sm transition-colors hover:text-gray-950"><X aria-hidden="true" className="h-4 w-4" /></button>
                 <Link to={`/product/${product.slug}`} aria-label={`View ${product.name}`}>
-                  <ProductImageFrame src={product.image} alt={product.name} className="mb-4" />
+                  <ProductImageFrame src={product.image} {...getAmazonImageSrcSets(product.image)} sizes="(max-width: 639px) calc(100vw - 64px), (max-width: 1023px) calc((100vw - 148px) / 2), (max-width: 1279px) calc((100vw - 104px) / 3 - 40px), 310px" alt={product.name} className="mb-4" />
                   <span className="line-clamp-2 min-h-10 text-sm font-bold text-gray-950 hover:underline">{product.name}</span>
                 </Link>
                 <div className="mb-4 mt-auto flex items-baseline gap-2 pt-4">

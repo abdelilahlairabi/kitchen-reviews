@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import AffiliateLink from '../AffiliateLink';
 import ProductImageFrame from '../ProductImageFrame';
 import SaveProductButton from '../SaveProductButton';
+import { getAmazonImageSrcSets } from '../../utils/amazonImageSrcSets';
 
 export default function ShopTheLook({ products, styleTitle, isError = false }) {
   if (isError && products.length === 0) {
@@ -21,7 +22,7 @@ export default function ShopTheLook({ products, styleTitle, isError = false }) {
           <article key={product.id} className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col hover:shadow-md transition-shadow">
             <div className="relative mb-4">
               <Link to={`/product/${product.slug}`} aria-label={`View ${product.name}`} className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950">
-                <ProductImageFrame src={product.image} alt={product.name} />
+                <ProductImageFrame src={product.image} {...getAmazonImageSrcSets(product.image)} sizes="(max-width: 639px) calc(100vw - 64px), (max-width: 767px) calc((100vw - 136px) / 2), (max-width: 1279px) calc((100vw - 112px) / 4 - 16px), 250px" alt={product.name} />
               </Link>
               <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
             </div>

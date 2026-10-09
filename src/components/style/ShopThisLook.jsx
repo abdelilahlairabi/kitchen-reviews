@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import AffiliateLink from '../AffiliateLink';
 import ProductImageFrame from '../ProductImageFrame';
 import SaveProductButton from '../SaveProductButton';
+import { getAmazonImageSrcSets } from '../../utils/amazonImageSrcSets';
 
 export default function ShopThisLook({ products, styleTitle, isError = false }) {
   if (isError && products.length === 0) {
@@ -25,7 +26,7 @@ export default function ShopThisLook({ products, styleTitle, isError = false }) 
           >
             <div>
               {/* Conteneur Image Produit */}
-              <ProductImageFrame src={product.image} alt={product.name} className="mb-4">
+              <ProductImageFrame src={product.image} {...getAmazonImageSrcSets(product.image)} sizes="(max-width: 639px) calc(100vw - 64px), (max-width: 767px) calc((100vw - 136px) / 2), (max-width: 1279px) calc((100vw - 112px) / 3 - 32px), 315px" alt={product.name} className="mb-4">
                 <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
               </ProductImageFrame>
 
