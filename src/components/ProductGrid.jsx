@@ -4,37 +4,13 @@ import ProductImageFrame from './ProductImageFrame';
 import { useProducts } from '../hooks/useProducts';
 import { PRODUCT_PAGE_SIZE } from '../services/products';
 import SaveProductButton from './SaveProductButton';
+import { getAmazonImageSrcSets } from '../utils/amazonImageSrcSets';
 
 const priceRanges = {
   'under-100': { maximumPrice: 99.99 },
   '100-200': { minimumPrice: 100, maximumPrice: 200 },
   '200-500': { minimumPrice: 200.01, maximumPrice: 500 },
   'over-500': { minimumPrice: 500.01 },
-};
-
-const getProductImageSrcSets = (src) => {
-  if (!src?.startsWith('https://m.media-amazon.com/images/I/')) return {};
-
-  const amazonSizePattern = /\._AC_[A-Z0-9_]+(?=\.(?:jpe?g|png|webp)(?:\?|$))/i;
-  if (!amazonSizePattern.test(src)) return {};
-  const avifQuality = src.includes('/81IC5+bWDgL.') ? 40 : 65;
-
-  const getSrcSet = (format, quality = 65) => [320, 480, 640]
-    .map((width) => {
-      const suffix = format === 'avif'
-        ? `._AC_SX${width}_FMavif_QL${quality}_`
-        : format === 'webp'
-          ? `._AC_SX${width}_FMwebp_QL65_`
-          : `._AC_SX${width}_`;
-      return `${src.replace(amazonSizePattern, suffix)} ${width}w`;
-    })
-    .join(', ');
-
-  return {
-    srcSet: getSrcSet('jpeg'),
-    webpSrcSet: getSrcSet('webp'),
-    avifSrcSet: getSrcSet('avif', avifQuality),
-  };
 };
 
 const StarIcon = ({ filled }) => (
@@ -87,7 +63,7 @@ const ProductGrid = () => {
         {products.length === 0 ? <p className="py-12 text-center text-gray-500">No products match your search and filters.</p> : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {products.map((product, index) => {
-              const { srcSet, webpSrcSet, avifSrcSet } = getProductImageSrcSets(product.image);
+              const { srcSet, webpSrcSet, avifSrcSet } = getAmazonImageSrcSets(product.image);
               return (
                 <article key={product.id} className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col hover:shadow-lg transition-shadow duration-300">
                   <ProductImageFrame
