@@ -18,7 +18,7 @@ const getProductImageSrcSet = (src) => {
   const amazonSizePattern = /\._AC_[A-Z0-9_]+(?=\.(?:jpe?g|png|webp)(?:\?|$))/i;
   if (!amazonSizePattern.test(src)) return undefined;
 
-  return [480, 720, 960]
+  return [320, 480, 640]
     .map((width) => `${src.replace(amazonSizePattern, `._AC_SX${width}_`)} ${width}w`)
     .join(', ');
 };
