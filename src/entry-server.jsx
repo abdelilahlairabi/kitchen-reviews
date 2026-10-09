@@ -19,7 +19,7 @@ export function renderHome() {
 
   const homepageProductQueries = [
     { badge: 'Best Seller', page: 1, pageSize: 4, sort: 'popularity' },
-    { page: 1, pageSize: 12, sort: 'popularity' },
+    { page: 1, pageSize: 24, sort: 'popularity' },
     { hasDiscount: true, page: 1, pageSize: 3, sort: 'discount' },
   ];
 
