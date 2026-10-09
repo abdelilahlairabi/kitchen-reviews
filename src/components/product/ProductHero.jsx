@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import AffiliateLink from '../AffiliateLink';
 import SaveProductButton from '../SaveProductButton';
 import { createAmazonVariantUrl } from '../../utils/affiliate';
@@ -95,8 +96,8 @@ const ProductHero = ({ product, category }) => {
             type="button"
             onClick={() => setShowAllDetails((expanded) => !expanded)}
             aria-expanded={showAllDetails}
-            className="mb-7 inline-flex min-h-9 items-center text-sm font-semibold text-amber-800 underline decoration-amber-300 underline-offset-4 hover:text-amber-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-2"
-          >{showAllDetails ? 'Show less' : 'Show more'}</button>}
+            className="mb-7 inline-flex min-h-9 items-center gap-2 rounded-full border border-gray-200 bg-white px-3.5 text-xs font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-50 hover:text-gray-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-2"
+          >{showAllDetails ? <>Show fewer details <ChevronUp aria-hidden="true" className="h-3.5 w-3.5" /></> : <>More product details <ChevronDown aria-hidden="true" className="h-3.5 w-3.5" /></>}</button>}
 
           {variants.length > 0 && <div className="mb-6">
             <h2 className="mb-2 text-sm font-semibold text-gray-800">Available options</h2>
@@ -118,8 +119,8 @@ const ProductHero = ({ product, category }) => {
               type="button"
               onClick={() => setShowAllVariants((expanded) => !expanded)}
               aria-expanded={showAllVariants}
-              className="mt-3 inline-flex min-h-9 items-center text-sm font-semibold text-amber-800 underline decoration-amber-300 underline-offset-4 hover:text-amber-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-2"
-            >{showAllVariants ? 'Show less options' : 'Show more options'}</button>}
+              className="mt-3 inline-flex min-h-9 items-center gap-2 rounded-full border border-gray-200 bg-white px-3.5 text-xs font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-50 hover:text-gray-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-2"
+            >{showAllVariants ? <>Show fewer options <ChevronUp aria-hidden="true" className="h-3.5 w-3.5" /></> : <>View all {variants.length} options <ChevronDown aria-hidden="true" className="h-3.5 w-3.5" /></>}</button>}
           </div>}
 
           <AffiliateLink href={product.affiliateUrl} className="mb-2 block w-full rounded-xl bg-[#ebd5b3] py-3.5 text-center font-bold text-gray-950 transition hover:bg-[#dcb589]" fallback="Product link coming soon">Check price on Amazon</AffiliateLink>

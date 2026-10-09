@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const REVIEWS_PER_PAGE = 3;
 const EMPTY_REVIEWS = [];
@@ -93,8 +94,8 @@ const ProductReviews = ({ reviews = EMPTY_REVIEWS, rating, reviewCount, ratingDi
             const next = new Set(current);
             if (next.has(reviewKey)) next.delete(reviewKey); else next.add(reviewKey);
             return next;
-          })} className="mt-2 text-sm font-semibold text-amber-800 underline decoration-amber-300 underline-offset-2 hover:text-amber-950">
-            {isExpanded ? 'Show less' : 'Show more'}
+          })} className="mt-3 inline-flex min-h-8 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-50 hover:text-gray-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-700 focus-visible:ring-offset-2">
+            {isExpanded ? <>Show less <ChevronUp aria-hidden="true" className="h-3.5 w-3.5" /></> : <>Read full review <ChevronDown aria-hidden="true" className="h-3.5 w-3.5" /></>}
           </button>}
           {review.images?.length > 0 && <div className="mt-4 flex gap-2 overflow-x-auto">
             {review.images.map((image, imageIndex) => {
