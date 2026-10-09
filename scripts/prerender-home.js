@@ -39,12 +39,25 @@ try {
     `<div id="root" data-ssr="true">${html}</div><script id="react-query-state" type="application/json">${serializeState(state)}</script>`,
   );
   const homeHtml = renderDocument(appHtml, dehydratedState);
-  const productsHtml = renderDocument(productHtml, productState, productsTemplate)
+  let productsHtml = renderDocument(productHtml, productState, productsTemplate)
     .replace('<title>KitchenTrusted</title>', '<title>Kitchen Products &amp; Reviews | KitchenTrusted</title>')
     .replace(
       /<meta name="description" content="[^"]*"\s*\/>/,
       '<meta name="description" content="Browse kitchen product reviews and recommendations. Filter by category, price, and rating to find options for your home." />',
     );
+
+  const firstProductPicture = productHtml.match(/<picture\b[^>]*>[\s\S]*?<\/picture>/i)?.[0];
+  const firstProductAvifSource = firstProductPicture?.match(/<source\b(?=[^>]*\btype="image\/avif")[^>]*>/i)?.[0];
+  const readHtmlAttribute = (element, attribute) => element?.match(new RegExp(`\\b${attribute}="([^"]*)"`, 'i'))?.[1];
+  const lcpImageSrcSet = readHtmlAttribute(firstProductAvifSource, 'srcSet');
+  const lcpImageSizes = readHtmlAttribute(firstProductAvifSource, 'sizes');
+  const lcpImageUrl = lcpImageSrcSet?.match(/(?:^|,\s*)(\S+)/)?.[1];
+
+  if (lcpImageUrl && lcpImageSrcSet && lcpImageSizes) {
+    const escapeAttribute = (value) => value.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+    const lcpImagePreload = `<link rel="preload" as="image" href="${escapeAttribute(lcpImageUrl)}" imagesrcset="${escapeAttribute(lcpImageSrcSet)}" imagesizes="${escapeAttribute(lcpImageSizes)}" type="image/avif" fetchpriority="high" />`;
+    productsHtml = productsHtml.replace('</head>', `${lcpImagePreload}</head>`);
+  }
 
   await mkdir(resolve('dist/products'), { recursive: true });
   await Promise.all([
