@@ -41,6 +41,16 @@ const normalizeSearch = (value) => String(value || '').trim().slice(0, 80);
 const normalizeCategorySlug = (value) => String(value || '').trim().toLowerCase().slice(0, 160);
 const escapePostgrestSearchTerm = (value) => value.replaceAll('\\', '\\\\').replaceAll('"', '\\"');
 const getSupabase = async () => (await import('../utils/supabase')).supabase;
+let productListClientPromise;
+const getProductListClient = () => {
+  productListClientPromise ??= import('@supabase/postgrest-js').then(({ PostgrestClient }) => (
+    new PostgrestClient(`${import.meta.env.VITE_SUPABASE_URL.replace(/\/+$/, '')}/rest/v1`, {
+      headers: { apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+      schema: 'public',
+    })
+  ));
+  return productListClientPromise;
+};
 
 export const toProduct = (row) => ({
   id: row.id,
@@ -105,9 +115,9 @@ export async function fetchProducts({
   const sortRule = sortColumns[sort] || sortColumns.popularity;
   const from = (safePage - 1) * safePageSize;
   const to = from + safePageSize - 1;
-  const supabase = await getSupabase();
+  const productListClient = await getProductListClient();
 
-  let query = supabase
+  let query = productListClient
     .from('products')
     .select(`${productListColumns}, categories!inner(slug)`, { count: 'exact' })
     .eq('is_active', true)
