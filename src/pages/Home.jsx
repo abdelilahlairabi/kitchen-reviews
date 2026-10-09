@@ -1,7 +1,6 @@
 import { lazy, Suspense } from 'react';
 import Hero from '../components/Hero';
 import KitchenInspiration from '../components/KitchenInspiration';
-import Newsletter from '../components/Newsletter';
 import ShopByNeed from '../components/ShopByNeed';
 import HomeProductShelves from '../components/HomeProductShelves';
 import ProductGridSkeleton from '../components/ProductGridSkeleton';
@@ -33,7 +32,6 @@ const Home = () => {
       <Suspense fallback={<FeaturedProductsFallback />}><FeaturedProductsGrid /></Suspense>
       <KitchenInspiration />
       <HomeProductShelves />
-      <Newsletter />
     </div>
   );
 };

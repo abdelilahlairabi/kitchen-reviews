@@ -100,7 +100,7 @@ const Hero = () => {
                   if (!searchRef.current?.contains(event.relatedTarget)) setIsSearchFocused(false);
                 }}
                 onKeyDown={handleSearchKeyDown}
-                placeholder="Search products, brands, or models"
+                placeholder="Search products or brands"
                 autoComplete="off"
                 role="combobox"
                 aria-autocomplete="list"
