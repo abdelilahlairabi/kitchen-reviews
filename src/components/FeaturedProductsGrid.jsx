@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
-import AffiliateLink from './AffiliateLink';
-import ProductImageFrame from './ProductImageFrame';
+import ProductCard from './ProductCard';
 import ProductGridSkeleton from './ProductGridSkeleton';
 import ProductGridError from './ProductGridError';
-import SaveProductButton from './SaveProductButton';
 import { rankFeaturedProducts } from '../utils/featuredProductRanking';
 import { getAmazonImageSrcSets } from '../utils/amazonImageSrcSets';
 
@@ -45,32 +43,7 @@ const FeaturedProductsGrid = () => {
       ) : (
         <>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-            {products.length === 0 ? <p className="col-span-full text-center text-gray-500">No products found for this filter.</p> : products.map((product, index) => {
-              const imageSrcSets = getAmazonImageSrcSets(product.image);
-              return (
-            <article key={product.id} className={`flex min-h-[350px] flex-col rounded-2xl border border-gray-200 bg-white p-3 transition duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-lg sm:min-h-[400px] sm:p-4 ${index >= 4 ? 'hidden lg:flex' : ''}`}>
-              <ProductImageFrame
-                src={product.image}
-                {...imageSrcSets}
-                srcSet={imageSrcSets.srcSet || getProductImageSrcSet(product.image)}
-                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 46vw, calc(50vw - 26px)"
-                alt={product.name}
-                className="mb-4 sm:mb-5"
-              >
-                <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
-              </ProductImageFrame>
-              <Link to={`/product/${product.slug}`} className="mb-1 line-clamp-2 min-h-10 text-xs font-extrabold text-black hover:text-gray-600 transition-colors sm:text-sm">{product.name}</Link>
-              <p className="mb-2 text-sm font-extrabold text-black sm:text-base">${product.price.toFixed(2)}</p>
-              <div className="flex items-center gap-1 mb-3 mt-auto sm:mb-4" role="img" aria-label={`${product.rating} out of 5 stars`}>
-                {[...Array(5)].map((_, starIndex) => <Star key={starIndex} aria-hidden="true" className={`w-3.5 h-3.5 ${starIndex < Math.round(product.rating) ? 'fill-[#dcb589] text-[#dcb589]' : 'fill-gray-200 text-gray-200'}`} />)}
-              </div>
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                <Link to={`/product/${product.slug}`} aria-label={`Details for ${product.name}`} className="block text-center border border-gray-300 hover:border-gray-500 py-2 rounded-md text-xs font-bold text-black transition-colors sm:py-2.5 sm:text-sm">Details</Link>
-                <AffiliateLink href={product.affiliateUrl} className="block text-center bg-[#dcb589] hover:bg-[#cba478] py-2 rounded-md text-xs font-bold text-black transition-colors aria-disabled:opacity-50 aria-disabled:cursor-not-allowed sm:py-2.5 sm:text-sm" fallback="Link soon">Amazon</AffiliateLink>
-              </div>
-            </article>
-              );
-            })}
+            {products.length === 0 ? <p className="col-span-full text-center text-gray-500">No products found for this filter.</p> : products.map((product, index) => <div key={product.id} className={index >= 4 ? 'hidden lg:block' : ''}><ProductCard product={product} imageSizes="(max-width: 359px) calc(100vw - 56px), (max-width: 639px) calc((100vw - 92px) / 2), (max-width: 1023px) calc((100vw - 136px) / 2), (max-width: 1279px) calc((100vw - 168px) / 4), 284px" imageSrcSet={getAmazonImageSrcSets(product.image).srcSet || getProductImageSrcSet(product.image)} /></div>)}
           </div>
           {products.length > 0 && (
             <div className="mt-9 flex justify-center">
