@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Clock3, Star, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useProductsBySlugs } from '../hooks/useProducts';
 import useProductSlugs from '../hooks/useProductSlugs';
@@ -8,7 +8,7 @@ import ProductImageFrame from './ProductImageFrame';
 import SaveProductButton from './SaveProductButton';
 import { getAmazonImageSrcSets } from '../utils/amazonImageSrcSets';
 
-function ProductShelf({ title, description, icon: Icon, slugs, products, isPending, isError, onRemove, onClear }) {
+function ProductShelf({ title, slugs, products, isPending, isError, onRemove, onClear }) {
   const carouselRef = useRef(null);
   const [scrollEdges, setScrollEdges] = useState({ left: false, right: false });
 
@@ -42,10 +42,7 @@ function ProductShelf({ title, description, icon: Icon, slugs, products, isPendi
     <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10" aria-busy={isPending}>
       <div className="mb-6 flex items-end justify-between gap-4 border-b border-[#e9e3d9] pb-4">
         <div>
-          <h2 className="flex items-center gap-2 text-xl font-bold tracking-tight text-gray-950 sm:text-2xl">
-            <Icon aria-hidden="true" className="h-5 w-5 text-[#8c6744]" />{title}
-          </h2>
-          <p className="mt-1 text-sm text-gray-600">{description}</p>
+          <h2 className="text-xl font-bold tracking-tight text-gray-950 sm:text-2xl">{title}</h2>
         </div>
         {(scrollEdges.left || scrollEdges.right || (onClear && products.length > 0)) && (
           <div className="flex shrink-0 items-center gap-2">
@@ -115,5 +112,5 @@ export default function HomeProductShelves() {
   const recent = useProductSlugs(RECENT_PRODUCTS_KEY, 6);
   const recentShelf = useShelfProducts(recent.slugs);
 
-  return <ProductShelf title="Recently viewed" description="Pick up where you left off." icon={Clock3} slugs={recent.slugs} {...recentShelf} />;
+  return <ProductShelf title="Recently viewed" slugs={recent.slugs} {...recentShelf} />;
 }
