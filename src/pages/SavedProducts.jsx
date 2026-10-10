@@ -18,7 +18,11 @@ export default function SavedProducts() {
 
   return (
     <main className="min-h-[60vh] w-full bg-[#fcfcfc] py-10 sm:py-14">
-      <PageMeta title="Saved Kitchen Products | KitchenTrusted" description="Return to kitchen products you saved on KitchenTrusted." />
+      <PageMeta
+        title="Saved Kitchen Products | KitchenTrusted"
+        description="Return to kitchen products you saved on KitchenTrusted."
+        robots="noindex,follow"
+      />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <nav className="mb-6 text-xs text-gray-500" aria-label="Breadcrumb">
           <Link to="/" className="hover:text-black">Home</Link><span className="mx-2">/</span><span className="font-medium text-gray-900">Saved products</span>

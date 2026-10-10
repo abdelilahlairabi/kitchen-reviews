@@ -9,6 +9,7 @@ import { PRODUCT_PAGE_SIZE } from '../services/products';
 import { categories, getCategoryBySlug } from '../data/categories';
 import PageMeta from '../components/PageMeta';
 import NotFound from './NotFound';
+import { getCategorySeo } from '../data/seoMetadata';
 
 const Category = () => {
   const { categoryName } = useParams();
@@ -16,6 +17,7 @@ const Category = () => {
   const category = getCategoryBySlug(categoryName);
   const sort = searchParams.get('sort') || 'popularity';
   const requestedPage = searchParams.has('type') ? 1 : Math.max(1, Number(searchParams.get('page')) || 1);
+  const seo = category ? getCategorySeo(category) : null;
 
   useEffect(() => {
     if (!category || !searchParams.has('type')) return;
@@ -37,7 +39,7 @@ const Category = () => {
 
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen" aria-busy={isFetching}>
-      <PageMeta title={`${category.name} Products & Reviews | KitchenTrusted`} description={category.description} />
+      <PageMeta title={seo.title} description={seo.description} />
       <CategoryHero category={category} productCount={data?.total || 0} />
       <CategoryFilters />
       {isLoadingProducts ? <p className="py-16 text-center text-gray-500">Loading products...</p> : <CategoryProductGrid products={data?.products || []} total={data?.total || 0} pageSize={PRODUCT_PAGE_SIZE} page={requestedPage} />}

@@ -6,14 +6,15 @@ import { categories } from '../src/data/categories.js';
 import { collections } from '../src/data/collections.js';
 import { guidesData } from '../src/data/guides.js';
 import { stylesData } from '../src/data/inspirationStyles.js';
-import { products as fallbackProducts } from '../src/data/products.js';
+import { validAmazonAffiliateUrlFilter } from '../src/utils/affiliate.js';
 
 const siteUrl = (process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://kitchen-reviews-seven.vercel.app')
   .trim()
   .replace(/\/$/, '');
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const supabaseKey = process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-let productSlugs = fallbackProducts.map(({ slug }) => slug).filter(Boolean);
+let productSlugs = [];
+const activeCategorySlugs = new Set();
 const pageSize = 500;
 
 if (supabaseUrl && supabaseKey) {
@@ -24,21 +25,26 @@ if (supabaseUrl && supabaseKey) {
     for (let offset = 0; ; offset += pageSize) {
       const { data, error } = await supabase
         .from('products')
-        .select('slug')
+        .select('slug, categories!inner(slug)')
+        .eq('is_active', true)
+        .or(validAmazonAffiliateUrlFilter)
         .order('id', { ascending: true })
         .range(offset, offset + pageSize - 1);
 
       if (error) throw error;
-      liveProductSlugs.push(...(data || []).map(({ slug }) => slug).filter(Boolean));
+      for (const product of data || []) {
+        if (product.slug) liveProductSlugs.push(product.slug);
+        if (product.categories?.slug) activeCategorySlugs.add(product.categories.slug);
+      }
       if (!data || data.length < pageSize) break;
     }
 
-    if (liveProductSlugs.length) productSlugs = liveProductSlugs;
+    productSlugs = liveProductSlugs;
   } catch (error) {
-    console.warn(`Could not fetch current product URLs for sitemap; using bundled product slugs. ${error.message}`);
+    console.warn(`Could not fetch active product URLs for sitemap; excluding product and category URLs. ${error.message}`);
   }
 } else {
-  console.warn('Supabase build environment variables are missing; using bundled product slugs for the sitemap.');
+  console.warn('Supabase build environment variables are missing; excluding product and category URLs from the sitemap.');
 }
 
 const staticPaths = [
@@ -54,7 +60,7 @@ const staticPaths = [
   '/privacy',
   '/terms',
   '/affiliate-disclosure',
-  ...categories.map(({ slug }) => `/category/${slug}`),
+  ...categories.filter(({ slug }) => activeCategorySlugs.has(slug)).map(({ slug }) => `/category/${slug}`),
   ...collections.map(({ slug }) => `/collections/${slug}`),
   ...guidesData.map(({ slug }) => `/guides/${slug}`),
   ...Object.keys(stylesData).map((slug) => `/inspiration/${slug}`),

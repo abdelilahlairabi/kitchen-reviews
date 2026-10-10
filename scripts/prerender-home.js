@@ -34,17 +34,18 @@ try {
     .replace(/</g, '\\u003c')
     .replace(/>/g, '\\u003e')
     .replace(/&/g, '\\u0026');
-  const renderDocument = (html, state, documentTemplate = template) => documentTemplate.replace(
-    rootPlaceholder,
-    `<div id="root" data-ssr="true">${html}</div><script id="react-query-state" type="application/json">${serializeState(state)}</script>`,
-  );
-  const homeHtml = renderDocument(appHtml, dehydratedState);
-  let productsHtml = renderDocument(productHtml, productState, productsTemplate)
-    .replace('<title>KitchenTrusted</title>', '<title>Kitchen Products &amp; Reviews | KitchenTrusted</title>')
-    .replace(
-      /<meta name="description" content="[^"]*"\s*\/>/,
-      '<meta name="description" content="Browse kitchen product reviews and recommendations. Filter by category, price, and rating to find options for your home." />',
+  const renderDocument = (html, state, documentTemplate = template) => {
+    const pageTemplate = documentTemplate
+      .replace(/<title>[^<]*<\/title>/, '')
+      .replace(/<meta name="description" content="[^"]*"\s*\/>/, '');
+
+    return pageTemplate.replace(
+      rootPlaceholder,
+      `<div id="root" data-ssr="true">${html}</div><script id="react-query-state" type="application/json">${serializeState(state)}</script>`,
     );
+  };
+  const homeHtml = renderDocument(appHtml, dehydratedState);
+  let productsHtml = renderDocument(productHtml, productState, productsTemplate);
 
   const firstProductPicture = productHtml.match(/<picture\b[^>]*>[\s\S]*?<\/picture>/i)?.[0];
   const firstProductAvifSource = firstProductPicture?.match(/<source\b(?=[^>]*\btype="image\/avif")[^>]*>/i)?.[0];

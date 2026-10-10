@@ -12,6 +12,7 @@ import useProductSlugs from '../hooks/useProductSlugs';
 import { RECENT_PRODUCTS_KEY } from '../utils/productPreferences';
 import { guidesData } from '../data/guides';
 import { collections } from '../data/collections';
+import { getProductSeo } from '../data/seoMetadata';
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -38,12 +39,14 @@ const ProductDetails = () => {
   const relatedCollections = collections
     .filter((collection) => collection.productSlugs?.includes(product.slug))
     .slice(0, 1);
+  const seo = getProductSeo(product);
 
   return (
     <div className="w-full bg-[#fcfcfc] min-h-screen">
       <PageMeta
-        title={`${product.name} Review & Product Details | KitchenTrusted`}
-        description={product.description}
+        title={seo.title}
+        description={seo.description}
+        type="product"
       />
       <ProductHero key={product.id} product={product} category={category} />
       <ProductSpecs product={product} />

@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom';
+import PageMeta from '../components/PageMeta';
 
 export default function NotFound() {
   return (
     <main className="min-h-[75vh] flex flex-col items-center justify-center text-center px-4 py-12 bg-white">
+      <PageMeta
+        title="Page Not Found | KitchenTrusted"
+        description="The page you requested could not be found. Browse kitchen product reviews, categories, and buying guides."
+        robots="noindex,follow"
+      />
       {/* 404 Big Title */}
       <h1 className="text-7xl md:text-8xl font-extrabold text-gray-900 tracking-tight mb-2">
         404

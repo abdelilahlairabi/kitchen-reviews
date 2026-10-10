@@ -1,48 +1,44 @@
-import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-const setMetaContent = (selector, attribute, content) => {
-  let element = document.head.querySelector(selector);
-  if (!element) {
-    element = document.createElement('meta');
-    if (selector.includes('property=')) element.setAttribute('property', attribute);
-    else element.setAttribute('name', attribute);
-    document.head.appendChild(element);
-  }
-  element.setAttribute('content', content);
-};
+const siteOrigin = (import.meta.env.VITE_SITE_URL || 'https://kitchen-reviews-seven.vercel.app')
+  .trim()
+  .replace(/\/+$/, '');
 
-export default function PageMeta({ title, description, robots }) {
-  useEffect(() => {
-    const previousTitle = document.title;
-    const descriptionElement = document.head.querySelector('meta[name="description"]');
-    const previousDescription = descriptionElement?.getAttribute('content');
-    const ogTitleElement = document.head.querySelector('meta[property="og:title"]');
-    const previousOgTitle = ogTitleElement?.getAttribute('content');
-    const ogDescriptionElement = document.head.querySelector('meta[property="og:description"]');
-    const previousOgDescription = ogDescriptionElement?.getAttribute('content');
-    const robotsElement = robots ? document.head.querySelector('meta[name="robots"]') : null;
-    const previousRobots = robotsElement?.getAttribute('content');
+function getCanonicalUrl(location, canonicalPath) {
+  if (canonicalPath) return new URL(canonicalPath, siteOrigin).href;
 
-    document.title = title;
-    setMetaContent('meta[name="description"]', 'description', description);
-    setMetaContent('meta[property="og:title"]', 'og:title', title);
-    setMetaContent('meta[property="og:description"]', 'og:description', description);
-    if (robots) setMetaContent('meta[name="robots"]', 'robots', robots);
+  // Keep pagination pages distinct while avoiding duplicate URLs for sort/filter state.
+  const page = Number(new URLSearchParams(location.search).get('page'));
+  const pathname = location.pathname.replace(/\/+$/, '') || '/';
+  const path = page > 1 ? `${pathname}?page=${page}` : pathname;
+  return new URL(path, siteOrigin).href;
+}
 
-    return () => {
-      document.title = previousTitle;
-      if (previousDescription === null || previousDescription === undefined) document.head.querySelector('meta[name="description"]')?.remove();
-      else descriptionElement?.setAttribute('content', previousDescription);
-      if (previousOgTitle === null || previousOgTitle === undefined) document.head.querySelector('meta[property="og:title"]')?.remove();
-      else ogTitleElement?.setAttribute('content', previousOgTitle);
-      if (previousOgDescription === null || previousOgDescription === undefined) document.head.querySelector('meta[property="og:description"]')?.remove();
-      else ogDescriptionElement?.setAttribute('content', previousOgDescription);
-      if (robots) {
-        if (previousRobots === null || previousRobots === undefined) document.head.querySelector('meta[name="robots"]')?.remove();
-        else robotsElement?.setAttribute('content', previousRobots);
-      }
-    };
-  }, [title, description, robots]);
+export default function PageMeta({
+  title,
+  description,
+  robots = 'index,follow',
+  canonicalPath,
+  type = 'website',
+}) {
+  const location = useLocation();
+  const canonicalUrl = getCanonicalUrl(location, canonicalPath);
 
-  return null;
+  // React 19 hoists title/meta/link tags to <head> for both client rendering and SSR.
+  return (
+    <>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta name="robots" content={robots} />
+      <link rel="canonical" href={canonicalUrl} />
+      <meta property="og:type" content={type} />
+      <meta property="og:site_name" content="KitchenTrusted" />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+    </>
+  );
 }

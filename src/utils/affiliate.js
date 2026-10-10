@@ -12,6 +12,14 @@ export const isValidAmazonProductUrl = (value) => {
   }
 };
 
+export const validAmazonAffiliateUrlFilter = [
+  'affiliate_url.imatch."^https://amazon[.]com/([^?#]*/)?dp/[A-Za-z0-9]{10}([/?#].*)?$"',
+  'affiliate_url.imatch."^https://amazon[.]com/([^?#]*/)?gp/product/[A-Za-z0-9]{10}([/?#].*)?$"',
+  'affiliate_url.imatch."^https://www[.]amazon[.]com/([^?#]*/)?dp/[A-Za-z0-9]{10}([/?#].*)?$"',
+  'affiliate_url.imatch."^https://www[.]amazon[.]com/([^?#]*/)?gp/product/[A-Za-z0-9]{10}([/?#].*)?$"',
+  'affiliate_url.imatch."^https://amzn[.]to/[A-Za-z0-9]{4,}([?#].*)?$"',
+].join(',');
+
 export const createAmazonVariantUrl = ({ asin, marketplace = 'amazon.com', affiliateUrl = '' }) => {
   const normalizedAsin = String(asin || '').trim().toUpperCase();
   if (!/^[A-Z0-9]{10}$/.test(normalizedAsin)) return null;

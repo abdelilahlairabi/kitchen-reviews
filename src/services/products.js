@@ -1,4 +1,4 @@
-import { isValidAmazonProductUrl } from '../utils/affiliate';
+import { isValidAmazonProductUrl, validAmazonAffiliateUrlFilter } from '../utils/affiliate';
 
 export const PRODUCT_PAGE_SIZE = 12;
 const MAX_PAGE_SIZE = 24;
@@ -27,14 +27,6 @@ const productListColumns = `
 
 // Filter at the database level so products without a valid Amazon destination
 // never appear in cards, detail pages, or pagination counts.
-const validAmazonAffiliateUrlFilter = [
-  'affiliate_url.imatch."^https://amazon[.]com/([^?#]*/)?dp/[A-Za-z0-9]{10}([/?#].*)?$"',
-  'affiliate_url.imatch."^https://amazon[.]com/([^?#]*/)?gp/product/[A-Za-z0-9]{10}([/?#].*)?$"',
-  'affiliate_url.imatch."^https://www[.]amazon[.]com/([^?#]*/)?dp/[A-Za-z0-9]{10}([/?#].*)?$"',
-  'affiliate_url.imatch."^https://www[.]amazon[.]com/([^?#]*/)?gp/product/[A-Za-z0-9]{10}([/?#].*)?$"',
-  'affiliate_url.imatch."^https://amzn[.]to/[A-Za-z0-9]{4,}([?#].*)?$"',
-].join(',');
-
 const normalizePage = (value) => Math.max(1, Number.parseInt(value, 10) || 1);
 const normalizePageSize = (value) => Math.min(MAX_PAGE_SIZE, Math.max(1, Number.parseInt(value, 10) || PRODUCT_PAGE_SIZE));
 const normalizeSearch = (value) => String(value || '').trim().slice(0, 80);

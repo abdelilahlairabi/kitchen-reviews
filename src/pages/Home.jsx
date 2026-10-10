@@ -4,6 +4,7 @@ import KitchenInspiration from '../components/KitchenInspiration';
 import ShopByNeed from '../components/ShopByNeed';
 import HomeProductShelves from '../components/HomeProductShelves';
 import ProductGridSkeleton from '../components/ProductGridSkeleton';
+import PageMeta from '../components/PageMeta';
 
 const FeaturedProductsGrid = lazy(() => import('../components/FeaturedProductsGrid'));
 
@@ -22,6 +23,10 @@ function FeaturedProductsFallback() {
 const Home = () => {
   return (
     <div className="w-full">
+      <PageMeta
+        title="Kitchen Product Reviews & Buying Guides | KitchenTrusted"
+        description="Compare kitchen product features, customer feedback, and practical buying guides for faucets, cookware, appliances, storage, and more."
+      />
       <Hero />
       <ShopByNeed />
       <Suspense fallback={<FeaturedProductsFallback />}><FeaturedProductsGrid /></Suspense>
