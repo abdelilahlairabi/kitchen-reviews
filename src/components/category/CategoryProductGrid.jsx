@@ -14,11 +14,11 @@ const CategoryProductGrid = ({ products, total, pageSize, page }) => {
     setSearchParams(params);
   };
 
-  return <div className="mx-auto mb-16 max-w-6xl px-4 sm:px-6 lg:px-8"><div className="mb-10 grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+  return <div className="mx-auto mb-16 max-w-6xl px-4 sm:px-6 lg:px-8"><div className="mb-10 grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
     {products.length === 0 ? <p className="col-span-full text-center text-gray-500 py-12">No products found in this category yet.</p> : products.map((product) => {
       const imageSrcSets = getAmazonImageSrcSets(product.image);
       return <article key={product.id} className="relative flex flex-col rounded-xl border border-gray-200 bg-white p-3 transition-shadow hover:shadow-md sm:p-4">
-      <ProductImageFrame src={product.image} {...imageSrcSets} sizes="(max-width: 359px) calc(100vw - 58px), (max-width: 639px) calc((100vw - 96px) / 2), (max-width: 1023px) calc(50vw - 64px), 320px" alt={product.name} className="mb-3 sm:mb-4">
+      <ProductImageFrame src={product.image} {...imageSrcSets} sizes="(max-width: 359px) calc(100vw - 58px), (max-width: 639px) calc((100vw - 96px) / 2), (max-width: 1023px) calc(50vw - 64px), (max-width: 1279px) calc((100vw - 144px) / 3), 246px" alt={product.name} className="mb-3 sm:mb-4">
         {product.badge && <span className="absolute left-2 top-2 z-10 rounded-full bg-white/95 px-2 py-1 text-[9px] font-semibold uppercase text-gray-900 sm:left-3 sm:top-3 sm:px-2.5 sm:text-[10px]">{product.badge}</span>}
         <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
       </ProductImageFrame>

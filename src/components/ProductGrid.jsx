@@ -61,7 +61,7 @@ const ProductGrid = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <p className="text-sm text-gray-500 mb-6">{total} {total === 1 ? 'product' : 'products'} found</p>
         {products.length === 0 ? <p className="py-12 text-center text-gray-500">No products match your search and filters.</p> : (
-          <div className="mb-12 grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+          <div className="mb-12 grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product, index) => {
               const { srcSet, webpSrcSet, avifSrcSet } = getAmazonImageSrcSets(product.image);
               return (
@@ -71,7 +71,7 @@ const ProductGrid = () => {
                     srcSet={srcSet}
                     webpSrcSet={webpSrcSet}
                     avifSrcSet={avifSrcSet}
-                    sizes="(max-width: 359px) calc(100vw - 56px), (max-width: 639px) calc((100vw - 92px) / 2), (max-width: 1023px) calc(50vw - 64px), 320px"
+                    sizes="(max-width: 359px) calc(100vw - 56px), (max-width: 639px) calc((100vw - 92px) / 2), (max-width: 1023px) calc(50vw - 64px), (max-width: 1279px) calc((100vw - 144px) / 3), 246px"
                     alt={product.name}
                     className="mb-3 sm:mb-4"
                     loading={index === 0 ? 'eager' : 'lazy'}

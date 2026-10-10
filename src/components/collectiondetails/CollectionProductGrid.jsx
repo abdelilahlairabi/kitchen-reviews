@@ -18,7 +18,7 @@ export default function CollectionProductGrid({ products, isError = false }) {
         </div>
         <p className="text-sm text-gray-500">{products.length} {products.length === 1 ? 'product' : 'products'}</p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+      <div className="grid grid-cols-1 min-[360px]:grid-cols-2 gap-3 sm:gap-5 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
         {products.map((product) => <CollectionProductCard key={product.id} product={product} />)}
       </div>
     </section>

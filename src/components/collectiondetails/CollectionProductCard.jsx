@@ -12,18 +12,18 @@ export default function CollectionProductCard({ product }) {
   const imageSrcSets = getAmazonImageSrcSets(product.image);
 
   return (
-    <article className="bg-white rounded-2xl border border-gray-200 p-4 md:p-5 flex flex-col shadow-sm hover:shadow-md transition-shadow">
-      <ProductImageFrame src={product.image} {...imageSrcSets} sizes="(max-width: 639px) calc(100vw - 64px), (max-width: 767px) calc((100vw - 132px) / 2), (max-width: 1023px) calc((100vw - 152px) / 2), (max-width: 1279px) calc((100vw - 232px) / 3), 349px" alt={product.name} className="mb-4">
+    <article className="bg-white rounded-2xl border border-gray-200 p-3 sm:p-4 md:p-5 flex flex-col shadow-sm hover:shadow-md transition-shadow">
+      <ProductImageFrame src={product.image} {...imageSrcSets} sizes="(max-width: 359px) calc(100vw - 56px), (max-width: 639px) calc((100vw - 92px) / 2), (max-width: 1023px) calc((100vw - 100px) / 2), (max-width: 1279px) calc((100vw - 232px) / 3), 276px" alt={product.name} className="mb-3 sm:mb-4">
         {product.badge && <span className="absolute left-3 top-3 z-10 bg-white/95 text-gray-900 text-[10px] font-semibold uppercase px-2.5 py-1 rounded-full">{product.badge}</span>}
         <SaveProductButton product={product} className="absolute right-2 top-2 z-10" />
       </ProductImageFrame>
 
       <div className="flex-1">
-        <Link to={`/product/${product.slug}`} className="font-bold text-gray-950 text-base leading-snug line-clamp-2 hover:underline underline-offset-4">{product.name}</Link>
+        <Link to={`/product/${product.slug}`} className="font-bold text-gray-950 text-sm sm:text-base leading-snug line-clamp-2 hover:underline underline-offset-4">{product.name}</Link>
         {hasRating && (
-          <div className="flex items-center gap-1.5 mt-2 mb-3" aria-label={`${product.rating.toFixed(1)} out of 5 stars${product.reviewCount ? `, ${product.reviewCount} reviews` : ''}`}>
+          <div className="flex min-w-0 items-center gap-1.5 mt-2 mb-3" aria-label={`${product.rating.toFixed(1)} out of 5 stars${product.reviewCount ? `, ${product.reviewCount} reviews` : ''}`}>
             <span className="flex" aria-hidden="true">{Array.from({ length: 5 }, (_, index) => <Star key={index} size={13} fill={index < filledStars ? 'currentColor' : 'none'} className={index < filledStars ? 'text-amber-500' : 'text-gray-300'} />)}</span>
-            <span className="text-xs text-gray-600">{product.rating.toFixed(1)}{product.reviewCount ? ` · ${product.reviewCount.toLocaleString()} reviews` : ''}</span>
+            <span className="truncate text-[10px] text-gray-600 sm:text-xs">{product.rating.toFixed(1)}{product.reviewCount ? ` · ${product.reviewCount.toLocaleString()} reviews` : ''}</span>
           </div>
         )}
       </div>
@@ -33,13 +33,13 @@ export default function CollectionProductCard({ product }) {
           {Number.isFinite(product.price) && <span className="text-base font-bold text-gray-950">${product.price.toFixed(2)}</span>}
           {Number.isFinite(product.price) && Number.isFinite(product.originalPrice) && product.originalPrice > product.price && <span className="text-xs text-gray-500 line-through ml-2">${product.originalPrice.toFixed(2)}</span>}
         </div>
-        <Link to={`/product/${product.slug}`} className="text-gray-900 border border-gray-300 hover:border-gray-950 text-xs font-semibold px-3 py-2 rounded-full transition-colors whitespace-nowrap">Details</Link>
+        <Link to={`/product/${product.slug}`} className="text-gray-900 border border-gray-300 hover:border-gray-950 text-[11px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full transition-colors whitespace-nowrap">Details</Link>
       </div>
 
       {hasAffiliateUrl ? (
-        <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer nofollow sponsored" className="mt-3 block text-center bg-gray-950 hover:bg-gray-800 text-white text-sm font-semibold px-4 py-2.5 rounded-full transition-colors">Check current price</a>
+        <a href={product.affiliateUrl} target="_blank" rel="noopener noreferrer nofollow sponsored" className="mt-3 block text-center bg-gray-950 hover:bg-gray-800 text-white text-xs sm:text-sm font-semibold px-2 sm:px-4 py-2.5 rounded-full transition-colors">Check current price</a>
       ) : (
-        <Link to={`/product/${product.slug}`} className="mt-3 block text-center bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-semibold px-4 py-2.5 rounded-full transition-colors">View product details</Link>
+        <Link to={`/product/${product.slug}`} className="mt-3 block text-center bg-gray-100 hover:bg-gray-200 text-gray-900 text-xs sm:text-sm font-semibold px-2 sm:px-4 py-2.5 rounded-full transition-colors">View product details</Link>
       )}
     </article>
   );
