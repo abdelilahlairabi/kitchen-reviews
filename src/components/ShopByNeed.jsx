@@ -59,7 +59,7 @@ const ShopByNeed = () => {
     <section className="w-full bg-[#f4f7f9] py-12 sm:py-16" aria-labelledby="shop-by-need-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-7 flex flex-col gap-5 sm:mb-9 sm:flex-row sm:items-end sm:justify-between">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl text-center sm:text-left">
             <h2 id="shop-by-need-heading" className="text-2xl font-bold tracking-tight text-gray-950 sm:text-3xl">
               Shop by Kitchen Need
             </h2>
