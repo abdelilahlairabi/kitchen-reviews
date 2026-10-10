@@ -15,6 +15,7 @@ const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const supabaseKey = process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 let productSlugs = [];
 const activeCategorySlugs = new Set();
+let categorySlugsForSitemap = categories.map(({ slug }) => slug);
 const pageSize = 500;
 
 if (supabaseUrl && supabaseKey) {
@@ -40,11 +41,12 @@ if (supabaseUrl && supabaseKey) {
     }
 
     productSlugs = liveProductSlugs;
+    categorySlugsForSitemap = [...activeCategorySlugs];
   } catch (error) {
-    console.warn(`Could not fetch active product URLs for sitemap; excluding product and category URLs. ${error.message}`);
+    console.warn(`Could not fetch active product URLs for sitemap; product URLs are omitted and all category pages are included as a fallback. ${error.message}`);
   }
 } else {
-  console.warn('Supabase build environment variables are missing; excluding product and category URLs from the sitemap.');
+  console.warn('Supabase build environment variables are missing; product URLs are omitted and all category pages are included as a fallback.');
 }
 
 const staticPaths = [
@@ -60,7 +62,7 @@ const staticPaths = [
   '/privacy',
   '/terms',
   '/affiliate-disclosure',
-  ...categories.filter(({ slug }) => activeCategorySlugs.has(slug)).map(({ slug }) => `/category/${slug}`),
+  ...categorySlugsForSitemap.map((slug) => `/category/${slug}`),
   ...collections.map(({ slug }) => `/collections/${slug}`),
   ...guidesData.map(({ slug }) => `/guides/${slug}`),
   ...Object.keys(stylesData).map((slug) => `/inspiration/${slug}`),
