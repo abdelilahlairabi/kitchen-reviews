@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowLeftRight, Check, SlidersHorizontal, X } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, ArrowLeftRight, Check, Share2, SlidersHorizontal, X } from 'lucide-react';
 import AffiliateLink from '../components/AffiliateLink';
 import PageMeta from '../components/PageMeta';
 import ProductImageFrame from '../components/ProductImageFrame';
@@ -216,14 +216,78 @@ function ComparisonTable({ products, specs, onRemove }) {
 
 export default function CompareProducts() {
   const { slugs, isReady, removeSlug, clear } = useProductSlugs(COMPARE_PRODUCTS_KEY, MAX_COMPARE_PRODUCTS);
-  const querySlugs = useMemo(() => slugs.length >= 2 ? slugs : [], [slugs]);
-  const { data = [], isPending, isError, refetch } = useProductsBySlugs(querySlugs);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [shareMessage, setShareMessage] = useState('');
+  const [manualShareUrl, setManualShareUrl] = useState('');
+  const searchParamString = searchParams.toString();
+  const urlParams = useMemo(() => new URLSearchParams(searchParamString), [searchParamString]);
+  const isSharedComparison = urlParams.has('compare');
+  const sharedSlugs = useMemo(() => [...new Set(urlParams.getAll('compare')
+    .flatMap((value) => value.split(','))
+    .map((slug) => slug.trim())
+    .filter((slug) => slug && slug.length <= 500))].slice(0, MAX_COMPARE_PRODUCTS), [urlParams]);
+  const activeSlugs = isSharedComparison ? sharedSlugs : slugs;
+  const { data = [], isPending, isError, refetch } = useProductsBySlugs(activeSlugs);
   const products = useMemo(() => {
     const bySlug = new Map(data.map((product) => [product.slug, product]));
-    return querySlugs.map((slug) => bySlug.get(slug)).filter(Boolean);
-  }, [data, querySlugs]);
+    return activeSlugs.map((slug) => bySlug.get(slug)).filter(Boolean);
+  }, [activeSlugs, data]);
   const specs = useMemo(() => getComparableSpecs(products), [products]);
-  const unavailableSlugs = querySlugs.filter((slug) => !products.some((product) => product.slug === slug));
+  const unavailableSlugs = activeSlugs.filter((slug) => !products.some((product) => product.slug === slug));
+
+  const updateSharedComparison = (nextSlugs) => {
+    const nextParams = new URLSearchParams(searchParamString);
+    nextParams.delete('compare');
+    (nextSlugs.length > 0 ? nextSlugs : ['']).forEach((slug) => nextParams.append('compare', slug));
+    setSearchParams(nextParams, { replace: true });
+  };
+
+  const removeComparedProduct = (slug) => {
+    if (isSharedComparison) {
+      updateSharedComparison(activeSlugs.filter((activeSlug) => activeSlug !== slug));
+      return;
+    }
+    removeSlug(slug);
+  };
+
+  const clearComparison = () => {
+    if (isSharedComparison) {
+      updateSharedComparison([]);
+      return;
+    }
+    clear();
+  };
+
+  const shareComparison = async () => {
+    const shareUrl = new URL(window.location.href);
+    shareUrl.searchParams.delete('compare');
+    activeSlugs.forEach((slug) => shareUrl.searchParams.append('compare', slug));
+    const url = shareUrl.toString();
+    setShareMessage('');
+    setManualShareUrl('');
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'KitchenTrusted product comparison',
+          text: `Compare these ${activeSlugs.length} kitchen products.`,
+          url,
+        });
+        setShareMessage('Share options opened.');
+        return;
+      } catch (error) {
+        if (error?.name === 'AbortError') return;
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(url);
+      setShareMessage('Comparison link copied.');
+    } catch {
+      setManualShareUrl(url);
+      setShareMessage('Copy is unavailable here. Select and copy this link:');
+    }
+  };
 
   return (
     <main className="min-h-[60vh] w-full bg-[#fcfcfc] py-10 sm:py-14">
@@ -237,22 +301,28 @@ export default function CompareProducts() {
             <h1 className="text-3xl font-extrabold tracking-tight text-gray-950 sm:text-4xl">Compare products</h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-600">Review key details side by side. Choose up to {MAX_COMPARE_PRODUCTS} products; missing information is marked “Not listed.”</p>
           </div>
-          <div className="flex shrink-0 gap-2">
+          <div className="flex flex-wrap gap-2 sm:shrink-0">
+            {activeSlugs.length >= 2 && <button type="button" onClick={shareComparison} aria-label="Share this product comparison" className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-3 text-sm font-semibold text-gray-700 transition hover:border-gray-500 hover:text-gray-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2"><Share2 aria-hidden="true" className="h-4 w-4" /><span className="hidden sm:inline">Share</span></button>}
             <Link to="/products" className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-3 text-sm font-semibold text-gray-700 transition hover:border-gray-500 hover:text-gray-950"><ArrowLeft aria-hidden="true" className="h-4 w-4" />Browse products</Link>
-            {slugs.length > 0 && <button type="button" onClick={clear} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-3 text-sm font-semibold text-gray-700 transition hover:border-gray-500 hover:text-gray-950"><X aria-hidden="true" className="h-4 w-4" />Clear</button>}
+            {activeSlugs.length > 0 && <button type="button" onClick={clearComparison} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-3 text-sm font-semibold text-gray-700 transition hover:border-gray-500 hover:text-gray-950"><X aria-hidden="true" className="h-4 w-4" />Clear</button>}
           </div>
         </header>
 
+        {shareMessage && <div role="status" className="mb-5 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-700">
+          <p>{shareMessage}</p>
+          {manualShareUrl && <input aria-label="Comparison share link" readOnly value={manualShareUrl} onFocus={(event) => event.currentTarget.select()} className="mt-2 min-h-10 w-full rounded-lg border border-gray-300 px-3 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-700" />}
+        </div>}
+
         {!isReady ? (
           <p role="status" className="rounded-2xl border border-gray-200 bg-white p-10 text-center text-sm text-gray-500">Loading your comparison…</p>
-        ) : slugs.length === 0 ? (
+        ) : activeSlugs.length === 0 ? (
           <div className="mx-auto max-w-2xl rounded-2xl border border-gray-200 bg-white px-6 py-14 text-center shadow-sm sm:px-12">
             <span className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-gray-100 text-gray-700"><ArrowLeftRight aria-hidden="true" className="h-7 w-7" /></span>
             <h2 className="text-xl font-bold text-gray-950">Start with two products</h2>
             <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-gray-600">Select Compare on products you’re considering. Your shortlist stays on this device, and you can add up to three products.</p>
             <Link to="/products" className="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-gray-950 px-5 text-sm font-semibold text-white transition hover:bg-gray-800">Browse products</Link>
           </div>
-        ) : slugs.length < 2 ? (
+        ) : activeSlugs.length < 2 ? (
           <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center sm:p-10">
             <h2 className="text-lg font-bold text-gray-950">Choose one more product</h2>
             <p className="mt-2 text-sm text-gray-600">You have one product selected. Add at least one more to see a useful comparison.</p>
@@ -269,16 +339,16 @@ export default function CompareProducts() {
           <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
             <h2 className="font-bold text-gray-950">Some selected products are no longer available</h2>
             <p className="mt-2 text-sm text-gray-700">Remove the unavailable item, then choose another product to compare.</p>
-            <div className="mt-4 flex flex-wrap gap-2">{unavailableSlugs.map((slug) => <button key={slug} type="button" onClick={() => removeSlug(slug)} className="rounded-full border border-amber-300 bg-white px-3 py-2 text-xs font-semibold text-gray-800 hover:border-amber-500">Remove unavailable item</button>)}</div>
+            <div className="mt-4 flex flex-wrap gap-2">{unavailableSlugs.map((slug) => <button key={slug} type="button" onClick={() => removeComparedProduct(slug)} className="rounded-full border border-amber-300 bg-white px-3 py-2 text-xs font-semibold text-gray-800 hover:border-amber-500">Remove unavailable item</button>)}</div>
           </div>
         ) : (
           <>
             {unavailableSlugs.length > 0 && <div role="status" className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-gray-800">
               <span>One selected product is no longer available in the catalog.</span>
-              {unavailableSlugs.map((slug) => <button key={slug} type="button" onClick={() => removeSlug(slug)} className="font-semibold underline underline-offset-2">Remove unavailable item</button>)}
+              {unavailableSlugs.map((slug) => <button key={slug} type="button" onClick={() => removeComparedProduct(slug)} className="font-semibold underline underline-offset-2">Remove unavailable item</button>)}
             </div>}
             <div className="mb-5 flex items-center gap-2 text-sm font-semibold text-gray-700"><Check aria-hidden="true" className="h-4 w-4 text-gray-700" />{products.length} products selected</div>
-            <ComparisonTable products={products} specs={specs} onRemove={removeSlug} />
+            <ComparisonTable products={products} specs={specs} onRemove={removeComparedProduct} />
           </>
         )}
       </div>
