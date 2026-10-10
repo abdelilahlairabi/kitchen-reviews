@@ -7,7 +7,7 @@ const CategoriesGrid = () => {
     <div className="mx-auto mb-12 max-w-6xl px-4 sm:mb-16 sm:px-6 lg:px-8">
       <h2 className="mb-4 text-lg font-bold text-black sm:mb-6 sm:text-xl">All Categories</h2>
 
-      <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2 sm:gap-6 md:grid-cols-3">
+      <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
         {categories.map((cat) => (
           <Link 
             key={cat.slug}
@@ -18,7 +18,7 @@ const CategoriesGrid = () => {
               <img
                 src={cat.heroImage}
                 srcSet={getCategoryHeroSrcSet(cat)}
-                sizes="(max-width: 359px) calc(100vw - 58px), (max-width: 639px) calc((100vw - 96px) / 2), (max-width: 767px) calc((100vw - 140px) / 2), (max-width: 1023px) calc((100vw - 198px) / 3), (max-width: 1279px) calc((100vw - 238px) / 3), 305px"
+                sizes="(max-width: 639px) calc((100vw - 44px) / 2), (max-width: 1023px) calc((100vw - 72px) / 2), (max-width: 1279px) calc((100vw - 136px) / 4), 254px"
                 alt={cat.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"

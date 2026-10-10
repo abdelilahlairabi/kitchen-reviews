@@ -38,14 +38,14 @@ export default function SavedProducts() {
         ) : isError ? (
           <div className="rounded-2xl border border-gray-200 bg-white px-6 py-14 text-center">
             <p className="font-semibold text-gray-900">We couldn’t load your saved products.</p>
-            <button type="button" onClick={() => refetch()} className="mt-4 rounded-md bg-[#dcb589] px-5 py-2.5 text-sm font-semibold text-black hover:bg-[#cba478]">Try again</button>
+            <button type="button" onClick={() => refetch()} className="mt-4 rounded-md bg-gray-950 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-gray-800">Try again</button>
           </div>
         ) : products.length === 0 ? (
           <div className="mx-auto max-w-2xl rounded-2xl border border-gray-200 bg-white px-6 py-14 text-center shadow-sm sm:px-12">
-            <span className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#f7f3ed] text-[#8c6744]"><Heart aria-hidden="true" className="h-7 w-7" /></span>
+            <span className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-gray-950 text-white"><Heart aria-hidden="true" className="h-7 w-7" /></span>
             <h2 className="text-xl font-bold text-gray-950">Your saved list is empty</h2>
             <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-gray-600">Tap the heart on any product to save it here. You can compare your shortlist later—no account needed.</p>
-            <Link to="/products" className="mt-6 inline-flex items-center gap-2 rounded-md bg-[#dcb589] px-5 py-3 text-sm font-semibold text-black transition-colors hover:bg-[#cba478]">
+            <Link to="/products" className="mt-6 inline-flex items-center gap-2 rounded-md bg-gray-950 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-gray-800">
               <ShoppingBag aria-hidden="true" className="h-4 w-4" />Browse products
             </Link>
           </div>
