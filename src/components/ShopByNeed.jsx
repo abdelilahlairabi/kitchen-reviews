@@ -68,12 +68,12 @@ const ShopByNeed = () => {
             </p>
           </div>
 
-          <div role="group" aria-label="Choose how to browse" className="inline-flex w-fit rounded-full border border-gray-200 bg-white p-1 shadow-sm">
+          <div role="group" aria-label="Choose how to browse" className="inline-flex w-fit self-center rounded-full border border-gray-200 bg-white p-1 shadow-sm sm:self-auto">
             <button
               type="button"
               aria-pressed={browseMode === 'category'}
               onClick={() => setBrowseMode('category')}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8c6744] focus-visible:ring-offset-2 ${browseMode === 'category' ? 'bg-[#dcb589] text-gray-950' : 'text-gray-600 hover:text-gray-950'}`}
+              className={`rounded-full px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8c6744] focus-visible:ring-offset-2 sm:px-4 sm:text-sm ${browseMode === 'category' ? 'bg-[#dcb589] text-gray-950' : 'text-gray-600 hover:text-gray-950'}`}
             >
               Browse by category
             </button>
@@ -81,7 +81,7 @@ const ShopByNeed = () => {
               type="button"
               aria-pressed={browseMode === 'need'}
               onClick={() => setBrowseMode('need')}
-              className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8c6744] focus-visible:ring-offset-2 ${browseMode === 'need' ? 'bg-[#dcb589] text-gray-950' : 'text-gray-600 hover:text-gray-950'}`}
+              className={`rounded-full px-3 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8c6744] focus-visible:ring-offset-2 sm:px-4 sm:text-sm ${browseMode === 'need' ? 'bg-[#dcb589] text-gray-950' : 'text-gray-600 hover:text-gray-950'}`}
             >
               Shop by need
             </button>
@@ -89,14 +89,14 @@ const ShopByNeed = () => {
         </div>
 
         {browseMode === 'category' ? (
-          <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-5" aria-label="Kitchen product categories">
+          <div className="grid grid-cols-2 justify-items-center gap-x-4 gap-y-6 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-5" aria-label="Kitchen product categories">
             {popularCategories.map((category) => {
               const [width, height] = sourceDimensions[category.slug];
               return (
                 <Link
                   key={category.slug}
                   to={`/category/${category.slug}`}
-                  className="group flex min-w-0 flex-col items-center rounded-2xl px-2 py-3 text-center transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8c6744] focus-visible:ring-offset-2"
+                  className="group flex min-w-0 flex-col items-center rounded-2xl px-2 py-3 text-center transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8c6744] focus-visible:ring-offset-2 last:col-span-2 last:w-1/2 last:justify-self-center sm:last:col-span-1 sm:last:w-auto sm:last:justify-self-stretch"
                 >
                   <span className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border border-gray-200 bg-white transition-all duration-200 group-hover:border-[#dcb589] group-hover:shadow-md sm:h-24 sm:w-24 lg:h-28 lg:w-28">
                     <img
