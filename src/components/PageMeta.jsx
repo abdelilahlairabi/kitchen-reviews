@@ -11,7 +11,7 @@ const setMetaContent = (selector, attribute, content) => {
   element.setAttribute('content', content);
 };
 
-export default function PageMeta({ title, description }) {
+export default function PageMeta({ title, description, robots }) {
   useEffect(() => {
     const previousTitle = document.title;
     const descriptionElement = document.head.querySelector('meta[name="description"]');
@@ -20,11 +20,14 @@ export default function PageMeta({ title, description }) {
     const previousOgTitle = ogTitleElement?.getAttribute('content');
     const ogDescriptionElement = document.head.querySelector('meta[property="og:description"]');
     const previousOgDescription = ogDescriptionElement?.getAttribute('content');
+    const robotsElement = robots ? document.head.querySelector('meta[name="robots"]') : null;
+    const previousRobots = robotsElement?.getAttribute('content');
 
     document.title = title;
     setMetaContent('meta[name="description"]', 'description', description);
     setMetaContent('meta[property="og:title"]', 'og:title', title);
     setMetaContent('meta[property="og:description"]', 'og:description', description);
+    if (robots) setMetaContent('meta[name="robots"]', 'robots', robots);
 
     return () => {
       document.title = previousTitle;
@@ -34,8 +37,12 @@ export default function PageMeta({ title, description }) {
       else ogTitleElement?.setAttribute('content', previousOgTitle);
       if (previousOgDescription === null || previousOgDescription === undefined) document.head.querySelector('meta[property="og:description"]')?.remove();
       else ogDescriptionElement?.setAttribute('content', previousOgDescription);
+      if (robots) {
+        if (previousRobots === null || previousRobots === undefined) document.head.querySelector('meta[name="robots"]')?.remove();
+        else robotsElement?.setAttribute('content', previousRobots);
+      }
     };
-  }, [title, description]);
+  }, [title, description, robots]);
 
   return null;
 }

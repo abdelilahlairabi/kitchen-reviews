@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
@@ -8,7 +7,6 @@ import ProductGridError from './ProductGridError';
 import { rankFeaturedProducts } from '../utils/featuredProductRanking';
 import { getAmazonImageSrcSets } from '../utils/amazonImageSrcSets';
 
-const filters = ['All', 'Top Rated'];
 const FEATURED_PRODUCT_COUNT = 8;
 
 const getProductImageSrcSet = (image) => {
@@ -17,24 +15,18 @@ const getProductImageSrcSet = (image) => {
 };
 
 const FeaturedProductsGrid = () => {
-  const [activeFilter, setActiveFilter] = useState('All');
   const { data, isPending, isError } = useProducts({
     page: 1,
     // Rank a broad popularity pool by review confidence, then diversify categories and brands.
     pageSize: 24,
     sort: 'popularity',
-    minimumRating: activeFilter === 'Top Rated' ? 4.8 : undefined,
   });
   const products = rankFeaturedProducts(data?.products || [], FEATURED_PRODUCT_COUNT);
 
   return (
     <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" aria-busy={isPending}>
-      <div className="flex flex-col items-center mb-12">
-        <span className="text-xs font-bold tracking-widest text-gray-500 uppercase mb-2">FEATURED PRODUCTS</span>
-        <h2 className="text-3xl font-bold text-black mb-6">Featured Products</h2>
-        <div className="flex gap-3">
-          {filters.map((filter) => <button key={filter} type="button" onClick={() => setActiveFilter(filter)} aria-pressed={activeFilter === filter} className={`px-5 py-1.5 rounded-full text-sm font-semibold border border-black transition-colors ${activeFilter === filter ? 'bg-[#dcb589] text-black' : 'bg-white text-black hover:bg-gray-50'}`}>{filter}</button>)}
-        </div>
+      <div className="mb-10 flex justify-center text-center">
+        <h2 className="text-3xl font-bold text-black">Featured Products</h2>
       </div>
       {isPending ? (
         <><span className="sr-only" role="status">Loading featured products</span><ProductGridSkeleton variant="featured" /></>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { isValidAmazonProductUrl } from '../utils/affiliate';
 import { getAmazonImageSrcSets } from '../utils/amazonImageSrcSets';
 import AffiliateLink from './AffiliateLink';
+import CompareProductButton from './CompareProductButton';
 import ProductImageFrame from './ProductImageFrame';
 import SaveProductButton from './SaveProductButton';
 
@@ -42,6 +43,7 @@ export default function ProductCard({
       <Link to={`/product/${product.slug}`} className="mb-1 line-clamp-3 min-h-[60px] text-xs font-bold leading-5 text-gray-950 transition-colors hover:text-gray-600 sm:line-clamp-2 sm:min-h-[40px] sm:text-sm">
         <h2>{product.name}</h2>
       </Link>
+      <CompareProductButton product={product} />
 
       {hasRating && (
         <div className="mb-3 flex min-w-0 items-center gap-1" role="img" aria-label={`${product.rating.toFixed(1)} out of 5 stars${product.reviewCount ? `, ${product.reviewCount.toLocaleString()} reviews` : ''}`}>

@@ -1,5 +1,7 @@
 export const SAVED_PRODUCTS_KEY = 'kitchentrusted:saved-products:v1';
 export const RECENT_PRODUCTS_KEY = 'kitchentrusted:recent-products:v1';
+export const COMPARE_PRODUCTS_KEY = 'kitchentrusted:compare-products:v1';
+export const MAX_COMPARE_PRODUCTS = 3;
 const PRODUCT_PREFERENCES_EVENT = 'kitchentrusted:product-preferences-change';
 const sessionValues = new Map();
 const snapshots = new Map();

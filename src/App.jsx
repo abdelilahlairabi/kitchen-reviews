@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import CompareTray from './components/CompareTray';
 
 const Home = lazy(() => import('./pages/Home'));
 const AllProducts = lazy(() => import('./pages/AllProducts'));
@@ -22,6 +23,7 @@ const Inspiration = lazy(() => import('./pages/Inspiration'));
 const StyleDetails = lazy(() => import('./pages/StyleDetails'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const SavedProducts = lazy(() => import('./pages/SavedProducts'));
+const CompareProducts = lazy(() => import('./pages/CompareProducts'));
 
 export function AppContent() {
   const location = useLocation();
@@ -49,6 +51,7 @@ export function AppContent() {
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<AllProducts />} /> {/* Ajout de la route */}
             <Route path="/saved" element={<SavedProducts />} />
+            <Route path="/compare" element={<CompareProducts />} />
             <Route path="/category/:categoryName" element={<Category />} />
             <Route path="/product/:productId" element={<ProductDetails />} />
             <Route path="/categories" element={<Categories />} />
@@ -70,6 +73,7 @@ export function AppContent() {
       </main>
 
       <Footer />
+      <CompareTray />
     </div>
   );
 }
