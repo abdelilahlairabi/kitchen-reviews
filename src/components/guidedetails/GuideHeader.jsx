@@ -85,7 +85,7 @@ export default function GuideHeader({ guide }) {
           src={guide.image}
           srcSet={getGuideImageSrcSet(guide.image)}
           sizes="(max-width: 1055px) calc(100vw - 32px), 992px"
-          alt={`${guide.title} — kitchen guide`}
+          alt={guide.imageAlt || `${guide.title} — kitchen guide`}
           width="1200"
           height="675"
           className="w-full h-full object-cover"

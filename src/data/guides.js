@@ -485,6 +485,149 @@ export const guidesData = [
       { q: "Can I replace a gas cooktop with induction myself?", a: "Installation requirements depend on the cooktop, electrical service, cabinetry, and local rules. Check the installation manual and have a qualified professional assess wiring and fit before purchase." },
     ],
   },
+  {
+    id: 8,
+    slug: "countertop-ice-maker-buying-guide",
+    title: "Countertop Ice Maker Buying Guide: What to Compare",
+    seoTitle: "How to Choose a Countertop Ice Maker | KitchenTrusted",
+    badge: "Buying Guides",
+    time: "8 min read",
+    date: "Updated October 2026",
+    desc: "Compare ice type, production claims, first-batch timing, counter fit, water handling, and cleaning before choosing a countertop ice maker.",
+    image: "/guides/countertop-ice-maker-buying-guide.jpg",
+    imageAlt: "A compact countertop ice maker and glass of ice on a bright, neutral kitchen counter.",
+    author: null,
+    quickTip: "Treat daily production, basket capacity, and first-batch time as separate specifications—they describe different parts of the experience.",
+    contentSections: [
+      {
+        heading: "Start with the kind of ice you want",
+        paragraphs: [
+          "Countertop machines can make different ice shapes and sizes, and those formats are not interchangeable. Think about the drinks and serving style you use most, then confirm the machine makes the type of ice you actually want.",
+          "Read the exact model description and manual rather than relying on a product photo. Names such as bullet, nugget, or clear ice describe different results and can refer to different machine designs.",
+        ],
+      },
+      {
+        heading: "Separate daily output from basket capacity",
+        paragraphs: [
+          "A production figure describes how much ice a machine may make over a period of time under stated conditions. Basket capacity describes how much ice it can hold at once. A high daily-output number does not mean the basket stores that amount or that it will be ready in one batch.",
+          "Compare the first-batch estimate separately from ongoing production. Results and timing can vary with the model, room conditions, water temperature, and how the machine is used, so check the manufacturer’s test notes and operating guidance.",
+        ],
+        bullets: [
+          "Daily production: the maker’s stated output over a day or other interval.",
+          "Basket capacity: the amount the removable basket holds at one time.",
+          "First-batch time: the stated wait for the first ice after starting a cycle.",
+        ],
+      },
+      {
+        heading: "Measure the counter and the working space",
+        paragraphs: [
+          "Check the machine’s full width, depth, and height against the space where you plan to use it. Leave room to open the lid, lift out the basket, add water, drain the unit, and reach any controls.",
+          "Vent locations and required clearance differ by model. Follow the manual’s placement instructions, and do not assume a machine can be pushed flush against a wall or placed in a tight cabinet while operating.",
+        ],
+      },
+      {
+        heading: "Check filling, draining, and cleaning",
+        paragraphs: [
+          "Some countertop machines use a refillable reservoir; other models may offer different water connections or drainage arrangements. Confirm how the exact unit is filled and emptied, and whether a drain plug or nearby sink access is needed where you plan to use it.",
+          "Look for clear cleaning instructions, including how often to clean the reservoir and ice-contact surfaces and whether the model has a cleaning cycle. Use only the cleaning method and products permitted by the manufacturer.",
+        ],
+      },
+      {
+        heading: "Review everyday operation and support",
+        paragraphs: [
+          "Think about where the unit will sit, when it will run, and how often you will refill and clean it. Check the product listing and manual for sound information, indicator lights, auto-stop behavior, warranty coverage, and support or replacement-part details.",
+          "Many compact ice makers are designed to produce ice rather than preserve it like a freezer. Storage and melt-water behavior vary, so check the specific model’s instructions before planning to leave ice in its basket for a long period.",
+        ],
+      },
+    ],
+    types: [],
+    finishes: [],
+    recommendedProductSlugs: [],
+    faqs: [
+      { q: "What is the difference between daily ice production and basket capacity?", a: "Daily production is the maker’s stated output over time; basket capacity is the amount it can hold at one time. Compare both, along with the time to the first batch." },
+      { q: "Does a countertop ice maker keep ice frozen?", a: "Storage behavior varies. Many compact machines are designed to make ice rather than work as a freezer, so check the exact model’s instructions for what happens to ice and melt water in the basket." },
+      { q: "How much room should I leave around an ice maker?", a: "Use the clearance and ventilation guidance in the specific model’s manual. Also allow practical room to open the lid, remove the basket, refill, and clean the machine." },
+      { q: "Do countertop ice makers need a water line?", a: "Water setup varies by model. Check whether the unit uses a refillable reservoir or another connection, and confirm how it drains before choosing a location." },
+    ],
+  },
+  {
+    id: 9,
+    slug: "countertop-appliance-fit-guide",
+    title: "Will It Fit? A Countertop Appliance Measuring Guide",
+    seoTitle: "Countertop Appliance Dimensions and Fit | KitchenTrusted",
+    badge: "Buying Guides",
+    time: "7 min read",
+    date: "Updated October 2026",
+    desc: "Measure counter space, cabinet clearance, cord reach, and storage before choosing a countertop appliance for your kitchen.",
+    image: "/guides/countertop-appliance-fit-guide.jpg",
+    imageAlt: "A blender and coffee maker on a counter beneath a cabinet, with a measuring tape showing the available space.",
+    author: null,
+    quickTip: "Measure the usable space in three dimensions, then compare it with the exact model’s dimensions and operating clearances in its manual.",
+    contentSections: [
+      {
+        heading: "Measure the usable counter area",
+        paragraphs: [
+          "Choose the spot where the appliance will actually sit, then measure its usable width and depth. Account for a backsplash, nearby walls, outlet placement, counter edges, and anything else that reduces the clear area.",
+          "Check the product’s full exterior dimensions, not just the cooking or container capacity. Handles, knobs, feet, rear plugs, and removable attachments can affect how much space it needs.",
+        ],
+      },
+      {
+        heading: "Check height and moving parts",
+        paragraphs: [
+          "Measure from the counter to the lowest cabinet, shelf, or window above the appliance. Then check the space needed to open a lid, raise a mixer head, fill a reservoir, remove a container, or pull out a drawer.",
+          "Some appliances are used only when moved away from the wall or brought forward on the counter. Compare the product’s dimensions and operating instructions with the space available while it is in use—not only while it is stored.",
+        ],
+        bullets: [
+          "For lids and hoppers, measure the height when they are fully open.",
+          "For drawers or baskets, allow room to pull them out and set them down.",
+          "For blenders and mixers, check how much overhead room is needed to add ingredients or remove parts.",
+        ],
+      },
+      {
+        heading: "Leave the required operating clearance",
+        paragraphs: [
+          "Ventilation and heat clearances depend on the appliance and model. Read the installation or use manual for required space at the sides, back, and top, and follow any warnings about nearby cabinets, walls, or other appliances.",
+          "Do not rely on a general rule of thumb when a manufacturer specifies a clearance. If the appliance will sit below cabinetry or beside a heat-sensitive surface, verify that placement is allowed for that exact model.",
+        ],
+      },
+      {
+        heading: "Plan the outlet and cord route",
+        paragraphs: [
+          "Check the cord length and the location of a suitable outlet before settling on a spot. Keep the cord route away from sinks, hot surfaces, walkways, and places where it could be pinched or pulled.",
+          "Follow the product’s electrical instructions, including any guidance about extension cords or required outlets. If the manual does not make a setup clear, ask the manufacturer or a qualified electrician rather than guessing.",
+        ],
+      },
+      {
+        heading: "Make sure storage is realistic",
+        paragraphs: [
+          "If the appliance will not stay on the counter, measure the shelf or cabinet opening and check the appliance’s weight, handles, and the room needed to lift it out. Consider whether removable parts need their own storage space.",
+          "A product that is difficult to move or access may be inconvenient to use regularly. Before buying, compare the storage location with your routine and follow the maker’s instructions for storing the appliance and its accessories.",
+        ],
+      },
+      {
+        heading: "Use this quick fit checklist",
+        paragraphs: [
+          "Write down the measurements before you shop, then compare them with the exact model’s product page and instructions. Leave yourself enough room to operate and clean the appliance safely.",
+        ],
+        bullets: [
+          "Usable counter width and depth, including any protruding parts.",
+          "Height below cabinets plus the space needed for lids, handles, or removable pieces.",
+          "Manufacturer-required side, rear, and top clearance.",
+          "Cord reach to an appropriate outlet without crossing a wet area or walkway.",
+          "Cabinet opening, shelf depth, and appliance weight if you plan to store it.",
+        ],
+      },
+    ],
+    types: [],
+    finishes: [],
+    recommendedProductSlugs: [],
+    faqs: [
+      { q: "How do I measure for a countertop appliance?", a: "Measure the usable counter width and depth, the vertical space to cabinets, and any extra room needed for lids, drawers, doors, or removable parts. Compare all of these with the exact model’s dimensions and manual." },
+      { q: "How much clearance does a countertop appliance need?", a: "There is no single clearance that applies to every appliance. Follow the manufacturer’s instructions for that model, especially around vents and heat-producing surfaces." },
+      { q: "Should I include handles and cords in the measurements?", a: "Yes. Check the complete exterior dimensions and cord location, and allow room for parts that project or move during use." },
+      { q: "Can I use an extension cord if the outlet is too far away?", a: "Do not assume an extension cord is permitted. Follow the electrical guidance in the appliance manual; if it is unclear, check with the manufacturer or a qualified electrician." },
+    ],
+  },
 ];
 
 export const getGuideBySlug = (slug) => guidesData.find((g) => g.slug === slug);

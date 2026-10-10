@@ -19,7 +19,7 @@ const GuidesGrid = ({ guides, isLoading, isError }) => {
                 src={guide.image}
                 srcSet={getGuideImageSrcSet(guide.image)}
                 sizes="(max-width: 767px) calc(100vw - 32px), (max-width: 1279px) calc((100vw - 72px) / 2), 368px"
-                alt={guide.title} 
+                alt={guide.imageAlt || guide.title}
                 width="1376"
                 height="768"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
