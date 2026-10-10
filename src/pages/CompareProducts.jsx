@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowLeftRight, Check, X } from 'lucide-react';
+import { ArrowLeft, ArrowLeftRight, Check, SlidersHorizontal, X } from 'lucide-react';
 import AffiliateLink from '../components/AffiliateLink';
 import PageMeta from '../components/PageMeta';
 import ProductImageFrame from '../components/ProductImageFrame';
@@ -29,11 +29,39 @@ const formatValue = (value) => {
 
 const formatPrice = (value) => Number.isFinite(value) ? `$${value.toFixed(2)}` : 'Not listed';
 
+const normalizeComparableValue = (value) => String(value)
+  .normalize('NFKC')
+  .trim()
+  .replace(/\s+/g, ' ')
+  .toLocaleLowerCase();
+
+const isMissingValue = (value) => ['not listed', 'not rated', 'n/a', 'na', ''].includes(normalizeComparableValue(value));
+
+const hasListedValue = (value) => {
+  if (value === null || value === undefined || isMissingValue(value)) return false;
+  if (Array.isArray(value)) return value.some(hasListedValue);
+  if (typeof value === 'object') return Object.values(value).some(hasListedValue);
+  return true;
+};
+
+function compareRowValues(values) {
+  const presentValues = values.map(normalizeComparableValue).filter((value) => !isMissingValue(value));
+  const distinctValues = new Set(presentValues);
+  const hasMissingValues = presentValues.length > 0 && presentValues.length < values.length;
+  const hasDifferentValues = distinctValues.size > 1;
+
+  return {
+    hasDifferentValues,
+    hasMissingValues,
+    hasDifferences: hasDifferentValues || hasMissingValues,
+  };
+}
+
 function getComparableSpecs(products) {
   const valuesByProduct = products.map((product) => {
     const specs = product.specs && typeof product.specs === 'object' && !Array.isArray(product.specs) ? product.specs : {};
     return new Map(Object.entries(specs)
-      .filter(([, value]) => value !== null && value !== undefined && value !== '')
+      .filter(([, value]) => hasListedValue(value))
       .map(([key, value]) => [normalizeSpecKey(key), { label: labelFor(key), value }]));
   });
   const keys = new Map();
@@ -75,18 +103,41 @@ function ProductHeading({ product, onRemove }) {
 
 function ComparisonTable({ products, specs, onRemove }) {
   const [showAllSpecs, setShowAllSpecs] = useState(false);
-  const visibleSpecs = showAllSpecs ? specs : specs.slice(0, INITIAL_SPEC_COUNT);
-  const rows = [
+  const [differencesOnly, setDifferencesOnly] = useState(false);
+  const coreRows = [
     { key: 'price', label: 'Price', values: products.map((product) => formatPrice(product.price)) },
     { key: 'rating', label: 'Rating', values: products.map((product) => Number.isFinite(product.rating) ? `${product.rating.toFixed(1)} / 5` : 'Not rated') },
     { key: 'reviews', label: 'Customer ratings', values: products.map((product) => product.reviewCount ? Number(product.reviewCount).toLocaleString() : 'Not listed') },
     { key: 'brand', label: 'Brand', values: products.map((product) => product.brandName || 'Not listed') },
     { key: 'model', label: 'Model', values: products.map((product) => product.modelNumber || 'Not listed') },
-    ...visibleSpecs.map((spec) => ({ key: spec.key, label: spec.label, values: spec.values.map(formatValue) })),
   ];
+  const allRows = [...coreRows, ...specs.map((spec) => ({ key: spec.key, label: spec.label, values: spec.values.map(formatValue) }))]
+    .map((row) => ({ ...row, comparison: compareRowValues(row.values) }));
+  const differingRows = allRows.filter((row) => row.comparison.hasDifferences);
+  const visibleSpecKeys = new Set((showAllSpecs || differencesOnly ? specs : specs.slice(0, INITIAL_SPEC_COUNT)).map((spec) => spec.key));
+  const rows = differencesOnly
+    ? differingRows
+    : allRows.filter((row) => coreRows.some((coreRow) => coreRow.key === row.key) || visibleSpecKeys.has(row.key));
+  const hasAdditionalListedSpecs = specs.slice(INITIAL_SPEC_COUNT).some((spec) => spec.values.some(hasListedValue));
+  const toggleClassName = `inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border px-3 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2 ${differencesOnly ? 'border-gray-900 bg-gray-900 text-white hover:bg-gray-800' : 'border-gray-300 bg-white text-gray-700 hover:border-gray-500 hover:text-gray-950'}`;
+
+  const renderNoDifferences = () => <div role="status" className="px-5 py-10 text-center">
+    <p className="font-semibold text-gray-900">No differences found in the listed details.</p>
+    <p className="mt-1 text-sm text-gray-600">All available values match, or the catalog has not listed enough details to compare.</p>
+    <button type="button" onClick={() => setDifferencesOnly(false)} className="mt-4 inline-flex min-h-10 items-center justify-center rounded-lg border border-gray-300 bg-white px-4 text-sm font-semibold text-gray-700 transition hover:border-gray-500 hover:text-gray-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2">Show all details</button>
+  </div>;
 
   return (
     <>
+      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-gray-600">See which details vary or are missing from a product listing.</p>
+        <button type="button" onClick={() => setDifferencesOnly((current) => !current)} aria-pressed={differencesOnly} className={toggleClassName}>
+          <SlidersHorizontal aria-hidden="true" className="h-4 w-4" />
+          Differences only
+          <span className={`rounded-full px-1.5 py-0.5 text-xs ${differencesOnly ? 'bg-white/15 text-white' : 'bg-gray-100 text-gray-600'}`}>{differingRows.length}</span>
+        </button>
+      </div>
+
       <div className="hidden overflow-x-auto rounded-2xl border border-gray-200 bg-white lg:block">
         <table className="w-full min-w-[850px] table-fixed border-separate border-spacing-0 text-left text-sm">
           <caption className="sr-only">Side-by-side comparison of selected kitchen products</caption>
@@ -103,10 +154,16 @@ function ComparisonTable({ products, specs, onRemove }) {
               </th>)}
             </tr>
           </thead>
-          <tbody>{rows.map((row, rowIndex) => <tr key={row.key} className={`border-b border-gray-100 last:border-0 ${rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50/70'}`}>
-            <th scope="row" className="px-4 py-3 font-semibold text-gray-800">{row.label}</th>
-            {row.values.map((value, index) => <td key={`${row.key}-${products[index].id}`} className={`break-words px-4 py-3 ${value === 'Not listed' || value === 'Not rated' ? 'text-gray-400' : 'text-gray-700'}`}>{value}</td>)}
-          </tr>)}</tbody>
+          <tbody>{rows.length > 0 ? rows.map((row, rowIndex) => <tr key={row.key} className={`border-b border-gray-100 last:border-0 ${rowIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50/70'}`}>
+            <th scope="row" className="px-4 py-3 font-semibold text-gray-800">
+              <span>{row.label}</span>
+              {differencesOnly && <span className="mt-1 block text-[10px] font-medium text-gray-500">{row.comparison.hasDifferentValues ? 'Values differ' : 'Some info missing'}</span>}
+            </th>
+            {row.values.map((value, index) => <td key={`${row.key}-${products[index].id}`} className={`break-words px-4 py-3 ${isMissingValue(value) ? 'text-gray-400' : row.comparison.hasDifferentValues ? 'font-semibold text-gray-950' : 'text-gray-700'}`}>
+              {value}
+              {differencesOnly && row.comparison.hasMissingValues && isMissingValue(value) && <span className="mt-1 block text-[10px] font-medium text-gray-500">Not provided</span>}
+            </td>)}
+          </tr>) : <tr><td colSpan={products.length + 1}>{renderNoDifferences()}</td></tr>}</tbody>
         </table>
       </div>
 
@@ -134,27 +191,33 @@ function ComparisonTable({ products, specs, onRemove }) {
         </section>
 
         <section aria-label="Compare product details" className="overflow-hidden rounded-2xl border border-gray-200 bg-white divide-y divide-gray-100">
-          {rows.map((row) => <div key={row.key} className="px-4 py-3.5">
-            <h3 className="text-sm font-semibold text-gray-900">{row.label}</h3>
+          {rows.length > 0 ? rows.map((row) => <div key={row.key} className="px-4 py-3.5">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-sm font-semibold text-gray-900">{row.label}</h3>
+              {differencesOnly && <span className="rounded-full bg-gray-100 px-2 py-1 text-[10px] font-medium text-gray-600">{row.comparison.hasDifferentValues ? 'Values differ' : 'Some info missing'}</span>}
+            </div>
             <dl className="mt-2 divide-y divide-gray-100">
               {row.values.map((value, index) => {
                 const product = products[index];
                 const productLabel = product.name.split(/[,|]/)[0].trim() || product.brandName || `Product ${index + 1}`;
-                const isMissing = value === 'Not listed' || value === 'Not rated';
+                const isMissing = isMissingValue(value);
                 return <div key={`${row.key}-${product.id}`} className="flex items-center justify-between gap-4 py-2 first:pt-0 last:pb-0">
                   <dt className="flex min-w-0 items-center gap-2 text-xs text-gray-600" title={product.name}>
                     <span aria-hidden="true" className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gray-100 text-[10px] font-bold text-gray-700">{index + 1}</span>
                     <span className="line-clamp-1">{productLabel}</span>
                   </dt>
-                  <dd className={`max-w-[48%] break-words text-right text-sm ${isMissing ? 'text-gray-400' : row.key === 'price' ? 'font-bold text-gray-950' : 'text-gray-800'}`}>{value}</dd>
+                  <dd className={`max-w-[48%] break-words text-right text-sm ${isMissing ? 'text-gray-400' : row.comparison.hasDifferentValues ? 'rounded-md bg-gray-100 px-2 py-1 font-semibold text-gray-950' : row.key === 'price' ? 'font-bold text-gray-950' : 'text-gray-800'}`}>
+                    {value}
+                    {differencesOnly && row.comparison.hasMissingValues && isMissing && <span className="block text-[10px] font-medium text-gray-500">Not provided</span>}
+                  </dd>
                 </div>;
               })}
             </dl>
-          </div>)}
+          </div>) : renderNoDifferences()}
         </section>
       </div>
 
-      {specs.length > INITIAL_SPEC_COUNT && <div className="mt-5 text-center">
+      {!differencesOnly && hasAdditionalListedSpecs && <div className="mt-5 text-center">
         <button type="button" onClick={() => setShowAllSpecs((current) => !current)} aria-expanded={showAllSpecs} className="inline-flex min-h-10 items-center justify-center rounded-full border border-gray-300 bg-white px-4 text-sm font-semibold text-gray-700 transition hover:border-gray-500 hover:text-gray-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-700 focus-visible:ring-offset-2">
           {showAllSpecs ? 'Show fewer specifications' : `Show all ${specs.length} specifications`}
         </button>
