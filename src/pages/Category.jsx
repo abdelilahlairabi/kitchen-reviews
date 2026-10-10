@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import CategoryHero from '../components/category/CategoryHero';
 import CategoryFilters from '../components/category/CategoryFilters';
@@ -11,14 +12,21 @@ import NotFound from './NotFound';
 
 const Category = () => {
   const { categoryName } = useParams();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const category = getCategoryBySlug(categoryName);
-  const activeType = searchParams.get('type') || '';
   const sort = searchParams.get('sort') || 'popularity';
-  const requestedPage = Math.max(1, Number(searchParams.get('page')) || 1);
+  const requestedPage = searchParams.has('type') ? 1 : Math.max(1, Number(searchParams.get('page')) || 1);
+
+  useEffect(() => {
+    if (!category || !searchParams.has('type')) return;
+    const params = new URLSearchParams(searchParams);
+    params.delete('type');
+    params.delete('page');
+    setSearchParams(params, { replace: true });
+  }, [category, searchParams, setSearchParams]);
+
   const { data, isPending: isLoadingProducts, isFetching, isError: productsError } = useProducts({
     categorySlug: category?.slug,
-    productType: activeType || undefined,
     page: requestedPage,
     pageSize: PRODUCT_PAGE_SIZE,
     sort,
@@ -31,7 +39,7 @@ const Category = () => {
     <div className="w-full bg-[#fcfcfc] min-h-screen" aria-busy={isFetching}>
       <PageMeta title={`${category.name} Products & Reviews | KitchenTrusted`} description={category.description} />
       <CategoryHero category={category} productCount={data?.total || 0} />
-      <CategoryFilters category={category} />
+      <CategoryFilters />
       {isLoadingProducts ? <p className="py-16 text-center text-gray-500">Loading products...</p> : <CategoryProductGrid products={data?.products || []} total={data?.total || 0} pageSize={PRODUCT_PAGE_SIZE} page={requestedPage} />}
       {!isLoadingProducts && <RelatedCategories categories={categories} currentSlug={category.slug} />}
     </div>
