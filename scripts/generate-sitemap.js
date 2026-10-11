@@ -7,10 +7,9 @@ import { collections } from '../src/data/collections.js';
 import { guidesData } from '../src/data/guides.js';
 import { stylesData } from '../src/data/inspirationStyles.js';
 import { validAmazonAffiliateUrlFilter } from '../src/utils/affiliate.js';
+import { resolveSiteUrl } from '../src/utils/siteUrl.js';
 
-const siteUrl = (process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://kitchen-reviews-seven.vercel.app')
-  .trim()
-  .replace(/\/$/, '');
+const siteUrl = resolveSiteUrl(process.env.SITE_URL || process.env.VITE_SITE_URL);
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const supabaseKey = process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 let productSlugs = [];

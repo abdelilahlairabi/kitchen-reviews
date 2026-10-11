@@ -1,8 +1,7 @@
 import { useLocation } from 'react-router-dom';
+import { resolveSiteUrl } from '../utils/siteUrl.js';
 
-const siteOrigin = (import.meta.env.VITE_SITE_URL || 'https://kitchen-reviews-seven.vercel.app')
-  .trim()
-  .replace(/\/+$/, '');
+const siteOrigin = resolveSiteUrl(import.meta.env.VITE_SITE_URL);
 
 function getCanonicalUrl(location, canonicalPath) {
   if (canonicalPath) return new URL(canonicalPath, siteOrigin).href;
